@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Τα δικά μου χρήσιμα</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+/* ===== ΧΡΩΜΑΤΑ ΘΕΜΑΤΟΣ ===== */
+
+:root {
+  --bg1: #0d1b2a;
+  --bg2: #1b263b;
+  --card: #415a77;
+  --text: #e0e1dd;
+  --accent: #f4a261;
+  --border: rgba(255,255,255,.15);
+}
+
+
+/* Reset βασικών */
+*{box-sizing:border-box}
+
+/* Σώμα σελίδας */
+body{
+  margin:0;
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+/* Περιτύλιγμα με padding κάτω για να μη καλύπτεται από το footer */
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 190px;}
+
+/* ===== HEADER ===== */
+header{text-align:center;margin-bottom:10px;}
+header h1{margin:4px 0 0;font-size:26px;font-weight:800;}
+header h2{margin:6px 0 0;font-size:14px;color:#2a9df4;font-weight:700;}
+header h3{margin:6px 0 0;font-size:13px;color:#bbb;font-weight:500;}
+
+/* ===== TOPBAR BUTTONS ===== */
+.topbar{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:12px 0 18px;}
+button{
+  padding:8px 14px;border:none;border-radius:10px;cursor:pointer;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;
+}
+button.gray{background:#596070 !important;color:#ccc !important;}
+button:disabled{opacity:.45;cursor:not-allowed;}
+
+/* ===== ΚΑΤΗΓΟΡΙΕΣ ===== */
+#categories{display:flex;flex-direction:column;gap:18px;padding:0 8px;}
+.category{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:14px;padding:10px;
+}
+.category.drag-over{outline:2px dashed #5aa9ff;outline-offset:4px;}
+.category-title{display:flex;align-items:center;justify-content:space-between;position:relative;}
+.category-title h2{margin:0;font-size:18px;}
+.cat-actions{display:flex;gap:6px;opacity:0;transition:.2s;position:absolute;right:0;top:0;}
+.category-title:hover .cat-actions{opacity:1;}
+.cat-btn{
+  cursor:pointer;font-size:12px;padding:2px 6px;border-radius:6px;
+  background:rgba(0,0,0,.45); color:var(--text);
+}
+.cat-btn:hover{background:rgba(0,0,0,.75);}
+
+/* ===== GRID LINKS ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:10px;
+  margin-top:10px;
+  min-height:44px;
+}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:20px;
+  width:100%; aspect-ratio:1/1; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center; transition:.18s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  background: color-mix(in oklab, var(--accent) 25%, transparent);
+  border-color: var(--accent);
+}
+.card a{
+  display:flex;flex-direction:column;align-items:center;text-decoration:none;
+  color:var(--text);width:100%;height:100%;justify-content:center;
+}
+.card img.favicon{width:40px;height:40px;margin-bottom:6px;display:block;image-rendering:auto;}
+.link-title{
+  font-size:12px;font-weight:800;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90%;
+}
+.link-desc{
+  font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;
+  max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+
+/* Κουμπιά πάνω στις κάρτες */
+.ctrl-left,.ctrl-right{position:absolute;top:4px;display:flex;gap:4px;opacity:0;transition:.2s;}
+.card:hover .ctrl-left,.card:hover .ctrl-right{opacity:1;}
+.ctrl-left{left:4px;} .ctrl-right{right:4px;}
+.ctrl-btn{
+  background:rgba(0,0,0,.55); padding:2px 6px; border-radius:6px;
+  cursor:pointer; user-select:none; color:var(--text); font-size:12px;
+}
+.ctrl-btn:hover{background:rgba(0,0,0,.8);}
+
+/* ===== FOOTER ===== */
+footer{
+  position:fixed;left:0;bottom:0;width:100%;
+  background:rgba(35,36,41,.96); backdrop-filter:blur(6px);
+  border-top:1px solid var(--border); padding:22px 10px; z-index:3000;
+  text-align:center;
+}
+footer .btnrow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:6px;}
+footer .note{color:#aab2bd;font-weight:700;}
+body:has(footer) .wrap{padding-bottom:210px;}
+
+/* ===== MODALS ===== */
+.modal{
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.6);z-index:4000;
+}
+.modal .box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+  padding:16px;width:94%;max-width:420px;
+}
+.modal h3{margin:0 0 8px;font-size:18px;}
+.modal .row{display:flex;flex-direction:column;gap:6px;margin:8px 0;}
+.modal input,.modal textarea,select{
+  background:var(--card);color:var(--text);border:1px solid var(--border);
+  border-radius:8px;padding:8px;width:100%;
+}
+.modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;}
+
+/* Icon picker rows */
+.icon-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.icon-row select, .icon-row input[type=file]{flex:1;}
+
+/* Προεπισκόπηση εικονιδίου */
+.icon-preview{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:12px;color:#cbd5e1;}
+.icon-preview img{width:24px;height:24px;}
+
+/* Κουμπί παλέτας (αόρατο αλλά clickable) */
+#paletteBtn{
+  position:fixed;top:50%;right:0;transform:translateY(-50%);
+  width:22px;height:44px;opacity:0;cursor:pointer;z-index:4500;
+}
+#paletteModal .box{max-width:360px;}
+#paletteModal .row{flex-direction:row;align-items:center;justify-content:space-between;}
+#paletteModal label{flex:1;font-size:14px;}
+#paletteModal input[type=color]{width:48px;height:48px;border:none;background:none;padding:0;flex-shrink:0;}
+
+/* ===== TOOLTIP (pale) ===== */
+[data-tooltip]{position:relative;}
+[data-tooltip]::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  bottom:125%;left:50%;transform:translateX(-50%);
+  background:#fff9c4;color:#0a58ca;border:1px solid rgba(10,88,202,.35);
+  padding:4px 8px;border-radius:6px;
+  white-space:nowrap;font-size:12px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+}
+[data-tooltip]:hover::after{opacity:1;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- ===== ΚΕΦΑΛΙΔΑ ===== -->
+  <header>
+    <h1>Τα δικά μου χρήσιμα</h1>
+    <h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
+    <h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
+  <button id="themeToggle" style="margin-top:8px;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;background:var(--accent);color:var(--text);font-weight:700;">Switch Theme</button>
+</header>
+
+  <!-- ===== ΠΑΝΩ ΜΠΑΡΑ ΚΟΥΜΠΙΩΝ ===== -->
+  <div class="topbar">
+    <button id="addBtnTop" data-tooltip="Εισαγωγή νέου link">+ Προσθήκη νέου link</button>
+    <button id="undoBtnTop" class="gray" disabled data-tooltip="Αναίρεση τελευταίας αλλαγής">↩ Αναίρεση</button>
+    <button id="backupBtn" data-tooltip="Λήψη αντιγράφου ασφαλείας">Backup</button>
+    <button id="restoreBtn" data-tooltip="Επαναφορά από backup ή HTML">Restore</button>
+  </div>
+
+  <!-- ===== ΧΩΡΟΣ ΓΙΑ ΚΑΤΗΓΟΡΙΕΣ ===== -->
+  <div id="categories"></div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="btnrow">
+    <button id="addBtnFoot" data-tooltip="Εισαγωγή νέου link">+ Προσθήκη νέου link</button>
+  </div>
+  <div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
+</footer>
+
+<!-- ===== MODAL ΝΕΟΥ LINK ===== -->
+<div class="modal" id="modalForm">
+  <div class="box">
+    <h3 id="modalTitle">Νέο link</h3>
+    <form id="linkForm" autocomplete="off">
+      <!-- URL πεδίο -->
+      <div class="row"><input autocomplete="off" type="url" id="url" placeholder="Διεύθυνση (URL)" required></div>
+      <!-- Όνομα link -->
+      <div class="row"><input autocomplete="off" type="text" id="name" placeholder="Όνομα (max 13)"></div>
+      <!-- Περιγραφή link -->
+      <div class="row"><input autocomplete="off" type="text" id="desc" placeholder="Περιγραφή"></div>
+
+      <!-- Icon επιλογές -->
+      <div class="row">
+        <label style="font-size:13px;">Εικονίδιο</label>
+        <div class="icon-row">
+          <select id="iconMode">
+            <option value="auto">Αυτόματο favicon</option>
+            <option value="builtin">Ενσωματωμένο εικονίδιο</option>
+            <option value="upload">Ανέβασμα εικόνας...</option>
+          </select>
+          <select id="builtinIcon" style="display:none">
+            <option value="star">★ Αστέρι</option>
+            <option value="heart">❤ Καρδιά</option>
+            <option value="pill">💊 Χάπι</option>
+            <option value="firstaid">🩹 Πρώτες βοήθειες</option>
+            <option value="link">🔗 Link</option>
+            <option value="doc">📄 Έγγραφο</option>
+          </select>
+          <input id="iconFile" type="file" accept="image/*,.ico,.png,.jpg,.jpeg" style="display:none">
+        </div>
+        <div class="icon-preview" id="iconPreview" style="display:none">
+          <span>Προεπισκόπηση:</span><img id="iconPreviewImg" alt="icon">
+        </div>
+      </div>
+
+      <!-- Επιλογή / Δημιουργία κατηγορίας -->
+      <div class="row">
+        <select id="categorySelect"></select>
+        <input autocomplete="off" type="text" id="newCategory" placeholder="Νέα κατηγορία">
+      </div>
+      <!-- Κουμπιά -->
+      <div class="actions">
+        <button type="button" id="cancelModal">Άκυρο</button>
+        <button type="submit">Αποθήκευση</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
+<div class="modal" id="paletteModal">
+  <div class="box">
+    <h3>Παλέτα Χρωμάτων</h3>
+    <div class="row"><label for="bg1">Φόντο 1</label><input type="color" id="bg1"></div>
+    <div class="row"><label for="bg2">Φόντο 2</label><input type="color" id="bg2"></div>
+    <div class="row"><label for="card">Κάρτα</label><input type="color" id="card"></div>
+    <div class="row"><label for="text">Κείμενο</label><input type="color" id="text"></div>
+    <div class="row"><label for="accent">Κουμπιά</label><input type="color" id="accent"></div>
+    <div class="actions">
+      <button id="defaultPalette">Default</button>
+      <button id="closePalette">Κλείσιμο</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ΚΡΥΦΟ ΚΟΥΜΠΙ ΓΙΑ ΠΑΛΕΤΑ ===== -->
+<div id="paletteBtn" data-tooltip="Ρυθμίσεις χρωμάτων"></div>
+
+<script>
+/* ===============================
+   📌 Κατάσταση / Μεταβλητές
+   =============================== */
+let categories = {};   // { Κατηγορία: [ {url,name,desc,iconType,iconValue}, ... ] }
+let catOrder = [];     // Σειρά εμφάνισης κατηγοριών
+let editing = null;    // {cat, idx}
+let historyStack = []; // Ιστορικό για undo
+
+// Default χρώματα αν δεν έχουν αποθηκευτεί
+let themeDefault = {
+  bg1:"#1f1f1f", bg2:"#232429",
+  card:"#2b2d33", text:"#eaeef5",
+  accent:"#2f80ed"
+};
+
+/* ===============================
+   📌 Αποθήκευση Δεδομένων
+   =============================== */
+function saveData(){
+  localStorage.setItem("categories", JSON.stringify(categories));
+  localStorage.setItem("catOrder", JSON.stringify(catOrder));
+}
+
+function loadData(){
+  categories = JSON.parse(localStorage.getItem("categories") || "{}");
+  catOrder = JSON.parse(localStorage.getItem("catOrder") || "[]");
+}
+
+/* ===============================
+   📌 Θέμα / Χρώματα
+   =============================== */
+function applyTheme(t){
+  for(const [k,v] of Object.entries(t)){
+    document.documentElement.style.setProperty("--"+k, v);
+  }
+}
+function getTheme(){
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    bg1: cs.getPropertyValue("--bg1").trim(),
+    bg2: cs.getPropertyValue("--bg2").trim(),
+    card: cs.getPropertyValue("--card").trim(),
+    text: cs.getPropertyValue("--text").trim(),
+    accent: cs.getPropertyValue("--accent").trim()
+  };
+}
+function saveTheme(t){ localStorage.setItem("theme", JSON.stringify(t)); }
+function loadTheme(){
+  const t = JSON.parse(localStorage.getItem("theme") || "null") || themeDefault;
+  applyTheme(t);
+  ["bg1","bg2","card","text","accent"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = t[id];
+  });
+}
+
+/* ===============================
+   📌 Undo / Ιστορικό
+   =============================== */
+function pushHistory(){
+  historyStack.push(JSON.stringify({
+    categories: JSON.parse(JSON.stringify(categories)),
+    catOrder: [...catOrder],
+    theme: getTheme()
+  }));
+  if(historyStack.length > 80) historyStack.shift();
+  updateUndoBtn();
+}
+function updateUndoBtn(){
+  const b = document.getElementById("undoBtnTop");
+  if(historyStack.length === 0){ b.disabled = true; b.classList.add("gray"); }
+  else { b.disabled = false; b.classList.remove("gray"); }
+}
+function undo(){
+  if(historyStack.length === 0) return;
+  const snap = JSON.parse(historyStack.pop());
+  categories = snap.categories;
+  catOrder = snap.catOrder;
+  applyTheme(snap.theme);
+  saveData(); saveTheme(snap.theme);
+  render();
+  updateUndoBtn();
+}
+
+/* ===============================
+   📌 Βοηθοί
+   =============================== */
+function normalizeUrl(u){
+  if(!u) return "";
+  let s = u.trim();
+  if(!/^https?:\/\//i.test(s)){
+    if(/^www\./i.test(s)) s = "https://" + s;
+    else s = "https://" + s;
+  }
+  return s;
+}
+function dedupeAdd(cat, linkObj){
+  // Αφαίρεση διπλών βάσει URL
+  const url = linkObj.url;
+  if(!(categories[cat])) categories[cat] = [];
+  if(categories[cat].some(L => (L.url||"").toLowerCase() === url.toLowerCase())) return false;
+  categories[cat].push(linkObj);
+  return true;
+}
+function builtinToDataUrl(kind){
+  // Μικρά SVG εικονίδια ως data URLs
+  const map = {
+    star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>',
+    heart:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 21s-6.716-4.928-9.428-8.35C-0.287 9.39 1.38 5 5.6 5c2.08 0 3.512 1.124 4.4 2.36C10.888 6.124 12.32 5 14.4 5 18.62 5 20.287 9.39 17.428 12.65 14.716 16.072 12 21 12 21z"/></svg>',
+    pill:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M4.22 19.78a3.75 3.75 0 0 1 0-5.3l6.26-6.26a3.75 3.75 0 0 1 5.3 5.3l-6.26 6.26a3.75 3.75 0 0 1-5.3 0Zm7.42-12.02 4.6 4.6"/></svg>',
+    firstaid:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2" ry="2" fill="white" opacity="0.15"/><path fill="white" d="M13 6h-2V4h2v2Zm-3 5H7v2h3v3h2v-3h3v-2h-3V8h-2v3Z"/></svg>',
+    link:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M10.59 13.41a1.996 1.996 0 0 0 2.82 0l3.59-3.59a2 2 0 1 0-2.83-2.83l-1 1 1.41 1.41 1-1a.5.5 0 1 1 .71.71l-3.59 3.59a.996.996 0 1 1-1.41-1.41l1-1-1.41-1.41-1 1a2 2 0 0 0 0 2.83Z"/></svg>',
+    doc:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1.5V8h4.5L14 3.5Z"/></svg>'
+  };
+  const svg = map[kind] || map.link;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* ===============================
+   📌 Render — Σχεδίαση UI
+   =============================== */
+function render(){
+  const wrap = document.getElementById("categories");
+  wrap.innerHTML = "";
+
+  catOrder.forEach(cat=>{
+    const sec = document.createElement("div");
+    sec.className = "category";
+    sec.draggable = true;
+    sec.dataset.cat = cat;
+
+    sec.innerHTML = `
+      <div class="category-title">
+        <h2>${cat}</h2>
+        <div class="cat-actions">
+          <span class="cat-btn rename" data-tooltip="Μετονομασία">✏</span>
+          <span class="cat-btn delcat" data-tooltip="Διαγραφή">🗑</span>
+        </div>
+      </div>`;
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    grid.dataset.cat = cat;
+
+    (categories[cat] || []).forEach((l,idx)=>{
+      let iconSrc = "";
+      if(l.iconType === "upload" && l.iconValue){ iconSrc = l.iconValue; }
+      else if(l.iconType === "builtin" && l.iconValue){ iconSrc = builtinToDataUrl(l.iconValue); }
+      else {
+        let domain=""; try{ domain=(new URL(l.url)).hostname; }catch{}
+        const gg = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+        const ddg = `https://icons.duckduckgo.com/ip2/${domain}.ico`;
+        iconSrc = gg;
+        // onerror θα πέσει σε ddg
+      }
+
+      const card = document.createElement("div");
+      card.className="card";
+      card.draggable=true;
+      card.dataset.cat=cat;
+      card.dataset.idx=idx;
+
+      card.innerHTML = `
+        <div class="ctrl-left"><div class="ctrl-btn edit" data-tooltip="Επεξεργασία">✏</div></div>
+        <div class="ctrl-right"><div class="ctrl-btn del" data-tooltip="Διαγραφή">🗑</div></div>
+        <a href="${l.url}" target="_blank" draggable="false">
+          <img class="favicon" src="${iconSrc}" onerror="this.onerror=null; this.src='${typeof iconSrc==='string' && iconSrc.startsWith('data:') ? iconSrc : ""}'; if(!this.src){ const d='${builtinToDataUrl("link")}'; this.src=d; }">
+          <div class="link-title" style="color:var(--text)">${(l.name||"").slice(0,13)}</div>
+          <div class="link-desc">${l.desc||""}</div>
+        </a>`;
+
+      grid.appendChild(card);
+    });
+
+    sec.appendChild(grid);
+    wrap.appendChild(sec);
+  });
+}
+
+/* ===============================
+   📌 Listeners — Κουμπιά και Ενέργειες
+   =============================== */
+// Modal νέο link
+["addBtnTop","addBtnFoot"].forEach(id =>
+  document.getElementById(id).onclick = () => {
+    editing = null;
+    document.getElementById("modalTitle").innerText = "Νέο link";
+    document.getElementById("linkForm").reset();
+    document.getElementById("iconPreview").style.display="none";
+    document.getElementById("builtinIcon").style.display="none";
+    document.getElementById("iconFile").style.display="none";
+    document.getElementById("iconMode").value="auto";
+
+    document.getElementById("categorySelect").innerHTML =
+      catOrder.map(c=>`<option>${c}</option>`).join("");
+
+    document.getElementById("modalForm").style.display = "flex";
+  }
+);
+document.getElementById("cancelModal").onclick =
+  () => document.getElementById("modalForm").style.display = "none";
+
+// Icon mode switching
+const iconModeEl = document.getElementById("iconMode");
+const builtinEl  = document.getElementById("builtinIcon");
+const iconFileEl = document.getElementById("iconFile");
+const iconPrev   = document.getElementById("iconPreview");
+const iconPrevImg= document.getElementById("iconPreviewImg");
+
+iconModeEl.addEventListener("change", ()=>{
+  builtinEl.style.display = iconModeEl.value==="builtin" ? "inline-block" : "none";
+  iconFileEl.style.display= iconModeEl.value==="upload"  ? "inline-block" : "none";
+  iconPrev.style.display  = "none";
+});
+
+builtinEl.addEventListener("change", ()=>{
+  const url = builtinToDataUrl(builtinEl.value);
+  iconPrevImg.src = url;
+  iconPrev.style.display="flex";
+});
+iconFileEl.addEventListener("change", ()=>{
+  const f = iconFileEl.files && iconFileEl.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { iconPrevImg.src = r.result; iconPrev.style.display="flex"; };
+  r.readAsDataURL(f);
+});
+
+// Υποβολή φόρμας
+document.getElementById("linkForm").onsubmit = e => {
+  e.preventDefault();
+  const url = normalizeUrl(urlEl.value);
+  const name = nameEl.value.trim();
+  const desc = descEl.value.trim();
+
+  if(!url){ alert("Παρακαλώ εισάγετε URL"); return; }
+
+  let cat = catSel.value, newCat = newCatEl.value.trim();
+  if(newCat) cat = newCat;
+
+  if(!categories[cat]){ pushHistory(); categories[cat]=[]; catOrder.push(cat); }
+
+  // συλλογή icon
+  let iconType = iconModeEl.value;
+  let iconValue = null;
+  if(iconType==="builtin"){
+    iconValue = builtinEl.value || "link";
+  }else if(iconType==="upload"){
+    if(iconFileEl.files && iconFileEl.files[0]){
+      iconValue = iconPrevImg.src || null;
+    }else{
+      iconType = "auto";
+    }
+  }
+
+  pushHistory();
+  const linkObj = { url, name, desc, iconType, iconValue };
+  if(editing){
+    categories[editing.cat][editing.idx] = linkObj;
+  }else{
+    dedupeAdd(cat, linkObj);
+  }
+
+  saveData(); render();
+  document.getElementById("modalForm").style.display = "none";
+};
+
+// Μεταβλητές για inputs φόρμας
+const urlEl = document.getElementById("url"),
+      nameEl = document.getElementById("name"),
+      descEl = document.getElementById("desc"),
+      catSel = document.getElementById("categorySelect"),
+      newCatEl = document.getElementById("newCategory");
+
+// Ενέργειες σε κάρτες/κατηγορίες
+document.addEventListener("click", e => {
+  if(e.target.classList.contains("del")){
+    const c = e.target.closest(".card");
+    pushHistory();
+    categories[c.dataset.cat].splice(+c.dataset.idx,1);
+    saveData(); render();
+  }
+
+  if(e.target.classList.contains("edit")){
+    const c = e.target.closest(".card");
+    editing = {cat:c.dataset.cat, idx:+c.dataset.idx};
+    const l = categories[editing.cat][editing.idx];
+    urlEl.value=l.url; nameEl.value=l.name||""; descEl.value=l.desc||"";
+    catSel.innerHTML = catOrder.map(x=>
+      `<option ${x===editing.cat?"selected":""}>${x}</option>`).join("");
+    newCatEl.value="";
+
+    // προεπιλογή icon στα πεδία
+    iconModeEl.value = l.iconType || "auto";
+    builtinEl.style.display = iconModeEl.value==="builtin" ? "inline-block" : "none";
+    iconFileEl.style.display= iconModeEl.value==="upload"  ? "inline-block" : "none";
+    iconPrev.style.display  = "none";
+    if(l.iconType==="builtin"){
+      builtinEl.value = l.iconValue || "link";
+      iconPrevImg.src = builtinToDataUrl(builtinEl.value); iconPrev.style.display="flex";
+    }else if(l.iconType==="upload" && l.iconValue){
+      iconPrevImg.src = l.iconValue; iconPrev.style.display="flex";
+    }
+
+    document.getElementById("modalTitle").innerText="Επεξεργασία link";
+    document.getElementById("modalForm").style.display="flex";
+  }
+
+  if(e.target.classList.contains("rename")){
+    const cat = e.target.closest(".category").dataset.cat;
+    const newN = prompt("Νέο όνομα:",cat);
+    if(newN && newN!==cat){
+      pushHistory();
+      categories[newN]=categories[cat];
+      delete categories[cat];
+      catOrder[catOrder.indexOf(cat)]=newN;
+      saveData(); render();
+    }
+  }
+
+  if(e.target.classList.contains("delcat")){
+    const cat = e.target.closest(".category").dataset.cat;
+    if(confirm("Διαγραφή "+cat+";")){
+      pushHistory();
+      delete categories[cat];
+      catOrder=catOrder.filter(c=>c!==cat);
+      saveData(); render();
+    }
+  }
+});
+
+/* ===============================
+   📌 Backup & Restore
+   =============================== */
+document.getElementById("backupBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({
+    categories,catOrder,theme:getTheme(),version:2
+  },null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="bookmarks_backup.json";
+  a.click();
+};
+
+document.getElementById("restoreBtn").onclick=()=>{
+  // Επιλογή τύπου αρχείου
+  const choice = confirm("OK: Επαναφορά από JSON backup\nCancel: Εισαγωγή από HTML σελιδοδείκτες");
+  const inp=document.createElement("input");
+  inp.type="file"; inp.accept = choice ? ".json" : ".html,.htm,.txt";
+  inp.onchange=()=>{
+    const r=new FileReader();
+    r.onload=()=>{
+      if(choice){
+        try{
+          const d=JSON.parse(r.result);
+          if(d.categories && d.catOrder){
+            pushHistory();
+            categories=d.categories;catOrder=d.catOrder;
+            if(d.theme){applyTheme(d.theme);saveTheme(d.theme);}
+            saveData(); render(); updateUndoBtn();
+          } else {
+            alert("Μη έγκυρο JSON.");
+          }
+        }catch{alert("Μη έγκυρο JSON.");}
+      } else {
+        // HTML εισαγωγή
+        const merge = confirm("OK: Συγχώνευση (δεν προσθέτει διπλά)\nCancel: Αντικατάσταση");
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(r.result,"text/html");
+        const anchors = Array.from(doc.querySelectorAll("a[href]"));
+        if(anchors.length===0){ alert("Δεν βρέθηκαν links στο HTML."); return; }
+        if(!merge){ pushHistory(); categories={}; catOrder=[]; }
+
+        // Ανάγνωση: κατηγορία από κοντινό H3 (ή H1/H2), αλλιώς "Εισαγωγή"
+        function closestHeading(el){
+          let cur=el; for(let i=0;i<4 && cur;i++, cur=cur.previousElementSibling){
+            if(/H[1-3]/.test(cur.tagName)) return cur.textContent.trim();
+          }
+          // αναζήτηση προς τα πάνω
+          let p=el.parentElement; while(p){
+            const h = p.querySelector("h3,h2,h1"); if(h) return h.textContent.trim();
+            p=p.parentElement;
+          }
+          return "Εισαγωγή";
+        }
+
+        let added=0;
+        anchors.forEach(a=>{
+          let href=a.getAttribute("href")||"";
+          if(!href) return;
+          // αγνόησε μη http(s)/www
+          if(!/^https?:\/\//i.test(href) && !/^www\./i.test(href)) return;
+          const url = normalizeUrl(href);
+          const name = (a.getAttribute("title")||a.textContent||"").trim();
+          const desc = ""; // δεν γνωρίζουμε
+          const cat = closestHeading(a);
+          if(!(categories[cat])){ categories[cat]=[]; catOrder.push(cat); }
+          const ok = dedupeAdd(cat, {url,name,desc,iconType:"auto",iconValue:null});
+          if(ok) added++;
+        });
+
+        saveData(); render(); updateUndoBtn();
+        alert("Εισαγωγή HTML ολοκληρώθηκε. Προστέθηκαν "+added+" links.");
+      }
+    };
+    r.readAsText(inp.files[0]);
+  };
+  inp.click();
+};
+
+/* ===============================
+   📌 Παλέτα Χρωμάτων
+   =============================== */
+document.getElementById("paletteBtn").onclick=
+  ()=>document.getElementById("paletteModal").style.display="flex";
+document.getElementById("closePalette").onclick=
+  ()=>document.getElementById("paletteModal").style.display="none";
+
+["bg1","bg2","card","text","accent"].forEach(id=>{
+  document.getElementById(id).oninput=e=>{
+    document.documentElement.style.setProperty("--"+id,e.target.value);
+    pushHistory();
+    saveTheme(getTheme());
+  };
+});
+// 👉 Επαναφορά σε προεπιλεγμένα χρώματα
+document.getElementById("defaultPalette").onclick=()=>{
+  applyTheme(themeDefault);
+  saveTheme(themeDefault);
+  ["bg1","bg2","card","text","accent"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value = themeDefault[id];
+  });
+  pushHistory();
+};
+
+/* ===============================
+   📌 Undo
+   =============================== */
+document.getElementById("undoBtnTop").onclick=undo;
+
+/* ===============================
+   📌 Drag & Drop (links και κατηγορίες)
+   =============================== */
+let dragSrc=null;
+document.addEventListener("dragstart",e=>{
+  const c=e.target.closest(".card"),
+        cat=e.target.closest(".category");
+  if(c){dragSrc=c;} else if(cat){dragSrc=cat;}
+});
+document.addEventListener("dragover",e=>{
+  if(e.target.closest(".card")||e.target.closest(".category")) e.preventDefault();
+});
+document.addEventListener("drop",e=>{
+  e.preventDefault(); if(!dragSrc) return;
+  const card=e.target.closest(".card"),
+        cat=e.target.closest(".category");
+
+  // Μεταφορά link
+  if(dragSrc.classList.contains("card")){
+    const f=dragSrc.dataset.cat, i=+dragSrc.dataset.idx, l=categories[f][i];
+    pushHistory();
+    categories[f].splice(i,1);
+    if(card && card!==dragSrc){
+      categories[card.dataset.cat].splice(+card.dataset.idx,0,l);
+    }else if(cat){
+      categories[cat.dataset.cat].push(l);
+    }else{
+      categories[f].push(l);
+    }
+    saveData(); render();
+  }
+
+  // Μεταφορά κατηγορίας
+  if(dragSrc.classList.contains("category") && cat){
+    const fi=catOrder.indexOf(dragSrc.dataset.cat),
+          ti=catOrder.indexOf(cat.dataset.cat);
+    pushHistory();
+    catOrder.splice(fi,1);
+    catOrder.splice(ti,0,dragSrc.dataset.cat);
+    saveData(); render();
+  }
+  dragSrc=null;
+});
+
+/* ===============================
+   📌 Init
+   =============================== */
+loadData(); loadTheme();
+if(catOrder.length===0){
+  categories={"Εισαγωγή":[]};
+  catOrder=["Εισαγωγή"];
+  saveData();
+}
+render(); updateUndoBtn();
+
+// === Theme Toggle ===
+let lightTheme = {
+  bg1: "#f0f4f8",
+  bg2: "#ffffff",
+  card: "#e0e7ef",
+  text: "#2c3e50",
+  accent: "#ff7f50"
+};
+
+let darkTheme = {
+  bg1: "#0d1b2a",
+  bg2: "#1b263b",
+  card: "#415a77",
+  text: "#e0e1dd",
+  accent: "#f4a261"
+};
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const current = getTheme();
+  const isDark = current.bg1.toLowerCase() === darkTheme.bg1.toLowerCase();
+  const t = isDark ? lightTheme : darkTheme;
+  applyTheme(t);
+  saveTheme(t);
+});
+
+</script>
+</body>
+</html>
