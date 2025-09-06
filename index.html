@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <title>Τα δικά μου χρήσιμα</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link id="favicon" rel="icon" href="">
+<link rel="icon" href="unnamed.png" type="image/png">
 <style>
 /* ===== ΧΡΩΜΑΤΑ ΘΕΜΑΤΟΣ ===== */
 :root{
-  --bg1:#0d1b2a; --bg2:#1b263b; --card:#415a77; --text:#e0e1dd; --accent:#f4a261;
-  --border:rgba(255,255,255,.15);
+--bg1:#0d1b2a; --bg2:#1b263b; --card:#415a77; --text:#e0e1dd; --accent:#f4a261;
+--border:rgba(255,255,255,.15);
 }
 
 /* Reset */
@@ -157,34 +157,32 @@ body:has(footer) .wrap{padding-bottom:210px;}
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Τα δικά μου χρήσιμα</h1>
-    <h2>Φαρμακείο</h2>
-    <h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
-    <button id="themeToggle">🌙 Dark</button>
-  </header>
+<header>
+<h1>Τα δικά μου χρήσιμα</h1>
+<h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
+<h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
+<button id="themeToggle">🌙 Dark</button>
+</header>
 
-  <div class="topbar">
-    <button id="addBtnTop">+ Προσθήκη νέου link</button>
-    <button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
-    <button id="backupBtn">Backup</button>
-    <button id="restoreBtn">Restore</button>
-  </div>
 
-  <div id="categories"></div>
+<div class="topbar">
+<button id="addBtnTop">+ Προσθήκη νέου link</button>
+<button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
+<button id="backupBtn">Backup</button>
+<button id="restoreBtn">Restore</button>
 </div>
 
-  <!-- ===== ΧΩΡΟΣ ΓΙΑ ΚΑΤΗΓΟΡΙΕΣ ===== -->
-  <div id="categories"></div>
+
+<div id="categories"></div>
 </div>
+
 
 <footer>
-  <div class="btnrow">
-    <button id="addBtnFoot">+ Προσθήκη νέου link</button>
-  </div>
-  <div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
+<div class="btnrow">
+<button id="addBtnFoot">+ Προσθήκη νέου link</button>
+</div>
+<div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
 </footer>
-
 <!-- ===== MODAL ΝΕΟΥ LINK ===== -->
 <div class="modal" id="modalForm">
   <div class="box">
@@ -246,127 +244,14 @@ body:has(footer) .wrap{padding-bottom:210px;}
     <div class="row palette-row"><label for="text">Κείμενο</label><input type="color" id="text"><div id="swatch-text" class="color-swatch"></div></div>
     <div class="row palette-row"><label for="accent">Κουμπιά</label><input type="color" id="accent"><div id="swatch-accent" class="color-swatch"></div></div>
     <div class="actions">
-	
-      <button id="defaultPalette">Default</button>
-      <button id="closePalette">Κλείσιμο</button>
-    </div>
-  </div>
-</div>
-<!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
-<style>
-/* ===== Στυλ Παλέτας ===== */
-.palette-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 12px 0;
-  gap: 10px;
-}
-
-.palette-row label {
-  flex: 1;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* Input σαν κουτάκι */
-.palette-row input[type="color"] {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #999;
-  border-radius: 6px;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  appearance: auto;
-  -webkit-appearance: auto;
-}
-
-/* Δίπλα το τετραγωνάκι preview */
-.color-swatch {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #999;
-  border-radius: 6px;
-}
-</style>
-
-<div class="modal" id="paletteModal">
-  <div class="box">
-    <h3>Παλέτα Χρωμάτων</h3>
-    <div class="row palette-row">
-      <label for="bg1">Φόντο 1</label>
-      <input type="color" id="bg1">
-      <div id="swatch-bg1" class="color-swatch"></div>
-    </div>
-    <div class="row palette-row">
-      <label for="bg2">Φόντο 2</label>
-      <input type="color" id="bg2">
-      <div id="swatch-bg2" class="color-swatch"></div>
-    </div>
-    <div class="row palette-row">
-      <label for="card">Κάρτα</label>
-      <input type="color" id="card">
-      <div id="swatch-card" class="color-swatch"></div>
-    </div>
-    <div class="row palette-row">
-      <label for="text">Κείμενο</label>
-      <input type="color" id="text">
-      <div id="swatch-text" class="color-swatch"></div>
-    </div>
-    <div class="row palette-row">
-      <label for="accent">Κουμπιά</label>
-      <input type="color" id="accent">
-      <div id="swatch-accent" class="color-swatch"></div>
-    </div>
-    <div class="actions">
       <button id="defaultPalette">Default</button>
       <button id="closePalette">Κλείσιμο</button>
     </div>
   </div>
 </div>
 
-<!-- Κρυφό κουμπί για άνοιγμα -->
-<div id="paletteBtn"></div>
-<style>
-/* ===== Στυλ Παλέτας ===== */
-.palette-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 12px 0;
-  gap: 10px;
-}
-
-.palette-row label {
-  flex: 1;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* Input σαν κουτάκι */
-.palette-row input[type="color"] {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #999;
-  border-radius: 6px;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  appearance: auto;
-  -webkit-appearance: auto;
-}
-
-/* Δίπλα το τετραγωνάκι preview */
-.color-swatch {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #999;
-  border-radius: 6px;
-}
-</style>
+<!-- ===== ΚΡΥΦΟ ΚΟΥΜΠΙ ΓΙΑ ΠΑΛΕΤΑ ===== -->
+<div id="paletteBtn" data-tooltip="Ρυθμίσεις χρωμάτων"></div>
 
 <script>
 /* ===============================
@@ -381,7 +266,6 @@ let historyStack = []; // Ιστορικό για undo
 let themeDefault = {
   bg1:"#1f1f1f", bg2:"#232429", card:"#2b2d33", text:"#eaeef5", accent:"#2f80ed"
 };
-
 
 /* ===============================
    📌 SVG Εικονίδια (διαφανή)
@@ -688,32 +572,7 @@ document.getElementById("linkForm").onsubmit = e => {
 };
 
 // Ενέργειες σε κάρτες/κατηγορίες
-["bg1","bg2","card","text","accent"].forEach(id => {
-  const input = document.getElementById(id);
-  const swatch = document.getElementById("swatch-" + id);
-  if(input && swatch){
-    // αρχικό χρώμα
-    swatch.style.backgroundColor = input.value;
-    // ενημέρωση όταν αλλάζει
-    input.addEventListener("input", () => {
-      swatch.style.backgroundColor = input.value;
-    });
-  }
-});
 document.addEventListener("click", e => {
-// ===== Swatches ενημέρωση =====
-["bg1","bg2","card","text","accent"].forEach(id => {
-  const input = document.getElementById(id);
-  const swatch = document.getElementById("swatch-" + id);
-  if(input && swatch){
-    // αρχικό χρώμα
-    swatch.style.backgroundColor = input.value;
-    // ενημέρωση όταν αλλάζει
-    input.addEventListener("input", () => {
-      swatch.style.backgroundColor = input.value;
-    });
-  }
-});
   // Διαγραφή link
   if(e.target.closest(".del")){
     const c = e.target.closest(".card");
@@ -938,37 +797,7 @@ document.addEventListener("drop",e=>{
   dragSrc=null;
 });
 
-/* ===============================
-   📌 Favicon (τυχαίο) & Init + Theme toggle
-   =============================== */
-function setRandomFavicon(){
-  try{
-    const chars = ['★','❤','💊','🔗','⚕'];
-    const ch = chars[Math.floor(Math.random()*chars.length)];
-    const colors = ['#f4a261','#2f80ed','#ffd54f','#f472b6','#34d399'];
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect rx='12' width='64' height='64' fill='${color}'/><text x='50%' y='56%' font-size='36' text-anchor='middle' fill='white' font-family='Arial, Helvetica, sans-serif'>${ch}</text></svg>`;
-    const url = 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
-    let link = document.getElementById('favicon');
-    if(!link){ link=document.createElement('link'); link.rel='icon'; link.id='favicon'; document.head.appendChild(link); }
-    link.href = url;
-  }catch(e){ /* non-critical */ }
-}
 
-loadData(); loadTheme();
-if(catOrder.length===0){
-  categories={"Εισαγωγή":[]};
-  catOrder=["Εισαγωγή"];
-  saveData();
-}
-render(); updateUndoBtn();
-
-// update palette swatches initial
-["bg1","bg2","card","text","accent"].forEach(id=>{
-  const el=document.getElementById(id);
-  const sw=document.getElementById('swatch-'+id);
-  if(el && sw) sw.style.background = el.value || getTheme()[id];
-});
 
 /* ===============================
    📌 Θέματα
@@ -1024,11 +853,22 @@ document.getElementById("themeToggle").addEventListener("click", () => {
   updateThemeButton();
 });
 
-// set random favicon once
-setRandomFavicon();
+loadData(); loadTheme();
+if(catOrder.length===0){
+categories={"Εισαγωγή":[]};
+catOrder=["Εισαγωγή"];
+saveData();
+}
+render(); updateUndoBtn();
+
+
+// update palette swatches initial
+["bg1","bg2","card","text","accent"].forEach(id=>{
+const el=document.getElementById(id);
+const sw=document.getElementById('swatch-'+id);
+if(el && sw) sw.style.background = el.value || getTheme()[id];
+});
+
 </script>
 </body>
 </html>
-
-
-
