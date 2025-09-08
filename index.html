@@ -24,23 +24,34 @@ header{text-align:center;margin-bottom:10px;}
 header h1{margin:4px 0 0;font-size:26px;font-weight:800;}
 header h2{margin:6px 0 0;font-size:14px;color:#2a9df4;font-weight:700;}
 header h3{margin:6px 0 0;font-size:13px;color:#bbb;font-weight:500;}
-#themeToggle {
-  position: absolute;
-  top: 115px;   /* πάνω κάτω */
-  right: 190px;     /* δεξια αριστερά */
-  margin-top:8px;
-  padding:6px 14px;
-  border-radius:8px;
-  border:none;
-  cursor:pointer;
-  background:var(--accent);
-  color:#fff;          /* 👈 Πάντα λευκά γράμματα */
-  font-weight:700;
-  font-size:15px;
-}
 
 /* ===== TOPBAR BUTTONS ===== */
-.topbar{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:12px 0 18px;}
+.topbar {
+  display: flex;
+  justify-content: center;  /* Κεντρικά τα κουμπιά */
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 18px;
+  position: relative;
+}
+
+/* Container για δεξιά κουμπιά */
+.topbar-right {
+  margin-left: auto; /* Σπρώχνει ό,τι έχει μέσα δεξιά */
+}
+
+/* Κουμπί Dark / Light */
+#themeToggle {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+}
+
 button{padding:8px 14px;border:none;border-radius:10px;cursor:pointer;
   background:var(--accent);color:#fff;;font-weight:700;font-size:14px;}
 button.gray{background:#596070 !important;color:#ccc !important;}
@@ -166,20 +177,26 @@ body:has(footer) .wrap{padding-bottom:210px;}
 </head>
 <body>
 <div class="wrap">
+
 <header>
-<h1>Τα δικά μου χρήσιμα</h1>
-<h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
-<h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
-<button id="themeToggle">🌙 Dark</button>
+  <h1>Τα δικά μου χρήσιμα</h1>
+  <h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
+  <h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
 </header>
 
-
 <div class="topbar">
-<button id="addBtnTop">+ Προσθήκη νέου link</button>
-<button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
-<button id="backupBtn">Backup</button>
-<button id="restoreBtn">Restore</button>
+  <!-- Κουμπιά κεντρικά -->
+  <button id="addBtnTop">+ Προσθήκη νέου link</button>
+  <button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
+  <button id="backupBtn">Backup</button>
+  <button id="restoreBtn">Restore</button>
+
+  <!-- Δεξιά -->
+  <div class="topbar-right">
+    <button id="themeToggle">🌙 Dark</button>
+  </div>
 </div>
+
 
 
 <div id="categories"></div>
