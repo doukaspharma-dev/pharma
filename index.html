@@ -6,56 +6,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/png" href="assets/unnamed.png">
 <style>
-/* ===== ΧΡΩΜΑΤΑ ΘΕΜΑΤΟΣ ===== */
 :root{
---bg1:#0d1b2a; --bg2:#1b263b; --card:#415a77; --text:#e0e1dd; --accent:#f4a261;
---border:rgba(255,255,255,.15);
+  --bg1:#0d1b2a; --bg2:#1b263b; --card:#415a77; --text:#e0e1dd; --accent:#f4a261;
+  --border:rgba(255,255,255,.15);
 }
 
-/* Reset */
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(160deg,var(--bg1),var(--bg2));
   color:var(--text);font-family:Arial,Helvetica,sans-serif;}
-/* μειωμένα πλάγια περιθώρια + extra κάτω για footer */
 .wrap{max-width:1200px;margin:0 auto;padding:24px 10px 210px;}
 
-/* ===== HEADER ===== */
 header{text-align:center;margin-bottom:10px;}
 header h1{margin:4px 0 0;font-size:26px;font-weight:800;}
 header h2{margin:6px 0 0;font-size:14px;color:#2a9df4;font-weight:700;}
 header h3{margin:6px 0 0;font-size:13px;color:#bbb;font-weight:500;}
 
-/* ===== TOPBAR BUTTONS ===== */
+/* ===== TOPBAR ===== */
 .topbar {
   display: flex;
-  justify-content: center;  /* Κεντρικά τα κουμπιά */
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin: 12px 0 18px;
   position: relative;
 }
+.topbar-right { margin-left: auto; }
 
-/* Container για δεξιά κουμπιά */
-.topbar-right {
-  margin-left: auto; /* Σπρώχνει ό,τι έχει μέσα δεξιά */
+button {
+  padding:8px 14px;border:none;border-radius:10px;cursor:pointer;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;
 }
-
-/* Κουμπί Dark / Light */
-#themeToggle {
-  padding: 6px 14px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-button{padding:8px 14px;border:none;border-radius:10px;cursor:pointer;
-  background:var(--accent);color:#fff;;font-weight:700;font-size:14px;}
 button.gray{background:#596070 !important;color:#ccc !important;}
 button:disabled{opacity:.45;cursor:not-allowed;}
+
+#themeSelect {
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  font-weight:600;
+  cursor:pointer;
+}
 
 /* ===== ΚΑΤΗΓΟΡΙΕΣ ===== */
 #categories{display:flex;flex-direction:column;gap:18px;padding:0 6px;}
@@ -71,61 +63,41 @@ button:disabled{opacity:.45;cursor:not-allowed;}
 .cat-btn:hover{background:rgba(0,0,0,.75);}
 
 /* ===== GRID & CARDS ===== */
-/* ελαφρώς μεγαλύτερες κάρτες + λίγο πιο αραιό κενό */
 .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:12px;margin-top:10px;min-height:44px;}
 .card{
   background:var(--card);border:1px solid var(--border);border-radius:22px;
   width:100%;aspect-ratio:1/1;position:relative;overflow:hidden;
   display:flex;align-items:center;justify-content:center;transition:.18s ease;
-  padding:10px; /* 👉 για να μην κολλά το περιεχόμενο στο περίγραμμα */
+  padding:10px;
 }
 .card:hover{
   transform:translateY(-3px);
   background: color-mix(in oklab, var(--accent) 20%, transparent);
   border-color:var(--accent);
 }
-/* ➕ Εμφάνιση όταν είναι pinned */
-.card.pinned{
-  outline:2px solid gold; outline-offset:-2px;
-  box-shadow:0 0 0 2px rgba(255,215,0,.25) inset;
-}
+.card.pinned{outline:2px solid gold;outline-offset:-2px;
+  box-shadow:0 0 0 2px rgba(255,215,0,.25) inset;}
 
 .card a{
   display:flex;flex-direction:column;align-items:center;text-decoration:none;
   color:var(--text);width:100%;height:100%;justify-content:center;
 }
-.card img.favicon{width:48px;height:48px;margin-bottom:8px;display:block;image-rendering:auto;}
-.link-title {
-  font-size: 11px;          /* μικρότερο μέγεθος */
-  font-weight: 700;         /* λίγο πιο “μαλακό” */
-  color: var(--text);
-  white-space: nowrap;      /* κρατάει το κείμενο σε μια γραμμή */
-  word-break: break-word;   /* σπάει μεγάλες λέξεις */
-  text-align: center;       /* κεντράρει το κείμενο */
-  max-width: 95%;           /* αφήνει περισσότερο χώρο */
-}
+.card img.favicon{width:48px;height:48px;margin-bottom:8px;display:block;}
+.link-title{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;word-break:break-word;text-align:center;max-width:95%;}
+.link-desc{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.link-desc{
-  font-size:9px;color:rgba(255,255,255,.6);margin-top:2px;
-  max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-
-/* Κουμπιά πάνω στις κάρτες (SVG, διαφανή) */
 .ctrl-left,.ctrl-right{position:absolute;top:6px;display:flex;gap:6px;opacity:0;transition:.2s;}
 .card:hover .ctrl-left,.card:hover .ctrl-right{opacity:1;}
 .ctrl-left{left:6px;} .ctrl-right{right:6px;}
-/* ➕ Κουμπί pin κάτω αριστερά */
 .ctrl-bottom{position:absolute;left:6px;bottom:6px;opacity:0;transition:.2s;}
 .card:hover .ctrl-bottom{opacity:1;}
 
-.ctrl-btn{
-  background:transparent;border:none;padding:0;margin:0;cursor:pointer;line-height:0;display:flex;
-}
-.ctrl-btn svg{width:20px;height:20px;display:block;}
+.ctrl-btn{background:transparent;border:none;padding:0;margin:0;cursor:pointer;line-height:0;display:flex;}
+.ctrl-btn svg{width:20px;height:20px;}
 .ctrl-btn:hover{transform:scale(1.14);}
 
 /* ===== FOOTER ===== */
-footer{position:fixed;left:0;bottom:0;width:100%;background:rgba(35,36,41,.96);backdrop-filter:blur(6px);text-align:center;margin-top:10px;color:var(--muted,#a8b0bb);font-size:12px;padding:8px 10px;}
+footer{position:fixed;left:0;bottom:0;width:100%;background:rgba(35,36,41,.96);backdrop-filter:blur(6px);text-align:center;color:#a8b0bb;font-size:12px;padding:8px 10px;}
 footer .btnrow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:6px;}
 footer .note{color:#aab2bd;font-weight:700;}
 body:has(footer) .wrap{padding-bottom:70px;}
@@ -143,23 +115,16 @@ body:has(footer) .wrap{padding-bottom:70px;}
 }
 .modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;}
 
-/* Icon picker rows */
 .icon-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .icon-row select,.icon-row input[type=file]{flex:1;}
 .icon-preview{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:12px;color:#cbd5e1;}
 .icon-preview img{width:24px;height:24px;}
 
-/* Κουμπί παλέτας (αόρατο αλλά clickable) -- μεγαλώσαμε σε 64x64 */
 #paletteBtn{position:fixed;top:50%;right:0;transform:translateY(-50%);
   width:64px;height:64px;opacity:0;cursor:pointer;z-index:4500;}
-
-/* palette swatches inside modal */
 .palette-row{display:flex;align-items:center;gap:12px;}
 .color-swatch{width:48px;height:48px;border-radius:8px;border:1px solid var(--border);flex-shrink:0;}
 
-/* ===== TOOLTIP (pale) ===== */
-/* 留: Keep tooltips available for other elements (topbar etc.), but
-   we will not add data-tooltip to the card icon buttons so those won't show tooltips. */
 [data-tooltip]{position:relative;}
 [data-tooltip]::after{
   content:attr(data-tooltip);
@@ -170,19 +135,9 @@ body:has(footer) .wrap{padding-bottom:70px;}
 }
 [data-tooltip]:hover::after{opacity:1;}
 
-/* === Smooth transitions === */
-body, footer, button {
-  transition: background 0.3s, color 0.3s, opacity 0.3s, transform 0.1s;
-}
-
-/* === Hover / Active στα κουμπιά === */
-button:hover {
-  opacity: 0.85;
-}
-button:active {
-  transform: scale(0.97);
-}
- 
+body, footer, button {transition: background 0.3s, color 0.3s, opacity 0.3s, transform 0.1s;}
+button:hover {opacity:0.85;}
+button:active {transform:scale(0.97);}
 </style>
 </head>
 <body>
@@ -195,30 +150,37 @@ button:active {
 </header>
 
 <div class="topbar">
-  <!-- Κουμπιά κεντρικά -->
   <button id="addBtnTop">+ Προσθήκη νέου link</button>
   <button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
   <button id="backupBtn">Backup</button>
   <button id="restoreBtn">Restore</button>
 
-  <!-- Δεξιά -->
   <div class="topbar-right">
-    <button id="themeToggle">🌙 Dark</button>
+    <select id="themeSelect">
+      <option value="dark">🌙 Dark</option>
+      <option value="light">🌞 Light</option>
+      <option value="ocean">🌊 Ocean</option>
+      <option value="forest">🌲 Forest</option>
+      <option value="sunset">🌅 Sunset</option>
+    </select>
   </div>
 </div>
-
-
 
 <div id="categories"></div>
 </div>
 
-
 <footer>
-<div class="btnrow">
-<button id="addBtnFoot">+ Προσθήκη νέου link</button>
-</div>
-<div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
+  <div class="btnrow">
+    <button id="addBtnFoot">+ Προσθήκη νέου link</button>
+  </div>
+  <div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
 </footer>
+
+
+
+
+
+
 <!-- ===== MODAL ΝΕΟΥ LINK ===== -->
 <div class="modal" id="modalForm">
   <div class="box">
@@ -836,66 +798,35 @@ document.addEventListener("drop",e=>{
 
 
 /* ===============================
-   📌 Θέματα
+   📌 Θεματικά Χρώματα (5 themes)
    =============================== */
-function getTheme(){
-  const cs = getComputedStyle(document.documentElement);
-  return {
-    bg1: cs.getPropertyValue("--bg1").trim(),
-    bg2: cs.getPropertyValue("--bg2").trim(),
-    card: cs.getPropertyValue("--card").trim(),
-    text: cs.getPropertyValue("--text").trim(),
-    accent: cs.getPropertyValue("--accent").trim()
-  };
-}
+const themes = {
+  dark:   { bg1:"#0d1b2a", bg2:"#1e293b", card:"#334155", text:"#f1f5f9", accent:"#3b82f6" },
+  light:  { bg1:"#f8fafc", bg2:"#ffffff", card:"#e0f2fe", text:"#1e293b", accent:"#1565c0" },
+  ocean:  { bg1:"#0f172a", bg2:"#164e63", card:"#1e3a8a", text:"#e0f2fe", accent:"#38bdf8" },
+  forest: { bg1:"#064e3b", bg2:"#14532d", card:"#166534", text:"#dcfce7", accent:"#22c55e" },
+  sunset: { bg1:"#7f1d1d", bg2:"#9a3412", card:"#b45309", text:"#fff7ed", accent:"#f97316" }
+};
+
 function applyTheme(t){
-  for(const [k,v] of Object.entries(t)){
+  for (const [k,v] of Object.entries(t)){
     document.documentElement.style.setProperty("--"+k, v);
   }
 }
-function saveTheme(t){ localStorage.setItem("theme", JSON.stringify(t)); }
+function saveTheme(name){ localStorage.setItem("themeName", name); }
 function loadTheme(){
-  const t = JSON.parse(localStorage.getItem("theme") || "null");
-  if(t) applyTheme(t);
+  let name = localStorage.getItem("themeName") || "dark";
+  applyTheme(themes[name]);
+  const sel = document.getElementById("themeSelect");
+  if(sel) sel.value = name;
 }
-
-let lightTheme = { 
-  bg1:"#f0f4f8", 
-  bg2:"#ffffff", 
-  card:"#e0e7ef", 
-  text:"#2c3e50", 
-  accent:"#1565c0"   // μπλε για έντονη αντίθεση σε ανοιχτό φόντο
-};
-let darkTheme  = { 
-  bg1:"#0d1b2a", 
-  bg2:"#1b263b", 
-  card:"#415a77", 
-  text:"#e0e1dd", 
-  accent:"#00bcd4"   // γαλάζιο για έντονη αντίθεση σε σκούρο φόντο
-};
-
-function updateThemeButton(){
-  const current = getTheme();
-  const isDark = current.bg1.toLowerCase() === darkTheme.bg1.toLowerCase();
-  document.getElementById("themeToggle").innerText = isDark ? "🌙 Dark" : "🌞 Light";
-}
-
-document.getElementById("themeToggle").addEventListener("click", () => {
-  const current = getTheme();
-  const isDark = current.bg1.toLowerCase() === darkTheme.bg1.toLowerCase();
-  const t = isDark ? lightTheme : darkTheme;
-  applyTheme(t);
-  saveTheme(t);
-  updateThemeButton();
+document.getElementById("themeSelect").addEventListener("change", e=>{
+  let name = e.target.value;
+  applyTheme(themes[name]);
+  saveTheme(name);
 });
+loadTheme();
 
-loadData(); loadTheme();
-if(catOrder.length===0){
-categories={"Εισαγωγή":[]};
-catOrder=["Εισαγωγή"];
-saveData();
-}
-render(); updateUndoBtn();
 
 
 // update palette swatches initial
