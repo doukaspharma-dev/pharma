@@ -155,12 +155,16 @@
   /* -------------------------------------------------
      7. GRID & CARDS
   ------------------------------------------------- */
-  .grid {
+.grid {
   display: grid;
-  grid-template-columns: repeat(10,1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: 12px;
   margin-top: 10px;
-  min-height: 54px;
+  min-height: 0px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden; /* Αλλάξτε από visible σε hidden */
+  max-height: 9999px;
+  opacity: 1;
 }
 
 .card {
@@ -169,19 +173,20 @@
   border-radius: 12px;
   width: 95%;
   aspect-ratio: 1/1;
-  overflow: visible; /* ✅ πολύ σημαντικό */
-
+  overflow: visible; /* Κρατήστε visible */
+  
   display: flex;
   align-items: center;
   justify-content: center;
   transition: .18s ease;
   padding: 10px;
 
-  /* ✨ Fade-in animation */
   opacity: 0;
   transform: translateY(10px);
   animation: fadeInUp 0.6s ease forwards;
+  position: relative;
 }
+
 
 .card:hover {
   transform: translateY(-3px);
@@ -206,10 +211,32 @@
   /* -------------------------------------------------
      8. LINKS ΣΕ ΚΑΡΤΕΣ
   ------------------------------------------------- */
-  .card a {
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-decoration:none; color:var(--text); width:100%; height:100%;
-  }
+ /* Μετακινήστε το link μέσα στο card-content */
+.card a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+/* Προσθέστε container για τα περιεχόμενα της κάρτας */
+.card-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Βάλτε το hidden εδώ */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
   .card img.favicon {
     width:48px; height:48px; margin-bottom:8px; display:block;
   }
@@ -252,10 +279,11 @@
 }
 
 /* κουμπί με τις τρεις τελείες */
+/* Το menu-btn παραμένει έξω από το card-content */
 .card .menu-btn {
   position: absolute;
-  top: 4px;        /* ✅ κολλάει στην κορυφή */
-  right: 4px;      /* ✅ πάει δεξιά */
+  top: 4px;
+  right: 4px;
   width: 14px;
   height: 20px;
   border: 1px solid #000;
@@ -444,14 +472,13 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(10,1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: 12px;
   margin-top: 10px;
-  min-height: 0px;
-
+  min-height: 54px;
   transition: max-height 0.3s ease, opacity 0.3s ease;
-  overflow: hidden;
-  max-height: 9999px; /* πάντα αρκετό για πολλά links */
+  overflow: visible; /* ή αφαιρέστε τελείως αυτή τη γραμμή */
+  max-height: 9999px;
   opacity: 1;
 }
 
@@ -597,6 +624,7 @@ footer {
   opacity: 0;
   transform: translateY(10px);
   animation: fadeInUp 0.6s ease forwards;
+  position: relative; /* Προσθέστε αυτό */
 }
 
 /* Keyframes όπως πριν */
@@ -1172,11 +1200,11 @@ function render(){
         </div>
       `;
 
-      const a = document.createElement("a");
-      a.href = l.url || "#";
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.draggable = false;
+		const a = document.createElement("a");
+		a.href = l.url || "#";
+		a.target = "_blank";
+		a.rel = "noopener";
+		a.draggable = false;
 
       const img = document.createElement("img");
       img.className = "favicon";
