@@ -147,52 +147,24 @@
      7. GRID & CARDS
   ------------------------------------------------- */
   .grid {
-  display: grid;
-  grid-template-columns: repeat(10,1fr);
-  gap: 12px;
-  margin-top: 10px;
-  min-height: 44px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  width: 100%;
-  aspect-ratio: 1/1;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: .18s ease;
-  padding: 10px;
-
-  /* ✨ Fade-in animation */
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  background: color-mix(in oklab, var(--accent) 20%, transparent);
-  border-color: var(--accent);
-}
-
-.card.pinned {
-  outline: 2px solid gold;
-  outline-offset: -2px;
-  box-shadow: 0 0 0 2px rgba(255,215,0,.25) inset;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    display:grid; grid-template-columns:repeat(10,1fr);
+    gap:12px; margin-top:10px; min-height:44px;
   }
-}
-
+  .card {
+    background:var(--card); border:1px solid var(--border); border-radius:22px;
+    width:100%; aspect-ratio:1/1; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    transition:.18s ease; padding:10px;
+  }
+  .card:hover {
+    transform:translateY(-3px);
+    background:color-mix(in oklab, var(--accent) 20%, transparent);
+    border-color:var(--accent);
+  }
+  .card.pinned {
+    outline:2px solid gold; outline-offset:-2px;
+    box-shadow:0 0 0 2px rgba(255,215,0,.25) inset;
+  }
 
   /* -------------------------------------------------
      8. LINKS ΣΕ ΚΑΡΤΕΣ
@@ -205,12 +177,12 @@
     width:48px; height:48px; margin-bottom:8px; display:block;
   }
   .link-title {
-    font-size:9px; font-weight:700; color:var(--text);
+    font-size:11px; font-weight:700; color:var(--text);
     white-space:nowrap; word-break:break-word; text-align:center;
     max-width:95%;
   }
   .link-desc {
-    font-size:8px; color:rgba(255,255,255,.6); margin-top:2px;
+    font-size:9px; color:rgba(255,255,255,.6); margin-top:2px;
     max-width:90%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
 
@@ -416,146 +388,27 @@ header {
   font-weight: 500;
 }
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background: rgba(35,36,41,.96);
-  backdrop-filter: blur(6px);
-  font-size: 12px;
-  color: #a8b0bb;
-  padding: 8px 10px;
-  overflow: hidden;
+
+/* ✅ Διορθώσεις για hover στις κάρτες */
+
+/* Το link μέσα στην κάρτα δεν κάνει scale */
+.card a:not(.fav):not(.del):not(.edit):hover {
+  color: var(--accent);
+  background: rgba(230,57,70,0.1);
+  border-radius: 10px;
 }
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background: rgba(35,36,41,.96);
-  backdrop-filter: blur(6px);
-  font-size: 12px;
-  color: #a8b0bb;
-  padding: 8px 10px;
-  overflow: hidden;
+/* Ολόκληρη η κάρτα μεγαλώνει στο hover */
+.card:hover {
+  transform: scale(1.03);
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  border-color: var(--accent);
 }
 
-/* Wrapper για το pulse */
-.note-wrapper {
-  display: inline-block;
-  animation: pulse 2s ease-in-out infinite;
+/* Το grid αφήνει τις κάρτες να “ξεφεύγουν” όταν κάνουν scale */
+.grid {
+  overflow: visible !important;
 }
-
-.note {
-  display: inline-block;
-  white-space: nowrap;
-  animation: scroll-right 12s linear infinite,
-             colorShift 8s linear infinite;
-	/* text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;*/
-}
-
-
-/* Κίνηση */
-@keyframes scroll-right {
-  0%   { transform: translateX(-100vw); }
-  100% { transform: translateX(100vw); }
-}
-
-/* Εναλλαγή χρώματος */
-@keyframes colorShift {
-  0%   { color: #f4a261; }
-  25%  { color: #2a9df4; }
-  50%  { color: #a1ff0a; }
-  75%  { color: #ff4081; }
-  100% { color: #f4a261; }
-}
-
-/* Pulse */
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.2); }
-}
-
-.typewriter {
-  display: inline-block;
-  overflow: hidden;             /* κρύβει το υπόλοιπο κείμενο */
-  white-space: nowrap;          /* να μη σπάει γραμμή */
-  border-right: 2px solid var(--accent); /* σαν cursor */
-  width: 0;                     /* ξεκινάει μηδενικό */
-  animation: typing 3s steps(25, end) forwards,
-             blinkCursor 0.7s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to   { width: 100% }
-}
-
-@keyframes blinkCursor {
-  from, to { border-color: transparent }
-  50% { border-color: var(--accent) }
-}
-.card {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-/* Keyframes όπως πριν */
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
-
-
-
-.palette-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* label αριστερά, preview δεξιά */
-  margin: 6px 0;
-}
-
-.palette-row label {
-  flex: 1; 
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.palette-row input[type="color"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none; /* μένει αόρατο */
-}
-
-.color-preview {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-}
-
-.row.palette-row {
-  flex-direction: row !important; /* παράκαμψη του column */
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-
-
-
-
-
-
 
 
 
@@ -579,8 +432,8 @@ footer {
   <div class="logo-title">
     <img src="assets/unnamed.png" alt="Logo">
     <div class="titles">
-     <h1 class="typewriter">Τα δικά μου χρήσιμα</h1>
-      <h2>Φαρμακείο Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
+      <h1>Τα δικά μου χρήσιμα</h1>
+      <h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
       <h3>Χρήσιμα εργαλεία και σύνδεσμοι</h3>
     </div>
   </div>
@@ -618,12 +471,10 @@ footer {
 
 
 <footer>
-  <div class="btnrow">
-    <button id="addBtnFoot">+ Προσθήκη νέου link</button>
-  </div>
-  <div class="note-wrapper">
-    <div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
-  </div>
+<div class="btnrow">
+<button id="addBtnFoot">+ Προσθήκη νέου link</button>
+</div>
+<div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
 </footer>
 <!-- ===== MODAL ΝΕΟΥ LINK ===== -->
 <div class="modal" id="modalForm">
@@ -690,7 +541,6 @@ footer {
         <input autocomplete="off" type="text" id="newCategory" placeholder="Νέα κατηγορία">
       </div>
 
-
       <!-- Κουμπιά -->
       <div class="actions">
         <button type="button" id="cancelModal">Άκυρο</button>
@@ -700,75 +550,18 @@ footer {
   </div>
 </div>
 
-
-
-
-
-
-
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
 <div class="modal" id="paletteModal">
   <div class="box">
     <h3>Παλέτα Χρωμάτων</h3>
-
-    <div class="row palette-row">
-      <label for="bg1">Φόντο 1</label>
-      <input type="color" id="bg1" value="#0d1b2a">
-      <div class="color-preview" id="preview-bg1"></div>
-    </div>
-
-    <div class="row palette-row">
-      <label for="bg2">Φόντο 2</label>
-      <input type="color" id="bg2" value="#1b263b">
-      <div class="color-preview" id="preview-bg2"></div>
-    </div>
-
-    <div class="row palette-row">
-      <label for="card">Κάρτα</label>
-      <input type="color" id="card" value="#415a77">
-      <div class="color-preview" id="preview-card"></div>
-    </div>
-
-    <div class="row palette-row">
-      <label for="accent">Κουμπί</label>
-      <input type="color" id="accent" value="#2f80ed">
-      <div class="color-preview" id="preview-accent"></div>
-    </div>
-
-    <div class="row palette-row">
-      <label for="text">Κείμενο</label>
-      <input type="color" id="text" value="#eaeef5">
-      <div class="color-preview" id="preview-text"></div>
-    </div>
-
-    <div class="row palette-row">
-      <label for="border">Περίγραμμα</label>
-      <input type="color" id="border" value="#cccccc">
-      <div class="color-preview" id="preview-border"></div>
-    </div>
-
-    <!-- Εδώ μένει και το Auto-Backup Restore -->
-    
-    <!-- Επιπλέον κουμπιά οριζόντια -->
-    <div class="actions-row">
+    <div class="row palette-row"><label for="bg1">Φόντο 1</label><input type="color" id="bg1"><div id="swatch-bg1" class="color-swatch"></div></div>
+    <div class="row palette-row"><label for="bg2">Φόντο 2</label><input type="color" id="bg2"><div id="swatch-bg2" class="color-swatch"></div></div>
+    <div class="row palette-row"><label for="card">Κάρτα</label><input type="color" id="card"><div id="swatch-card" class="color-swatch"></div></div>
+    <div class="row palette-row"><label for="text">Κείμενο</label><input type="color" id="text"><div id="swatch-text" class="color-swatch"></div></div>
+    <div class="row palette-row"><label for="accent">Κουμπιά</label><input type="color" id="accent"><div id="swatch-accent" class="color-swatch"></div></div>
+    <div class="actions">
       <button id="defaultPalette">Default</button>
       <button id="closePalette">Κλείσιμο</button>
-    </div>
-    <style>
-    #paletteModal .actions-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    #paletteModal .actions-row button {
-      padding: 6px 12px;
-      border-radius: 8px;
-    }
-    </style>
-    <div class="row palette-row">
-      <label for="autoBackup">Auto-Backup Restore</label>
-      <button id="autoBackupBtn">Επαναφορά</button>
     </div>
   </div>
 </div>
@@ -776,14 +569,8 @@ footer {
 
 
 
-
-
 <!-- ===== ΚΡΥΦΟ ΚΟΥΜΠΙ ΓΙΑ ΠΑΛΕΤΑ ===== -->
 <div id="paletteBtn" data-tooltip="Ρυθμίσεις χρωμάτων"></div>
-
-
-
-
 
 <script>
 /* ===============================
@@ -837,6 +624,30 @@ function loadData(){
 /* ===============================
    📌 Θέμα / Χρώματα
    =============================== */
+function applyTheme(t){
+  for(const [k,v] of Object.entries(t)){
+    document.documentElement.style.setProperty("--"+k, v);
+  }
+}
+function getTheme(){
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    bg1: cs.getPropertyValue("--bg1").trim(),
+    bg2: cs.getPropertyValue("--bg2").trim(),
+    card: cs.getPropertyValue("--card").trim(),
+    text: cs.getPropertyValue("--text").trim(),
+    accent: cs.getPropertyValue("--accent").trim()
+  };
+}
+function saveTheme(t){ localStorage.setItem("theme", JSON.stringify(t)); }
+function loadTheme(){
+  const t = JSON.parse(localStorage.getItem("theme") || "null") || themeDefault;
+  applyTheme(t);
+  ["bg1","bg2","card","text","accent"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = t[id];
+  });
+}
 
 /* ===============================
    📌 Undo / Ιστορικό
@@ -866,26 +677,6 @@ function undo(){
   updateUndoBtn();
 }
 
-let firstLoad = true;
-
-// Προσθέτει staggered animation στις κάρτες (μόνο στο πρώτο render)
-function animateCards() {
-  if (!firstLoad) return;
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card, i) => {
-    card.style.animationDelay = (i * 0.1) + "s";
-  });
-  firstLoad = false; // μετά την πρώτη φορά, δεν ξανατρέχει
-}
-
-// Override render
-const originalRender = render;
-render = function() {
-  originalRender();
-  animateCards();
-};
-
-
 /* ===============================
    📌 Βοηθοί
    =============================== */
@@ -905,30 +696,18 @@ function dedupeAdd(cat, linkObj){
   categories[cat].push(linkObj);
   return true;
 }
-
-// Εμφανίζει τα διαθέσιμα auto-backups και επιτρέπει restore
-function showAutoBackups() {
-  const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
-  if (!backups.length) {
-    alert("Δεν υπάρχει διαθέσιμο auto-backup!");
-    return;
-  }
-
-  let msg = "Διαθέσιμα Auto-Backups:\n\n";
-  backups.forEach((b, i) => {
-    msg += i + ": " + b.timestamp + "\n";
-  });
-  msg += "\nΠληκτρολόγησε 0,1,2 για να διαλέξεις:";
-
-  const choice = prompt(msg);
-  if (choice !== null && !isNaN(choice)) {
-    restoreAutoBackup(parseInt(choice));
-  }
+function builtinToDataUrl(kind){
+  const map = {
+    star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>',
+    heart:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 21s-6.716-4.928-9.428-8.35C-0.287 9.39 1.38 5 5.6 5c2.08 0 3.512 1.124 4.4 2.36C10.888 6.124 12.32 5 14.4 5 18.62 5 20.287 9.39 17.428 12.65 14.716 16.072 12 21 12 21z"/></svg>',
+    pill:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M4.22 19.78a3.75 3.75 0 0 1 0-5.3l6.26-6.26a3.75 3.75 0 0 1 5.3 5.3l-6.26 6.26a3.75 3.75 0 0 1-5.3 0Zm7.42-12.02 4.6 4.6"/></svg>',
+    firstaid:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2" ry="2" fill="white" opacity="0.15"/><path fill="white" d="M13 6h-2V4h2v2Zm-3 5H7v2h3v3h2v-3h3v-2h-3V8h-2v3Z"/></svg>',
+    link:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M10.59 13.41a1.996 1.996 0 0 0 2.82 0l3.59-3.59a2 2 0 1 0-2.83-2.83l-1 1 1.41 1.41 1-1a.5.5 0 1 1 .71.71l-3.59 3.59a.996.996 0 1 1-1.41-1.41l1-1-1.41-1.41-1 1a2 2 0 0 0 0 2.83Z"/></svg>',
+    doc:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1.5V8h4.5L14 3.5Z"/></svg>'
+  };
+  const svg = map[kind] || map.link;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
-
-// σύνδεση του κουμπιού
-document.getElementById("autoBackupBtn").addEventListener("click", showAutoBackups);
-
 
 /* ===============================
    📌 Render — Σχεδίαση UI (με Pin + Drag&Drop για νέα links)
@@ -1658,38 +1437,6 @@ render(); updateUndoBtn();
 
 
 
-
-
-// Συνδέει previews με inputs
-document.querySelectorAll("input[type=color]").forEach(input => {
-  const preview = document.getElementById("preview-" + input.id);
-  if (preview) {
-    preview.style.background = input.value;
-
-    // ενημέρωση preview όταν αλλάζει το χρώμα
-    input.addEventListener("input", () => {
-      preview.style.background = input.value;
-    });
-
-    // click στο preview ανοίγει τον picker
-    preview.addEventListener("click", () => input.click());
-
-    // click στο label ανοίγει τον picker
-    const label = document.querySelector("label[for=" + input.id + "]");
-    if (label) {
-      label.addEventListener("click", () => input.click());
-    }
-  }
-});
-
-
-
-
-
-
-
-
-
 // update palette swatches initial
 ["bg1","bg2","card","text","accent"].forEach(id=>{
   const el=document.getElementById(id);
@@ -1700,3 +1447,5 @@ document.querySelectorAll("input[type=color]").forEach(input => {
 </script>
 </body>
 </html>
+
+
