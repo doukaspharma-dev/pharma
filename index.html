@@ -1194,14 +1194,14 @@ function render(){
       card.dataset.idx=idx;
       if(l.pinned) card.classList.add("pinned");
 
-      // 👉 ΝΕΟ μενού
+      // 👉 ΝΕΟ μενού  κουμπάκια
       card.innerHTML = `
         <div class="menu-btn">⋮</div>
         <div class="menu-popup">
-          <button class="edit" aria-label="Επεξεργασία">${svgIcon('edit')}</button>
-          <button class="del" aria-label="Διαγραφή">${svgIcon('delete')}</button>
-          <button class="pin" aria-label="Pin / Unpin">${svgIcon('pin', !!l.pinned)}</button>
-        </div>
+  <button class="edit">✏️</button>
+  <button class="delete">🗑️</button>
+  <button class="pin">📌</button>
+</div>
       `;
 
       const a = document.createElement("a");
