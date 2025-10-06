@@ -241,7 +241,7 @@
 }
 
 
- /* -------------------------------------------------
+/* -------------------------------------------------
    ΝΕΟ MENU ΠΑΝΩ ΣΤΙΣ ΚΑΡΤΕΣ
   ------------------------------------------------- */
 
@@ -284,65 +284,62 @@
   background: color-mix(in srgb, var(--accent) 80%, #000 20%); /* Πιο σκούρο μπλε στο hover */
   transform: scale(1.15);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
 }
 /* popup με τα κουμπάκια */
 .card .menu-popup {
   position: absolute;
-  top: -32px;        /* εμφανίζεται ΠΑΝΩ από τις ⋮ */
-  right: 8px;
-  background: var(--bg2);
-  border: 2px solid var(--border);
-  border-radius: 4px;
-  padding: 1px;   /* μικρότερο περιθώριο μέσα */
-  gap: 1px;       /* μικρότερο κενό ανάμεσα στα κουμπιά */
+  top: -32px;                /* λίγο πιο κοντά στην κάρτα */
+  right: 4px;
   display: none;
-  flex-direction: row; /* κάθετα τα κουμπάκια */
-  gap: 4px;
-  z-index: 1200;
+  flex-direction: row;
+  gap: 2px;
+  background: #1b2631;
+  border: 1px solid #000;
+  border-radius: 6px;
+  padding: 2px 4px;          /* μικρότερο padding */
+  z-index: 1000;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  transform: scale(0.9);     /* μικραίνει ολόκληρο το πλαίσιο */
+  transform-origin: top right;
 }
 
-/* styling για τα κουμπιά μέσα στο popup */
+
+
+/* styling για τα κουμπάκια */
 .card .menu-popup button {
-  background: transparent;
-  border: none;
+  background: #2c3e50;
+  border: 1px solid #000;
+  border-radius: 50%;
+  width: 24px;               /* μικρότεροι κύκλοι */
+  height: 24px;
   cursor: pointer;
-  padding: 1px;       /* πιο μικρό */
-}
-
-.card .menu-popup button svg {
-  width: 14px;        /* μικρότερο εικονίδιο */
-  height: 14px;
-  fill: var(--text);
-}
-.card .menu-popup button:hover svg {
-  fill: var(--accent);
-}
-
-.card .menu-popup button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
+/* εικονίδιο μέσα στο κουμπί */
 .card .menu-popup button svg {
-  width: 16px;
-  height: 16px;
-  fill: var(--text);
+  width: 12px;
+  height: 12px;
+  fill: #fff;
   transition: fill 0.2s ease;
 }
 
-/* ✨ Εφέ στο hover */
+/* hover εφέ */
 .card .menu-popup button:hover {
-  transform: scale(1.2);            /* μεγαλώνει λίγο */
-  background: rgba(255,255,255,0.1); /* ή βάζεις φόντο */
-  border-radius: 4px;
+  transform: scale(1.1);
+  background: var(--accent);
+ display: flex;
 }
 
 .card .menu-popup button:hover svg {
-  fill: var(--accent); /* αλλάζει χρώμα */
+  fill: #fff;
 }
+
+
 
 
   /* -------------------------------------------------
