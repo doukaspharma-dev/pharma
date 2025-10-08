@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
   <title>Τα δικά μου χρήσιμα</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" type="image/png" href="assets/unnamed.png">
+   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
 
   <style>
   
@@ -93,6 +93,16 @@
 
 
 
+/* -------------------------------------------------
+     6. ΚΑΤΗΓΟΡΙΕΣ
+  ------------------------------------------------- */
+  #categories { display:flex; flex-direction:column; gap:18px; padding:0 6px; }
+  .category {
+    background:rgba(255,255,255,.04); border:1px solid var(--border);
+    border-radius:14px; padding:10px;
+  }
+  .category.drag-over { outline:2px dashed #5aa9ff; outline-offset:4px; }
+
 /* ===== Στυλ για τίτλο κατηγορίας ===== */
 .category-title {
   display: flex;
@@ -102,12 +112,21 @@
   padding: 4px 2px;
 }
 
-/* Όνομα κατηγορίας αριστερά */
+/* Όνομα κατηγορίας αριστερά - ΜΕ ΤΟ ΝΕΟ ΧΡΩΜΑΤΙΣΤΟ ΦΩΝΤΟ */
 .category-title h2 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
   color: var(--text);
+  
+  /* ΝΕΟ ΣΤΥΛ ΠΑΡΟΜΟΙΟ ΜΕ ΤΟ ΡΟΛΟΙ */
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Ενέργειες δεξιά */
@@ -245,7 +264,7 @@
 
 
  /* -------------------------------------------------
-   ΝΕΟ MENU ΠΑΝΩ ΣΤΙΣ ΚΑΡΤΕΣ
+  9. ΝΕΟ MENU ΠΑΝΩ ΣΤΙΣ ΚΑΡΤΕΣ
   ------------------------------------------------- */
 
 /* το <a> μένει χαμηλά ώστε να μην σκεπάζει το κουμπί */
@@ -709,7 +728,7 @@ header {
 }
 
 .datetime-widget .time {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--accent);
   margin-bottom: 2px;
@@ -719,7 +738,7 @@ header {
 }
 
 .datetime-widget .date {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   opacity: 0.9;
@@ -769,11 +788,88 @@ header {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* ===== ΧΡΩΜΑΤΙΣΤΟ ΦΩΝΤΟ ΜΟΝΟ ΓΙΑ ΤΟ ΟΝΟΜΑ ΚΑΤΗΓΟΡΙΑΣ ===== */
+.category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 4px 2px;
+}
+
+/* Το όνομα κατηγορίας με το special φόντο */
+.category-title h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  
+  /* Νέο στυλ για το φόντο */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  
+  /* Κείμενο */
+  text-shadow: 0 0 10px rgba(244, 162, 97, 0.3);
+}
+
+/* Ενέργειες δεξιά */
+.cat-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+/* Φαίνονται στο hover */
+.category-title:hover .cat-actions {
+  opacity: 1;
+}}
+/* Διαφορετικά χρώματα για κάθε κατηγορία */
+.category:nth-child(1) .category-title h2 {
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(244, 162, 97, 0.1));
+  border: 1px solid rgba(244, 162, 97, 0.3);
+}
+
+.category:nth-child(2) .category-title h2 {
+  background: linear-gradient(135deg, rgba(42, 157, 244, 0.2), rgba(42, 157, 244, 0.1));
+  border: 1px solid rgba(42, 157, 244, 0.3);
+}
+
+.category:nth-child(3) .category-title h2 {
+  background: linear-gradient(135deg, rgba(161, 255, 10, 0.2), rgba(161, 255, 10, 0.1));
+  border: 1px solid rgba(161, 255, 10, 0.3);
+}
+
+.category:nth-child(4) .category-title h2 {
+  background: linear-gradient(135deg, rgba(255, 64, 129, 0.2), rgba(255, 64, 129, 0.1));
+  border: 1px solid rgba(255, 64, 129, 0.3);
+}
+
+.category:nth-child(5) .category-title h2 {
+  background: linear-gradient(135deg, rgba(159, 89, 243, 0.2), rgba(159, 89, 243, 0.1));
+  border: 1px solid rgba(159, 89, 243, 0.3);
+}
+
+/* Για περισσότερες κατηγορίες επαναλαμβάνουμε τα χρώματα */
+.category:nth-child(6) .category-title h2 {
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(244, 162, 97, 0.1));
+  border: 1px solid rgba(244, 162, 97, 0.3);
+}
 
 
   </style>
 </head>
 <body>
+ <!-- Audio element - κρυφό -->
+  <audio id="welcomeSound" preload="auto" style="display: none;">
+    <source src="assets/hello.mp3" type="audio/mpeg">
+    <source src="assets/hello.wav" type="audio/wav">
+  </audio>
   <style>
     #paletteModal .actions-row {
       display: flex;
@@ -799,7 +895,7 @@ header {
 <header>
 
   <div class="logo-title">
-    <img src="assets/unnamed.png" alt="Logo">
+<img src="assets/logo.png" alt="Logo">
     <div class="titles">
       <h1 class="typewriter">Τα δικά μου χρήσιμα</h1>
       <h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
@@ -933,7 +1029,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 2.3.9b</span>
+  <span class="version">ver. 2.4.1a</span>
 </div>
 
 
@@ -1020,6 +1116,8 @@ let themeDefault = {
   bg1:"#1f1f1f", bg2:"#232429", card:"#2b2d33", text:"#eaeef5", accent:"#2f80ed"
 };
 
+
+
 /* ===============================
    📌 Default Favicon Generator
    =============================== */
@@ -1075,15 +1173,41 @@ function svgIcon(kind, active=false){
 function saveData(){
   localStorage.setItem("categories", JSON.stringify(categories));
   localStorage.setItem("catOrder", JSON.stringify(catOrder));
+  localStorage.setItem("categoryColors", JSON.stringify(categoryColors)); // ΝΕΟ
 }
 function loadData(){
   categories = JSON.parse(localStorage.getItem("categories") || "{}");
   catOrder = JSON.parse(localStorage.getItem("catOrder") || "[]");
+  categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}"); // ΝΕΟ
 }
 
 /* ===============================
-   📌 Θέμα / Χρώματα
+   📌 ΤΥΧΑΙΑ ΧΡΩΜΑΤΑ ΓΙΑ ΚΑΤΗΓΟΡΙΕΣ
    =============================== */
+function getRandomCategoryColor() {
+  // Λίστα με όμορφα gradient χρώματα
+  const colorPairs = [
+    { bg: 'rgba(244, 162, 97, 0.2)', border: 'rgba(244, 162, 97, 0.3)' },      // Orange
+    { bg: 'rgba(42, 157, 244, 0.2)', border: 'rgba(42, 157, 244, 0.3)' },      // Blue
+    { bg: 'rgba(161, 255, 10, 0.2)', border: 'rgba(161, 255, 10, 0.3)' },      // Green
+    { bg: 'rgba(255, 64, 129, 0.2)', border: 'rgba(255, 64, 129, 0.3)' },      // Pink
+    { bg: 'rgba(159, 89, 243, 0.2)', border: 'rgba(159, 89, 243, 0.3)' },      // Purple
+    { bg: 'rgba(255, 215, 0, 0.2)', border: 'rgba(255, 215, 0, 0.3)' },        // Yellow
+    { bg: 'rgba(0, 230, 118, 0.2)', border: 'rgba(0, 230, 118, 0.3)' },        // Emerald
+    { bg: 'rgba(156, 39, 176, 0.2)', border: 'rgba(156, 39, 176, 0.3)' },      // Deep Purple
+    { bg: 'rgba(33, 150, 243, 0.2)', border: 'rgba(33, 150, 243, 0.3)' },      // Light Blue
+    { bg: 'rgba(229, 57, 53, 0.2)', border: 'rgba(229, 57, 53, 0.3)' },        // Red
+    { bg: 'rgba(0, 150, 136, 0.2)', border: 'rgba(0, 150, 136, 0.3)' },        // Teal
+    { bg: 'rgba(121, 85, 72, 0.2)', border: 'rgba(121, 85, 72, 0.3)' }         // Brown
+  ];
+  
+  // Επιλογή τυχαίου χρώματος
+  const randomIndex = Math.floor(Math.random() * colorPairs.length);
+  return colorPairs[randomIndex];
+}
+
+// Αποθήκευση χρωμάτων για κάθε κατηγορία
+let categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}");
 
 /* ===============================
    📌 Undo / Ιστορικό
@@ -1183,7 +1307,7 @@ function render(){
   const wrap = document.getElementById("categories");
   wrap.innerHTML = "";
 
-  catOrder.forEach(cat=>{
+  catOrder.forEach(cat => {
     const sec = document.createElement("div");
     sec.className = "category";
     sec.draggable = true;
@@ -1196,6 +1320,19 @@ function render(){
     // όνομα αριστερά
     const h2 = document.createElement("h2");
     h2.textContent = cat;
+    
+    // ΝΕΟ: Εφαρμογή χρώματος για την κατηγορία
+    if (!categoryColors[cat]) {
+      // Αν δεν υπάρχει χρώμα, δημιούργησε ένα νέο
+      categoryColors[cat] = getRandomCategoryColor();
+      saveData(); // Αποθήκευση του νέου χρώματος
+    }
+    
+    // ΝΕΟ: Εφαρμογή του χρώματος στο όνομα
+    const color = categoryColors[cat];
+    h2.style.background = `linear-gradient(135deg, ${color.bg}, ${color.bg.replace('0.2', '0.1')})`;
+    h2.style.border = `1px solid ${color.border}`;
+    
     title.appendChild(h2);
 
     // actions δεξιά
@@ -1379,7 +1516,9 @@ function render(){
 
     wrap.appendChild(sec);
   });
-}/* ===============================
+}
+
+/* ===============================
    📌 Συνάρτηση για να βρίσκουμε τον τίτλο σελίδας
    =============================== */
 async function fetchTitle(url) {
@@ -1801,6 +1940,8 @@ function restoreAutoBackup(index) {
   }
 }
 
+
+
 /* ===============================
    📌 Έλεγχος κατά την εκκίνηση
    =============================== */
@@ -2166,6 +2307,39 @@ document.getElementById("autoBackupBtn").addEventListener("click", showAutoBacku
 // Δημιουργία αρχικού backup κατά την εκκίνηση
 setTimeout(createAutoBackup, 1000);
 
+/* ===============================
+   📌 ΗΧΗΤΙΚΟ WELCOME ΜΕ ΠΡΩΤΗ ΑΛΛΗΛΕΠΙΔΡΑΣΗ
+   =============================== */
+
+let welcomePlayed = false;
+
+function playWelcomeOnInteraction() {
+  if (welcomePlayed) return;
+  
+  const welcomeSound = document.getElementById('welcomeSound');
+  if (welcomeSound) {
+    welcomeSound.volume = 0.4;
+    welcomeSound.play().then(() => {
+      welcomePlayed = true;
+    }).catch(e => console.log('Play failed'));
+  }
+}
+
+// Προσθήκη event listeners για πρώτη αλληλεπίδραση
+window.addEventListener('load', function() {
+  // Περίμενε λίγο και μετά παίξε με το πρώτο click/scroll/touch
+  setTimeout(() => {
+    document.addEventListener('click', playWelcomeOnInteraction, { once: true });
+    document.addEventListener('scroll', playWelcomeOnInteraction, { once: true });
+    document.addEventListener('touchstart', playWelcomeOnInteraction, { once: true });
+    
+    // Fallback: auto-play μετά από 3 δευτερόλεπτα
+    setTimeout(playWelcomeOnInteraction, 3000);
+  }, 1000);
+});
+
+
+
 loadData(); 
 if(catOrder.length===0){
   categories={"Εισαγωγή":[]};
@@ -2173,6 +2347,8 @@ if(catOrder.length===0){
   saveData();
 }
 render(); updateUndoBtn();
+
+
 
 
 
