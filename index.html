@@ -49,7 +49,7 @@
   }
   .topbar-right {
   position: relative;
-  right: -286px; /* Πάει αριστερά */
+  right: -225px; /* Πάει αριστερά */
 }
 
   /* -------------------------------------------------
@@ -877,8 +877,154 @@ header {
 }
 
 
-    </style>
-  <!-- Μπουρμπουλήθρες -->
+
+/* Help Menu Styles - ΔΙΩΡΘΩΜΕΝΕΣ */
+.help-menu {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.help-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+}
+
+.help-menu h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.help-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.help-section h3 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+.help-section p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.help-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.help-section li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+    color: #555;
+}
+
+.help-section li:before {
+    content: "•";
+    color: #3498db;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.close-help {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #7f8c8d;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-help:hover {
+    background: #f0f0f0;
+    color: #e74c3c;
+}
+
+/* ΒΟΗΘΕΙΑ ΚΟΥΜΠΙ - ΜΟΝΟ ΑΥΤΟ ΚΡΑΤΑ */
+.help-btn {
+    background: var(--accent) !important;
+}
+
+.help-btn:hover {
+    background: var(--accent-hover, #8e44ad) !important;
+    transform: translateY(-2px);
+}
+/* Help Button Theme Colors - ΟΛΑ ΤΑ THEMES */
+.help-btn.default { background: #9b59b6 !important; }
+.help-btn.dark { background: #63c2c9 !important; }
+.help-btn.light { background: #2980b9 !important; }
+..help-btn.green { background: #2ecc71 !important; }
+.help-btn.brown { background: #bd5b6b !important; }
+.help-btn.purple { background: #9b59b6 !important; }
+.help-btn.blue { background: #3498db !important; }
+.help-btn.orange { background: #d69358 !important; }
+.help-btn.pink { background: #b5678d !important; }
+
+.help-btn.default:hover { background: #8e44ad !important; }
+.help-btn.dark:hover { background: #95a5a6 !important; }
+.help-btn.light:hover { background: #2980b9 !important; }
+.help-btn.green:hover { background: #229954 !important; }
+.help-btn.brown:hover { background: #A0522D !important; }
+.help-btn.purple:hover { background: #8e44ad !important; }
+.help-btn.blue:hover { background: #2980b9 !important; }
+.help-btn.orange:hover { background: #d35400 !important; }
+.help-btn.pink:hover { background: #fd79a8 !important; }
+
+/* Responsive βελτιώσεις help */
+@media (max-width: 768px) {
+    .help-menu {
+        width: 95%;
+        padding: 20px;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .help-menu {
+        width: 98%;
+        padding: 15px;
+        margin: 5px;
+    }
+	
+} </style>
+  <!-- Bubble  -->
 
 <div class="bubbles">
   <span></span><span></span><span></span><span></span><span></span>
@@ -914,7 +1060,8 @@ header {
   <button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
   <button id="backupBtn">Backup</button>
   <button id="restoreBtn">Restore</button>
-
+  
+<button class="nav-btn help-btn default" id="helpBtn">💡 Βοήθεια</button>
 
   <!-- Δεξιά -->
 <div class="topbar-right">
@@ -1023,7 +1170,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 2.4.1a</span>
+  <span class="version">ver. 3.2.1b</span>
 </div>
 
 
@@ -1090,7 +1237,52 @@ header {
 <!-- ===== ΚΡΥΦΟ ΚΟΥΜΠΙ ΓΙΑ ΠΑΛΕΤΑ ===== -->
 <div id="paletteBtn" data-tooltip="Ρυθμίσεις χρωμάτων"></div>
 
-
+<!-- Help Menu -->
+<div class="help-overlay" id="helpOverlay"></div>
+<div class="help-menu" id="helpMenu">
+    <button class="close-help" id="closeHelp">&times;</button>
+    
+    <h2>📚 Οδηγίες Χρήσης</h2>
+    
+    <div class="help-section">
+        <h3>🎴 Πώς να χρησιμοποιήσετε τα shortcuts</h3>
+        <p>Για εύκολο χειρισμό των αγαπημένων σας sites</p>
+        <ul>
+            <li>Χρησιμοποιήστε τα κουμπιά <strong>"Επόμενη"</strong> και <strong>"Προηγούμενη"</strong> για πλοήγηση</li>
+            
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3>💡 Συμβουλές Μάθησης</h3>
+        <p>Ακολουθήστε αυτές τις συμβουλές για καλύτερα αποτελέσματα:</p>
+        <ul>
+            <li>Επανάληψη είναι το κλειδί - χρησιμοποιήστε την εφαρμογή καθημερινά</li>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3>🎯 Πληροφορίες Εφαρμογής</h3>
+        <p>Αυτή η εφαρμογή σας βοηθά να:</p>
+        <ul>
+            
+            <li>Νά βρίσκετε γρήγορα .........τον δρόμο σας!!</li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3>⌨️ Συντομεύσεις Πληκτρολογίου</h3>
+        <ul>
+            <li><strong>ESC:</strong> Κλείσιμο help menu</li>
+            <li><strong>Βοήθεια:</strong> Κουμπί για άνοιγμα αυτού του παραθύρου</li>
+        </ul>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px; color: #7f8c8d; font-style: italic;">
+        <p>Καλή επιτυχία στην εκμάθηση! </p>
+    </div>
+</div>
 
 
 
@@ -2140,6 +2332,29 @@ function getTheme(){
   };
 }
 
+function changeTheme(theme) {
+    const root = document.documentElement;
+    const helpBtn = document.getElementById('helpBtn');
+    
+    // Remove existing theme classes
+    root.className = '';
+    
+    // Apply new theme
+    if (theme !== 'default') {
+        root.classList.add(theme + '-theme');
+    }
+    
+    // 🔥 ΔΙΟΡΘΩΜΕΝΟ: Χρήση CSS classes αντί για inline style
+    if (helpBtn) {
+        // Αφαίρεσε όλες τις theme classes
+        helpBtn.classList.remove('default', 'dark', 'light', 'green', 'brown', 'purple', 'blue', 'orange', 'pink');
+        // Πρόσθεσε τη νέα theme class
+        helpBtn.classList.add(theme);
+    }
+    
+    // Save theme preference
+    localStorage.setItem('selectedTheme', theme);
+}
 // αποθήκευση theme (όνομα ή custom)
 function saveTheme(nameOrObj){ 
   if(typeof nameOrObj === "string"){
@@ -2164,11 +2379,17 @@ function loadTheme(){
     applyTheme(t);
   }
 
+  // 🔥 ΝΕΟ: Ενημέρωση help button
+  const helpBtn = document.getElementById('helpBtn');
+  if (helpBtn) {
+    helpBtn.classList.remove('default', 'dark', 'light', 'green', 'brown', 'purple', 'blue', 'orange', 'pink');
+    helpBtn.classList.add(name === 'custom' ? 'default' : name);
+  }
+
   // ενημέρωση dropdown
   const sel = document.getElementById("themeSelect");
   if(sel){
     if(name === "custom"){
-      // Αν δεν υπάρχει επιλογή custom στο select → πρόσθεσέ την
       if(![...sel.options].some(o => o.value === "custom")){
         sel.add(new Option("Custom", "custom"));
       }
@@ -2185,10 +2406,9 @@ document.getElementById("themeSelect").addEventListener("change", e => {
   if(themes[chosen]){
     applyTheme(themes[chosen]);
     saveTheme(chosen);
+    changeTheme(chosen); // 🔥 ΠΡΟΣΘΗΚΗ ΑΥΤΗΣ ΤΗΣ ΓΡΑΜΜΗΣ
   }
 });
-
-
 // κλήση στην εκκίνηση
 loadTheme();
 
@@ -2389,6 +2609,53 @@ if(catOrder.length===0){
 }
 render(); updateUndoBtn();
 
+// Help Menu Functionality
+function initHelpMenu() {
+    const helpMenu = document.getElementById('helpMenu');
+    const helpOverlay = document.getElementById('helpOverlay');
+    const closeHelp = document.getElementById('closeHelp');
+    
+    // Create help button if it doesn't exist
+if (!document.getElementById('helpBtn')) {
+    const helpBtn = document.createElement('button');
+    helpBtn.id = 'helpBtn';
+    helpBtn.className = 'nav-btn help-btn default';
+    helpBtn.innerHTML = '❓ Βοήθεια';
+    document.querySelector('.nav-buttons').appendChild(helpBtn);
+    
+    helpBtn.addEventListener('click', showHelpMenu);
+} else {
+    document.getElementById('helpBtn').addEventListener('click', showHelpMenu);
+}
+    
+    // Help menu functions
+    function showHelpMenu() {
+        helpMenu.style.display = 'block';
+        helpOverlay.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    function hideHelpMenu() {
+        helpMenu.style.display = 'none';
+        helpOverlay.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    // Event listeners
+    closeHelp.addEventListener('click', hideHelpMenu);
+    helpOverlay.addEventListener('click', hideHelpMenu);
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            hideHelpMenu();
+        }
+    });
+}
+
+// Initialize help menu when page loads
+document.addEventListener('DOMContentLoaded', initHelpMenu);
+
 
 
 // Συνδέει previews με inputs
@@ -2413,6 +2680,32 @@ document.querySelectorAll("input[type=color]").forEach(input => {
   }
 });
 
+
+function changeTheme(theme) {
+    const root = document.documentElement;
+    const helpBtn = document.getElementById('helpBtn');
+    
+    console.log('🔄 Αλλαγή theme σε:', theme); // DEBUG
+    console.log('📌 Help button classes πριν:', helpBtn?.className); // DEBUG
+    
+    // Remove existing theme classes
+    root.className = '';
+    
+    // Apply new theme
+    if (theme !== 'default') {
+        root.classList.add(theme + '-theme');
+    }
+    
+    // Ενημέρωση help button
+    if (helpBtn) {
+        helpBtn.classList.remove('default', 'dark', 'light', 'green', 'brown', 'purple', 'blue', 'orange', 'pink');
+        helpBtn.classList.add(theme);
+        console.log('🎨 Help button classes μετά:', helpBtn.className); // DEBUG
+    }
+    
+    // Save theme preference
+    localStorage.setItem('selectedTheme', theme);
+}
 
 // update palette swatches initial
 ["bg1","bg2","card","text","accent"].forEach(id=>{
