@@ -1,15 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
-
-  <meta charset="UTF-8">
-  <title>Favicon Επιλογές</title>
-  <link rel="icon" href="data:,"> <!-- default -->
   <meta charset="UTF-8">
   <title>Τα δικά μου χρήσιμα</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" type="image/png" href="assets/logo.png">
 
   <style>
   
@@ -79,20 +74,6 @@
 }
 
 
-
-
-  /* -------------------------------------------------
-     6. ΚΑΤΗΓΟΡΙΕΣ
-  ------------------------------------------------- */
-  #categories { display:flex; flex-direction:column; gap:18px; padding:0 6px; }
-  .category {
-    background:rgba(255,255,255,.04); border:1px solid var(--border);
-    border-radius:14px; padding:10px;
-  }
-  .category.drag-over { outline:2px dashed #5aa9ff; outline-offset:4px; }
-
-
-
 /* -------------------------------------------------
      6. ΚΑΤΗΓΟΡΙΕΣ
   ------------------------------------------------- */
@@ -103,7 +84,9 @@
   }
   .category.drag-over { outline:2px dashed #5aa9ff; outline-offset:4px; }
 
+
 /* ===== Στυλ για τίτλο κατηγορίας ===== */
+
 .category-title {
   display: flex;
   align-items: center;
@@ -436,7 +419,9 @@
   background: rgba(90, 169, 255, 0.08);
 }
 
-  <!-- Μπουρμπουλήθρες -->
+  /* -------------------------------------------------
+     14. BUBBLE EFE
+  ------------------------------------------------- */
 
 .bubbles {
   position: fixed;
@@ -533,19 +518,6 @@ header {
   font-size: 13px;
   color: #bbb;
   font-weight: 500;
-}
-
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background: rgba(35,36,41,.96);
-  backdrop-filter: blur(6px);
-  font-size: 12px;
-  color: #a8b0bb;
-  padding: 8px 10px;
-  overflow: hidden;
 }
 
 footer {
@@ -703,7 +675,7 @@ footer {
 }
 
 /* -------------------------------------------------
-   ΡΟΛΟΙ - ΗΜΕΡΟΜΗΝΙΑ (ΔΕΞΙΑ ΣΕ ΙΔΙΑ ΓΡΑΜΜΗ)
+   12. ΡΟΛΟΙ - ΗΜΕΡΟΜΗΝΙΑ (ΔΕΞΙΑ ΣΕ ΙΔΙΑ ΓΡΑΜΜΗ)
 ------------------------------------------------- */
 header {
   display: flex;
@@ -828,7 +800,7 @@ header {
 /* Φαίνονται στο hover */
 .category-title:hover .cat-actions {
   opacity: 1;
-}}
+}
 /* Διαφορετικά χρώματα για κάθε κατηγορία */
 .category:nth-child(1) .category-title h2 {
   background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(244, 162, 97, 0.1));
@@ -861,6 +833,17 @@ header {
   border: 1px solid rgba(244, 162, 97, 0.3);
 }
 
+/* Στυλ για το ρολόι όταν είναι editable */
+.datetime-widget.editable-title {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.datetime-widget.editable-title:hover {
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.3), rgba(42, 157, 244, 0.3));
+  transform: scale(1.02);
+}
+
 
   </style>
 </head>
@@ -881,6 +864,19 @@ header {
       padding: 6px 12px;
       border-radius: 8px;
     }
+
+/* Βεβαιωθείτε ότι τα prompts εμφανίζονται σωστά */
+.palette-modal {
+  z-index: 4000;
+}
+
+/* Προσθέστε αυτό για καλύτερη αλληλεπίδραση */
+.datetime-widget {
+  z-index: 1;
+  position: relative;
+}
+
+
     </style>
   <!-- Μπουρμπουλήθρες -->
 
@@ -894,8 +890,9 @@ header {
 
 <header>
 
+
   <div class="logo-title">
-<img src="assets/logo.png" alt="Logo">
+    <img src="assets/logo.png" alt="Logo">
     <div class="titles">
       <h1 class="typewriter">Τα δικά μου χρήσιμα</h1>
       <h2>Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.</h2>
@@ -903,16 +900,13 @@ header {
     </div>
   </div>
   
-  <!-- Ρολόι - Ημερομηνία -->
-  <div class="datetime-widget">
+<!-- Ρολόι - Ημερομηνία (ΕΞΩ από το logo-title) -->
+<div class="datetime-widget" id="titleWidget" data-tooltip="Double-click to change επωνυμία">
     <div class="time" id="currentTime">00:00:00</div>
     <div class="date" id="currentDate">Παρασκευή, 1 Ιανουαρίου</div>
-  </div>
-  
-  
-  
-</header>
+</div>
 
+</header>
 
 <div class="topbar">
   <!-- Κουμπιά κεντρικά -->
@@ -1206,8 +1200,6 @@ function getRandomCategoryColor() {
   return colorPairs[randomIndex];
 }
 
-// Αποθήκευση χρωμάτων για κάθε κατηγορία
-let categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}");
 
 /* ===============================
    📌 Undo / Ιστορικό
@@ -2307,6 +2299,10 @@ document.getElementById("autoBackupBtn").addEventListener("click", showAutoBacku
 // Δημιουργία αρχικού backup κατά την εκκίνηση
 setTimeout(createAutoBackup, 1000);
 
+
+
+
+
 /* ===============================
    📌 ΗΧΗΤΙΚΟ WELCOME ΜΕ ΠΡΩΤΗ ΑΛΛΗΛΕΠΙΔΡΑΣΗ
    =============================== */
@@ -2338,8 +2334,53 @@ window.addEventListener('load', function() {
   }, 1000);
 });
 
+/* ===============================
+   📌 ΕΠΕΞΕΡΓΑΣΙΑ ΥΠΟΤΙΤΛΟΥ ΜΕ DOUBLE-CLICK
+   =============================== */
 
+let currentSubtitle = "Συστεγασμένα Φαρμακεία Νεοκ. & Νικ. Μενεξιάδης & ΣΙΑ Ο.Ε.";
 
+function loadSubtitle() {
+  const savedSubtitle = localStorage.getItem("customSubtitle");
+  if (savedSubtitle) {
+    currentSubtitle = savedSubtitle;
+    updateSubtitleDisplay();
+  }
+}
+
+function saveSubtitle(subtitle) {
+  currentSubtitle = subtitle;
+  localStorage.setItem("customSubtitle", subtitle);
+  updateSubtitleDisplay();
+}
+
+function updateSubtitleDisplay() {
+  const subtitleElement = document.querySelector('.titles h2');
+  if (subtitleElement) {
+    subtitleElement.textContent = currentSubtitle;
+  }
+}
+
+// Προσθήκη double-click event
+document.addEventListener('DOMContentLoaded', function() {
+  const titleWidget = document.getElementById('titleWidget');
+  
+  if (titleWidget) {
+    titleWidget.style.cursor = 'pointer';
+    
+    titleWidget.addEventListener('dblclick', function(e) {
+    e.stopPropagation(); // Σταματά την propagation
+    e.preventDefault(); // Αποφεύγει τυχόν default behavior
+      const newSubtitle = prompt('Αλλαγή υπότιτλου:', currentSubtitle);
+      if (newSubtitle && newSubtitle.trim() !== '') {
+        saveSubtitle(newSubtitle.trim());
+      }
+    });
+  }
+  
+  // Φόρτωση αποθηκευμένου υπότιτλου
+  loadSubtitle();
+});
 loadData(); 
 if(catOrder.length===0){
   categories={"Εισαγωγή":[]};
@@ -2347,10 +2388,6 @@ if(catOrder.length===0){
   saveData();
 }
 render(); updateUndoBtn();
-
-
-
-
 
 
 
