@@ -995,7 +995,7 @@ header {
 .help-btn.default { background: #9b59b6 !important; }
 .help-btn.dark { background: #00bcd4 !important; }
 .help-btn.light { background: #2980b9 !important; }
-..help-btn.green { background: #2ecc71 !important; }
+.help-btn.green { background: #2ecc71 !important; }
 .help-btn.brown { background: #bd5b6b !important; }
 .help-btn.purple { background: #9b59b6 !important; }
 .help-btn.blue { background: #3498db !important; }
@@ -1175,10 +1175,123 @@ header {
   transform: scale(1.1);
 }
 
+<<<<<<< Updated upstream
 
 
 
 
+=======
+/* PERMANENT BUTTON HEIGHT FIX */
+.topbar button,
+.topbar .zuccaradio-btn,
+.topbar .help-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+.topbar #themeSelect {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 10px !important;
+    line-height: 38px !important;
+    box-sizing: border-box !important;
+}
+
+.volume-container {
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.category, .card {
+  transition: transform 0.15s ease;
+}
+
+.category.dragging {
+  opacity: 0.6;
+  transform: scale(1.02);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.card.dragging {
+  opacity: 0.7;
+  transform: rotate(3deg) scale(1.05);
+  transition: transform 0.1s ease, opacity 0.1s ease;
+  z-index: 1000;
+}
+/* ===============================
+   ERROR/SUCCESS MESSAGES
+   =============================== */
+.error-message, .success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+}
+
+.error-message {
+    background: #e74c3c;
+    color: white;
+    border: 1px solid #c0392b;
+}
+
+.success-message {
+    background: #27ae60;
+    color: white;
+    border: 1px solid #219a52;
+}
+
+@keyframes slideDown {
+    from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+/* ===============================
+   ERROR/SUCCESS MESSAGES
+   =============================== */
+.error-message, .success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+    max-width: 80%;
+    text-align: center;
+}
+
+.error-message {
+    background: #e74c3c;
+    color: white;
+    border: 1px solid #c0392b;
+}
+
+.success-message {
+    background: #27ae60;
+    color: white;
+    border: 1px solid #219a52;
+}
+
+@keyframes slideDown {
+    from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+>>>>>>> Stashed changes
 
 </style>
   <!-- Bubbles  -->
@@ -1246,6 +1359,7 @@ header {
 
 
 <footer>
+
   <div class="btnrow">
     <button id="addBtnFoot">+ Προσθήκη νέου link</button>
   </div>
@@ -1473,6 +1587,41 @@ header {
 }
 
 <script>
+
+/* ===============================
+   📌 Error Handling System
+   =============================== */
+function showError(message) {
+    // Δημιουργία error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = `❌ ${message}`;
+    document.body.appendChild(errorDiv);
+    
+    // Αυτόματη αφαίρεση μετά από 4 δευτερόλεπτα
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+        }
+    }, 4000);
+}
+
+function showSuccess(message) {
+    // Δημιουργία success message
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = `✅ ${message}`;
+    document.body.appendChild(successDiv);
+    
+    // Αυτόματη αφαίρεση μετά από 3 δευτερόλεπτα
+    setTimeout(() => {
+        if (successDiv.parentNode) {
+            successDiv.parentNode.removeChild(successDiv);
+        }
+    }, 3000);
+}
+
+
 /* ===============================
    📌 Κατάσταση / Μεταβλητές
    =============================== */
@@ -1488,6 +1637,24 @@ let themeDefault = {
   bg1:"#1f1f1f", bg2:"#232429", card:"#2b2d33", text:"#eaeef5", accent:"#2f80ed"
 };
 
+/* ===============================
+   📌 Error Handling System
+   =============================== */
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    document.body.prepend(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
+}
+
+function showSuccess(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    document.body.prepend(successDiv);
+    setTimeout(() => successDiv.remove(), 3000);
+}
 
 
 /* ===============================
@@ -1624,7 +1791,10 @@ const originalRender = render;
 render = function() {
   originalRender();
   animateCards();
+  enableCategoryDragDrop();
+  enableLinkDragDrop();
 };
+
 
 
 /* ===============================
@@ -1663,7 +1833,11 @@ function dedupeAdd(cat, linkObj){
   
   if (existingLink) {
     const existingName = existingLink.name || "Χωρίς όνομα";
+<<<<<<< Updated upstream
     alert(`⚠️ Αυτή η συντόμευση ήδη υπάρχει!\n\nURL: ${url}\nΚατηγορία: ${cat}\nΥπάρχον όνομα: ${existingName}`);
+=======
+    showError(`Αυτή η συντόμευση ήδη υπάρχει! URL: ${url}, Κατηγορία: ${cat}, Υπάρχον όνομα: ${existingName}`);
+>>>>>>> Stashed changes
     return false;
   }
   
@@ -1675,7 +1849,7 @@ function dedupeAdd(cat, linkObj){
 function showAutoBackups() {
   const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
   if (!backups.length) {
-    alert("Δεν υπάρχει διαθέσιμο auto-backup!");
+    showError("Δεν υπάρχει διαθέσιμο auto-backup!");
     return;
   }
 
@@ -1697,7 +1871,12 @@ document.getElementById("autoBackupBtn").addEventListener("click", showAutoBacku
 /* ===============================
    📌 Render — Σχεδίαση UI (με Pin + Drag&Drop για νέα links)
    =============================== */
-function render(){
+function render() {
+  // Αν γίνεται drag, μην κάνεις full render
+  if (document.querySelector('.dragging')) {
+    return;
+  }
+  
   const wrap = document.getElementById("categories");
   wrap.innerHTML = "";
 
@@ -2037,7 +2216,7 @@ document.getElementById("linkForm").onsubmit = e => {
   const url = normalizeUrl(urlEl.value);
   const name = nameEl.value.trim();
   const desc = descEl.value.trim();
-  if(!url){ alert("Παρακαλώ εισάγετε URL"); return; }
+  if(!url){ showError("Παρακαλώ εισάγετε URL"); return; }
 
   let cat = catSel.value, newCat = newCatEl.value.trim();
   if(newCat) cat = newCat;
@@ -2330,7 +2509,7 @@ function restoreAutoBackup(index) {
   
   if (confirm(`Επαναφορά από backup της ${backup.timestamp};\nΘα χάσετε τρέχουσες αλλαγές!`)) {
     safeRestore(backup);
-    alert(`Επαναφορά ολοκληρώθηκε από backup: ${backup.timestamp}`);
+    showSuccess("Backup δημιουργήθηκε επιτυχώς!");
   }
 }
 
@@ -2382,14 +2561,14 @@ document.getElementById("restoreBtn").onclick=()=>{
             categories=d.categories;catOrder=d.catOrder;
             if(d.theme){applyTheme(d.theme);saveTheme(d.theme);}
             saveData(); render(); updateUndoBtn();
-          } else { alert("Μη έγκυρο JSON."); }
-        }catch{ alert("Μη έγκυρο JSON."); }
+          } else { showError("Μη έγκυρο αρχείο JSON."); }
+        }catch{ showError("Μη έγκυρο αρχείο JSON."); }
       } else {
         const merge = confirm("OK: Συγχώνευση (δεν προσθέτει διπλά)\nCancel: Αντικατάσταση");
         const parser = new DOMParser();
         const doc = parser.parseFromString(r.result,"text/html");
         const anchors = Array.from(doc.querySelectorAll("a[href]"));
-        if(anchors.length===0){ alert("Δεν βρέθηκαν links στο HTML."); return; }
+        if(anchors.length===0){ showError("Δεν βρέθηκαν links στο αρχείο HTML."); return; }
         if(!merge){ pushHistory(); categories={}; catOrder=[]; }
 
         function closestHeading(el){
@@ -2418,7 +2597,7 @@ document.getElementById("restoreBtn").onclick=()=>{
         });
 
         saveData(); render(); updateUndoBtn();
-        alert("Εισαγωγή HTML ολοκληρώθηκε. Προστέθηκαν "+added+" links.");
+        showSuccess(`Εισαγωγή HTML ολοκληρώθηκε! Προστέθηκαν ${added} links.`);
       }
     };
     r.readAsText(inp.files[0]);
@@ -2493,6 +2672,7 @@ document.addEventListener("drop",e=>{
       categories[f].push(l);
     }
     saveData(); render();
+	showSuccess(editing ? "Link ενημερώθηκε επιτυχώς!" : "Νέο link προστέθηκε!");
   }
 
   // Μεταφορά κατηγορίας
@@ -2687,7 +2867,7 @@ function restoreAutoBackup(index) {
       saveData();
       render();
       updateUndoBtn();
-      alert("✅ Επαναφορά ολοκληρώθηκε! Τα εικονίδια βελτιστοποιήθηκαν.");
+      showSuccess(`Επαναφορά ολοκληρώθηκε από backup: ${backup.timestamp}`);
     }, 100);
   }
 }
@@ -2696,7 +2876,7 @@ function restoreAutoBackup(index) {
 function showAutoBackups() {
   const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
   if (!backups.length) {
-    alert("Δεν υπάρχει διαθέσιμο auto-backup!");
+    showError("Δεν υπάρχει διαθέσιμο auto-backup!");
     return;
   }
 
@@ -2979,7 +3159,11 @@ let isRadioPlaying = false;
 
 radioPlayer.addEventListener('error', (e) => {
   console.error('Radio error:', e);
+<<<<<<< Updated upstream
   alert('Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.');
+=======
+  showError("Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.");
+>>>>>>> Stashed changes
   resetRadioButton();
 });
 radioPlayer.addEventListener('ended', resetRadioButton);
@@ -3141,6 +3325,129 @@ function fixButtonHeights() {
 document.addEventListener('DOMContentLoaded', fixButtonHeights);
 setTimeout(fixButtonHeights, 1000);
 
+<<<<<<< Updated upstream
+=======
+/* ===============================
+   📌 Drag & Drop Κατηγοριών (fix + throttle + rAF)
+   =============================== */
+function enableCategoryDragDrop() {
+  const wrap = document.getElementById("categories");
+  if (!wrap) return;
+
+  let rafId = null;
+  let currentDragElement = null;
+
+  document.querySelectorAll(".category").forEach(catEl => {
+    catEl.addEventListener("dragstart", e => {
+      e.dataTransfer.setData("text/plain", catEl.dataset.cat || "");
+      catEl.classList.add("dragging");
+      currentDragElement = catEl;
+    });
+    
+    catEl.addEventListener("dragend", () => {
+      catEl.classList.remove("dragging");
+      currentDragElement = null;
+      
+      // Αποθήκευση ΜΟΝΟ όταν τελειώσει το drag
+      catOrder = [...document.querySelectorAll(".category")].map(c => c.dataset.cat);
+      saveData();
+    });
+  });
+
+  wrap.addEventListener("dragover", e => {
+    e.preventDefault();
+    
+    if (!currentDragElement) return;
+    
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      const others = [...wrap.querySelectorAll(".category:not(.dragging)")];
+      const after = others.find(el => {
+        const rect = el.getBoundingClientRect();
+        return e.clientY <= rect.top + rect.height / 2;
+      });
+      
+      if (after) wrap.insertBefore(currentDragElement, after);
+      else wrap.appendChild(currentDragElement);
+      
+      rafId = null;
+    });
+  });
+}
+
+/* ===============================
+   📌 Drag & Drop Links (fix + throttle)
+   =============================== */
+function enableLinkDragDrop() {
+  let currentDragCard = null;
+
+  document.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("dragstart", e => {
+      e.dataTransfer.setData("text/plain", JSON.stringify({
+        cat: card.dataset.cat,
+        idx: card.dataset.idx
+      }));
+      card.classList.add("dragging");
+      currentDragCard = card;
+      e.dataTransfer.effectAllowed = "move";
+      try { e.dataTransfer.setDragImage(card, 12, 12); } catch (err) { /* ignore */ }
+    });
+    
+    card.addEventListener("dragend", () => {
+      card.classList.remove("dragging");
+      currentDragCard = null;
+      render(); // Render ΜΟΝΟ όταν τελειώσει το drag
+    });
+  });
+
+  document.querySelectorAll(".grid").forEach(grid => {
+    let rafId = null;
+    
+    grid.addEventListener("dragover", e => {
+      e.preventDefault();
+      
+      if (!currentDragCard) return;
+      
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const others = [...grid.querySelectorAll(".card:not(.dragging)")];
+        const after = others.find(el => {
+          const rect = el.getBoundingClientRect();
+          return e.clientY <= rect.top + rect.height / 2;
+        });
+        
+        if (after) grid.insertBefore(currentDragCard, after);
+        else grid.appendChild(currentDragCard);
+        
+        rafId = null;
+      });
+    });
+
+    grid.addEventListener("drop", e => {
+      e.preventDefault();
+      let dataStr = e.dataTransfer.getData("text/plain");
+      if (!dataStr) return;
+      let data;
+      try { data = JSON.parse(dataStr); } catch { return; }
+      const fromCat = data.cat;
+      const fromIdx = parseInt(data.idx);
+      const toCat = grid.dataset.cat;
+      if (!categories[fromCat]) return;
+      const item = categories[fromCat].splice(fromIdx, 1)[0];
+      if (!item) return;
+      if (!categories[toCat]) categories[toCat] = [];
+      const domIndex = [...grid.querySelectorAll(".card")].indexOf(grid.querySelector(".card.dragging"));
+      const newIdx = domIndex === -1 ? categories[toCat].length : domIndex;
+      categories[toCat].splice(newIdx, 0, item);
+      saveData();
+      // ΜΗΝ καλείς render() εδώ - θα καλείται στο dragend
+    });
+  });
+}
+     
+	
+
+>>>>>>> Stashed changes
 
 </script>
 </body>
