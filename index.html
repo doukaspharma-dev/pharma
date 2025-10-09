@@ -48,8 +48,7 @@
     gap:10px; margin:12px 0 18px; position:relative;
   }
   .topbar-right {
-  position: relative;
-  right: -225px; /* Πάει αριστερά */
+  margin-center: auto; /* το πάει δεξιά σωστά */
 }
 
   /* -------------------------------------------------
@@ -384,10 +383,12 @@
   .icon-preview img{width:24px;height:24px;}
 
   /* Κουμπί παλέτας (αόρατο) */
-  #paletteBtn {
+#paletteBtn {
     position:fixed; top:50%; right:0; transform:translateY(-50%);
-    width:64px; height:64px; opacity:0; cursor:pointer; z-index:4500;
-  }
+    width:10px; height:30px; opacity:0; cursor:pointer; z-index:4500;
+    padding: 5px 5px; /* Μεγαλώνει την clickable περιοχή */
+    margin-right: 5px; /* Απομάκρυνση λίγο από την άκρη */
+}
 
   /* Παλέτα */
   .palette-row { display:flex; align-items:center; gap:12px; }
@@ -498,7 +499,7 @@ header {
 }
 
 .logo-title img {
-  height: 60px; /* μέγεθος logo, το ρυθμίζεις όπως θες */
+  height: 70px; /* μέγεθος logo, το ρυθμίζεις όπως θες */
   border-radius: 12px; /* προαιρετικό, αν θες στρογγυλεμένες γωνίες */
 }
 
@@ -571,12 +572,18 @@ footer {
 
 .typewriter {
   display: inline-block;
-  overflow: hidden;             /* κρύβει το υπόλοιπο κείμενο */
-  white-space: nowrap;          /* να μη σπάει γραμμή */
-  border-right: 2px solid var(--accent); /* σαν cursor */
-  width: 0;                     /* ξεκινάει μηδενικό */
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent);
+  width: 0;
   animation: typing 3s steps(25, end) forwards,
-             blinkCursor 0.7s step-end infinite;
+             hideCursor 0.1s 3s forwards;
+}
+
+@keyframes hideCursor {
+  to {
+    border-color: transparent;
+  }
 }
 
 @keyframes typing {
@@ -584,10 +591,8 @@ footer {
   to   { width: 100% }
 }
 
-@keyframes blinkCursor {
-  from, to { border-color: transparent }
-  50% { border-color: var(--accent) }
-}
+
+
 .card {
   opacity: 0;
   transform: translateY(10px);
@@ -1023,7 +1028,159 @@ header {
         margin: 5px;
     }
 	
-} </style>
+	/* Zuccaradio Button Styles */
+.zuccaradio-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    padding: 10px 16px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3) !important;
+}
+
+.zuccaradio-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(238, 90, 36, 0.4) !important;
+    background: linear-gradient(135deg, #ff7979, #ff3838) !important;
+}
+
+.zuccaradio-btn.playing {
+    background: linear-gradient(135deg, #00b894, #00a085) !important;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3) !important;
+}
+
+.zuccaradio-btn.playing:hover {
+    background: linear-gradient(135deg, #00d4a7, #00b894) !important;
+    box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4) !important;
+}
+
+/* ===== Volume Control ===== */
+.volume-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 360px; /* περίπου εκεί που αρχίζει το theme menu */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.volume-control {
+  width: 90px;
+  accent-color: var(--accent);
+}
+
+.volume-control::-webkit-slider-runnable-track {
+    background: var(--card);
+    border-radius: 10px;
+    height: 6px;
+    border: 1px solid var(--border);
+}
+
+.volume-control::-webkit-slider-thumb {
+    appearance: none;
+    background: var(--accent);
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.volume-control::-moz-range-track {
+    background: var(--card);
+    border-radius: 10px;
+    height: 6px;
+    border: 1px solid var(--border);
+}
+
+.volume-control::-moz-range-thumb {
+    background: var(--accent);
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#volumeTooltip {
+  position: absolute;
+  bottom: 125%; /* σταθερό, δεν αλλάζει layout */
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.volume-icon {
+    font-size: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    z-index: 100; /* Προσθήκη αυτού */
+}
+
+.volume-icon:hover {
+    transform: scale(1.1);
+}
+
+/* === Ενοποίηση κουμπιών & volume === */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* <-- αφήνει τα αντικείμενα αριστερά */
+}
+
+.topbar button,
+.zuccaradio-btn,
+.help-btn {
+  padding: 8px 14px !important;
+  font-size: 14px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  position: relative;
+  left: 320px; /* <-- άλλαζε εδώ μέχρι να "κάτσει" σωστά */
+}
+
+.volume-control {
+  width: 90px;
+  accent-color: var(--accent);
+  transform: translateY(1px);
+}
+
+.volume-icon {
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.volume-icon:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+
+
+</style>
   <!-- Bubbles  -->
 
 <div class="bubbles">
@@ -1061,22 +1218,25 @@ header {
   <button id="backupBtn">Backup</button>
   <button id="restoreBtn">Restore</button>
   
-<button class="nav-btn help-btn default" id="helpBtn">💡 Βοήθεια</button>
+  <!-- ΝΕΟ ΚΟΥΜΠΙ ZUCCARADIO -->
+  <button id="zuccaradioBtn" class="zuccaradio-btn" data-tooltip="Ακούστε Zuccaradio">🎵 Zuccaradio</button>
+  
+  <button class="nav-btn help-btn default" id="helpBtn" data-tooltip="Διάβασέ με">💡 Βοήθεια</button>
 
   <!-- Δεξιά -->
-<div class="topbar-right">
-  <select id="themeSelect">
-    <option value="dark">Dark 🌙</option>
-    <option value="light">Light ☀️</option>
-    <option value="green">Green 🌵</option>
-    <option value="brown">Brown ☕</option>
-    <option value="purple">Purple 🪀</option>
-    <option value="blue">Blue 🌊</option>
-    <option value="orange">Orange 🍊</option>
-    <option value="pink">Pink 🌸</option>
-  </select>
-</div>
+  <div class="topbar-right">
+    <select id="themeSelect">
+      <option value="dark">Dark 🌙</option>
+      <option value="light">Light ☀️</option>
+      <option value="green">Green 🌵</option>
+      <option value="brown">Brown ☕</option>
+      <option value="purple">Purple 🪀</option>
+      <option value="blue">Blue 🌊</option>
+      <option value="orange">Orange 🍊</option>
+      <option value="pink">Pink 🌸</option>
+    </select>
   </div>
+</div>
 
 
 
@@ -1170,7 +1330,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.2.1b</span>
+  <span class="version">ver. 3.5.3c</span>
 </div>
 
 
@@ -1284,7 +1444,33 @@ header {
     </div>
 </div>
 
+/* PERMANENT BUTTON HEIGHT FIX */
+.topbar button,
+.topbar .zuccaradio-btn,
+.topbar .help-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
 
+.topbar #themeSelect {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 10px !important;
+    line-height: 38px !important;
+    box-sizing: border-box !important;
+}
+
+.volume-container {
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+}
 
 <script>
 /* ===============================
@@ -1456,7 +1642,31 @@ function normalizeUrl(u){
 function dedupeAdd(cat, linkObj){
   const url = linkObj.url;
   if(!(categories[cat])) categories[cat] = [];
-  if(categories[cat].some(L => (L.url||"").toLowerCase() === url.toLowerCase())) return false;
+  
+  // Κανονικοποίηση URL για καλύτερο έλεγχο
+  const normalizeUrlForComparison = (url) => {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.hostname + urlObj.pathname.replace(/\/$/, '');
+    } catch {
+      return url.toLowerCase().replace(/\/$/, '');
+    }
+  };
+  
+  const normalizedNewUrl = normalizeUrlForComparison(url);
+  
+  // Έλεγχος για διπλότυπο
+  const existingLink = categories[cat].find(L => {
+    const existingUrl = normalizeUrlForComparison(L.url || "");
+    return existingUrl === normalizedNewUrl;
+  });
+  
+  if (existingLink) {
+    const existingName = existingLink.name || "Χωρίς όνομα";
+    alert(`⚠️ Αυτή η συντόμευση ήδη υπάρχει!\n\nURL: ${url}\nΚατηγορία: ${cat}\nΥπάρχον όνομα: ${existingName}`);
+    return false;
+  }
+  
   categories[cat].push(linkObj);
   return true;
 }
@@ -2144,10 +2354,6 @@ function checkAndCompressExistingImages() {
   });
 }
 
-
-
-
-
 /* ===============================
    📌 Backup & Restore
    =============================== */
@@ -2534,10 +2740,20 @@ function playWelcomeOnInteraction() {
   
   const welcomeSound = document.getElementById('welcomeSound');
   if (welcomeSound) {
-    welcomeSound.volume = 0.4;
-    welcomeSound.play().then(() => {
-      welcomePlayed = true;
-    }).catch(e => console.log('Play failed'));
+    // Ένταση 80% - καλό compromise
+    welcomeSound.volume = 0.8;
+    
+    // Προσπάθεια αναπαραγωγής με fallback
+    const playPromise = welcomeSound.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        welcomePlayed = true;
+        console.log('🔊 Ηχητικό welcome played');
+      }).catch(error => {
+        console.log('Αυτόματη αναπαραγωγή απέτυχε, απαιτείται χειροκίνητο κλικ');
+      });
+    }
   }
 }
 
@@ -2751,6 +2967,180 @@ function updateDateTime() {
 // Εκκίνηση ρολογιού
 updateDateTime();
 setInterval(updateDateTime, 1000);
+
+/* ===============================
+   📌 ZUCCARADIO PLAYER - ΕΝΗΜΕΡΩΜΕΝΟ (ΕΝΙΑΙΟ ΜΕ VOLUME)
+   =============================== */
+
+// === ΡΑΔΙΟ ===
+const radioPlayer = new Audio();
+radioPlayer.preload = "none";
+let isRadioPlaying = false;
+
+radioPlayer.addEventListener('error', (e) => {
+  console.error('Radio error:', e);
+  alert('Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.');
+  resetRadioButton();
+});
+radioPlayer.addEventListener('ended', resetRadioButton);
+
+function resetRadioButton() {
+  isRadioPlaying = false;
+  const btn = document.getElementById("zuccaradioBtn");
+  btn.classList.remove("playing");
+  btn.textContent = "🎵 Zuccaradio";
+  styleMainButton(btn);
+  btn.setAttribute("data-tooltip", "Ακούστε Zuccaradio");
+}
+
+function toggleRadio() {
+  const btn = document.getElementById("zuccaradioBtn");
+
+  if (!isRadioPlaying) {
+    console.log("Starting radio...");
+    radioPlayer.src = "https://stream.zuccaradio.com/stream?t=" + new Date().getTime();
+    radioPlayer.volume = 0.7;
+
+    const playPromise = radioPlayer.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isRadioPlaying = true;
+        btn.classList.add("playing");
+        btn.textContent = "⏸ Zuccaradio";
+        styleMainButton(btn);
+        btn.setAttribute("data-tooltip", "Παύση Zuccaradio");
+      }).catch((error) => {
+        console.error("Play failed:", error);
+        alert("Δεν μπορώ να παίξω το ραδιόφωνο: " + error.message);
+        resetRadioButton();
+      });
+    }
+  } else {
+    console.log("Stopping radio...");
+    radioPlayer.pause();
+    radioPlayer.currentTime = 0;
+    resetRadioButton();
+  }
+}
+
+document.getElementById("zuccaradioBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleRadio();
+});
+
+document.getElementById("welcomeSound").addEventListener("play", () => {
+  if (isRadioPlaying) toggleRadio();
+});
+window.addEventListener("beforeunload", () => {
+  if (isRadioPlaying) radioPlayer.pause();
+});
+
+// === ΒΟΗΘΗΤΙΚΟ: Στυλ κουμπιών (ίδιο με τα υπόλοιπα) ===
+function styleMainButton(btn) {
+  btn.style.padding = "8px 14px";
+  btn.style.fontSize = "14px";
+  btn.style.height = "36px";
+  btn.style.borderRadius = "10px";
+  btn.style.fontWeight = "700";
+  btn.style.background = "var(--accent)";
+  btn.style.color = "#fff";
+  btn.style.border = "none";
+  btn.style.boxShadow = "none";
+}
+
+// === VOLUME CONTROL (ΧΩΡΙΣ TOOLTIP) ===
+const volumeContainer = document.createElement("div");
+volumeContainer.className = "volume-container";
+
+const volumeIcon = document.createElement("span");
+volumeIcon.className = "volume-icon";
+volumeIcon.textContent = "🔊";
+volumeIcon.title = "Σίγαση/Ενεργοποίηση ήχου";
+
+const volumeControl = document.createElement("input");
+volumeControl.type = "range";
+volumeControl.className = "volume-control";
+volumeControl.min = "0";
+volumeControl.max = "1";
+volumeControl.step = "0.1";
+volumeControl.value = "0.7";
+volumeControl.title = "Ρύθμιση έντασης";
+
+volumeContainer.appendChild(volumeIcon);
+volumeContainer.appendChild(volumeControl);
+
+// --- ΔΗΜΙΟΥΡΓΙΑ ΝΕΑΣ ΣΕΙΡΑΣ: Zuccaradio → Help → Volume ---
+const radioButton = document.getElementById("zuccaradioBtn");
+const helpButton = document.getElementById("helpBtn");
+
+if (volumeContainer.parentNode) volumeContainer.parentNode.removeChild(volumeContainer);
+
+// Εφαρμόζουμε ίδιο στυλ και στα δύο
+styleMainButton(radioButton);
+styleMainButton(helpButton);
+
+// Εισαγωγή Help μετά το Radio
+radioButton.parentNode.insertBefore(helpButton, radioButton.nextSibling);
+
+// Εισαγωγή Volume ανάμεσα σε Help και Theme select
+const topbar = radioButton.closest(".topbar");
+topbar.insertBefore(volumeContainer, document.getElementById("themeSelect").parentNode);
+
+// === Volume λειτουργίες χωρίς tooltip ===
+volumeControl.addEventListener("input", (e) => {
+  radioPlayer.volume = e.target.value;
+  updateVolumeIcon(e.target.value);
+});
+
+volumeIcon.addEventListener("click", () => {
+  if (radioPlayer.volume > 0) {
+    radioPlayer.volume = 0;
+    volumeControl.value = 0;
+  } else {
+    radioPlayer.volume = 0.7;
+    volumeControl.value = 0.7;
+  }
+  updateVolumeIcon(volumeControl.value);
+});
+
+function updateVolumeIcon(volume) {
+  if (volume == 0) volumeIcon.textContent = "🔇";
+  else if (volume < 0.3) volumeIcon.textContent = "🔈";
+  else if (volume < 0.7) volumeIcon.textContent = "🔉";
+  else volumeIcon.textContent = "🔊";
+}
+updateVolumeIcon(volumeControl.value);
+
+// FIX BUTTON HEIGHTS - RUN THIS ON LOAD
+function fixButtonHeights() {
+    // Βρες όλα τα κουμπιά στην topbar
+    const topbarButtons = document.querySelectorAll('.topbar button, .topbar .zuccaradio-btn, .topbar .help-btn');
+    const themeSelect = document.getElementById('themeSelect');
+    
+    // Όλα τα κουμπιά ίδιο ύψος
+    topbarButtons.forEach(button => {
+        button.style.height = '38px';
+        button.style.minHeight = '38px';
+        button.style.padding = '8px 14px';
+        button.style.lineHeight = '1';
+        button.style.display = 'flex';
+        button.style.alignItems = 'center';
+        button.style.justifyContent = 'center';
+    });
+    
+    // Το dropdown
+    if (themeSelect) {
+        themeSelect.style.height = '38px';
+        themeSelect.style.padding = '0 10px';
+        themeSelect.style.display = 'flex';
+        themeSelect.style.alignItems = 'center';
+    }
+}
+
+// Τρέξε όταν φορτωθεί η σελίδα
+document.addEventListener('DOMContentLoaded', fixButtonHeights);
+setTimeout(fixButtonHeights, 1000);
+
 
 </script>
 </body>
