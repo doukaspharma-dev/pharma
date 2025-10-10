@@ -1839,6 +1839,8 @@ function render(){
       a.target = "_blank";
       a.rel = "noopener";
       a.draggable = false;
+	  a.draggable = false;
+      a.addEventListener("dragstart", e => e.preventDefault());
 
       const img = document.createElement("img");
       img.className = "favicon";
@@ -2023,6 +2025,15 @@ function builtinToDataUrl(type){
   ctx.fillText(emoji, 32, 32);
   return canvas.toDataURL("image/png");
 }
+	//προσθήκη
+function disableAnchorDrag() {
+  document.querySelectorAll("a").forEach(a => {
+    a.setAttribute("draggable", "false");
+    a.addEventListener("dragstart", e => e.preventDefault());
+  });
+}
+
+document.addEventListener("DOMContentLoaded", disableAnchorDrag);
 
 
 // Demo: υποβολή φόρμας
