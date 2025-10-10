@@ -995,7 +995,7 @@ header {
 .help-btn.default { background: #9b59b6 !important; }
 .help-btn.dark { background: #00bcd4 !important; }
 .help-btn.light { background: #2980b9 !important; }
-.help-btn.green { background: #2ecc71 !important; }
+..help-btn.green { background: #2ecc71 !important; }
 .help-btn.brown { background: #bd5b6b !important; }
 .help-btn.purple { background: #9b59b6 !important; }
 .help-btn.blue { background: #3498db !important; }
@@ -1207,84 +1207,8 @@ header {
   transition: transform 0.15s ease;
 }
 
-.category.dragging {
-  opacity: 0.6;
-  transform: scale(1.02);
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
 
-.card.dragging {
-  opacity: 0.7;
-  transform: rotate(3deg) scale(1.05);
-  transition: transform 0.1s ease, opacity 0.1s ease;
-  z-index: 1000;
-}
-/* ===============================
-   ERROR/SUCCESS MESSAGES
-   =============================== */
-.error-message, .success-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    animation: slideDown 0.3s ease;
-}
 
-.error-message {
-    background: #e74c3c;
-    color: white;
-    border: 1px solid #c0392b;
-}
-
-.success-message {
-    background: #27ae60;
-    color: white;
-    border: 1px solid #219a52;
-}
-
-@keyframes slideDown {
-    from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
-    to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-/* ===============================
-   ERROR/SUCCESS MESSAGES
-   =============================== */
-.error-message, .success-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    animation: slideDown 0.3s ease;
-    max-width: 80%;
-    text-align: center;
-}
-
-.error-message {
-    background: #e74c3c;
-    color: white;
-    border: 1px solid #c0392b;
-}
-
-.success-message {
-    background: #27ae60;
-    color: white;
-    border: 1px solid #219a52;
-}
-
-@keyframes slideDown {
-    from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
-    to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
 
 </style>
   <!-- Bubbles  -->
@@ -1352,7 +1276,6 @@ header {
 
 
 <footer>
-
   <div class="btnrow">
     <button id="addBtnFoot">+ Προσθήκη νέου link</button>
   </div>
@@ -1554,41 +1477,6 @@ header {
 
 
 <script>
-
-/* ===============================
-   📌 Error Handling System
-   =============================== */
-function showError(message) {
-    // Δημιουργία error message
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = `❌ ${message}`;
-    document.body.appendChild(errorDiv);
-    
-    // Αυτόματη αφαίρεση μετά από 4 δευτερόλεπτα
-    setTimeout(() => {
-        if (errorDiv.parentNode) {
-            errorDiv.parentNode.removeChild(errorDiv);
-        }
-    }, 4000);
-}
-
-function showSuccess(message) {
-    // Δημιουργία success message
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.textContent = `✅ ${message}`;
-    document.body.appendChild(successDiv);
-    
-    // Αυτόματη αφαίρεση μετά από 3 δευτερόλεπτα
-    setTimeout(() => {
-        if (successDiv.parentNode) {
-            successDiv.parentNode.removeChild(successDiv);
-        }
-    }, 3000);
-}
-
-
 /* ===============================
    📌 Κατάσταση / Μεταβλητές
    =============================== */
@@ -1604,24 +1492,6 @@ let themeDefault = {
   bg1:"#1f1f1f", bg2:"#232429", card:"#2b2d33", text:"#eaeef5", accent:"#2f80ed"
 };
 
-/* ===============================
-   📌 Error Handling System
-   =============================== */
-function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    document.body.prepend(errorDiv);
-    setTimeout(() => errorDiv.remove(), 3000);
-}
-
-function showSuccess(message) {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.textContent = message;
-    document.body.prepend(successDiv);
-    setTimeout(() => successDiv.remove(), 3000);
-}
 
 
 /* ===============================
@@ -1800,7 +1670,7 @@ function dedupeAdd(cat, linkObj){
   
   if (existingLink) {
     const existingName = existingLink.name || "Χωρίς όνομα";
-    showError(`Αυτή η συντόμευση ήδη υπάρχει! URL: ${url}, Κατηγορία: ${cat}, Υπάρχον όνομα: ${existingName}`);
+    alert(`⚠️ Αυτή η συντόμευση ήδη υπάρχει!\n\nURL: ${url}\nΚατηγορία: ${cat}\nΥπάρχον όνομα: ${existingName}`);
     return false;
   }
   
@@ -1812,7 +1682,7 @@ function dedupeAdd(cat, linkObj){
 function showAutoBackups() {
   const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
   if (!backups.length) {
-    showError("Δεν υπάρχει διαθέσιμο auto-backup!");
+    alert("Δεν υπάρχει διαθέσιμο auto-backup!");
     return;
   }
 
@@ -1834,12 +1704,7 @@ document.getElementById("autoBackupBtn").addEventListener("click", showAutoBacku
 /* ===============================
    📌 Render — Σχεδίαση UI (με Pin + Drag&Drop για νέα links)
    =============================== */
-function render() {
-  // Αν γίνεται drag, μην κάνεις full render
-  if (document.querySelector('.dragging')) {
-    return;
-  }
-  
+function render(){
   const wrap = document.getElementById("categories");
   wrap.innerHTML = "";
 
@@ -2179,7 +2044,7 @@ document.getElementById("linkForm").onsubmit = e => {
   const url = normalizeUrl(urlEl.value);
   const name = nameEl.value.trim();
   const desc = descEl.value.trim();
-  if(!url){ showError("Παρακαλώ εισάγετε URL"); return; }
+  if(!url){ alert("Παρακαλώ εισάγετε URL"); return; }
 
   let cat = catSel.value, newCat = newCatEl.value.trim();
   if(newCat) cat = newCat;
@@ -2472,7 +2337,7 @@ function restoreAutoBackup(index) {
   
   if (confirm(`Επαναφορά από backup της ${backup.timestamp};\nΘα χάσετε τρέχουσες αλλαγές!`)) {
     safeRestore(backup);
-    showSuccess("Backup δημιουργήθηκε επιτυχώς!");
+    alert(`Επαναφορά ολοκληρώθηκε από backup: ${backup.timestamp}`);
   }
 }
 
@@ -2524,14 +2389,14 @@ document.getElementById("restoreBtn").onclick=()=>{
             categories=d.categories;catOrder=d.catOrder;
             if(d.theme){applyTheme(d.theme);saveTheme(d.theme);}
             saveData(); render(); updateUndoBtn();
-          } else { showError("Μη έγκυρο αρχείο JSON."); }
-        }catch{ showError("Μη έγκυρο αρχείο JSON."); }
+          } else { alert("Μη έγκυρο JSON."); }
+        }catch{ alert("Μη έγκυρο JSON."); }
       } else {
         const merge = confirm("OK: Συγχώνευση (δεν προσθέτει διπλά)\nCancel: Αντικατάσταση");
         const parser = new DOMParser();
         const doc = parser.parseFromString(r.result,"text/html");
         const anchors = Array.from(doc.querySelectorAll("a[href]"));
-        if(anchors.length===0){ showError("Δεν βρέθηκαν links στο αρχείο HTML."); return; }
+        if(anchors.length===0){ alert("Δεν βρέθηκαν links στο HTML."); return; }
         if(!merge){ pushHistory(); categories={}; catOrder=[]; }
 
         function closestHeading(el){
@@ -2560,7 +2425,7 @@ document.getElementById("restoreBtn").onclick=()=>{
         });
 
         saveData(); render(); updateUndoBtn();
-        showSuccess(`Εισαγωγή HTML ολοκληρώθηκε! Προστέθηκαν ${added} links.`);
+        alert("Εισαγωγή HTML ολοκληρώθηκε. Προστέθηκαν "+added+" links.");
       }
     };
     r.readAsText(inp.files[0]);
@@ -2635,7 +2500,6 @@ document.addEventListener("drop",e=>{
       categories[f].push(l);
     }
     saveData(); render();
-	showSuccess(editing ? "Link ενημερώθηκε επιτυχώς!" : "Νέο link προστέθηκε!");
   }
 
   // Μεταφορά κατηγορίας
@@ -2830,7 +2694,7 @@ function restoreAutoBackup(index) {
       saveData();
       render();
       updateUndoBtn();
-      showSuccess(`Επαναφορά ολοκληρώθηκε από backup: ${backup.timestamp}`);
+      alert("✅ Επαναφορά ολοκληρώθηκε! Τα εικονίδια βελτιστοποιήθηκαν.");
     }, 100);
   }
 }
@@ -2839,7 +2703,7 @@ function restoreAutoBackup(index) {
 function showAutoBackups() {
   const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
   if (!backups.length) {
-    showError("Δεν υπάρχει διαθέσιμο auto-backup!");
+    alert("Δεν υπάρχει διαθέσιμο auto-backup!");
     return;
   }
 
@@ -3122,7 +2986,7 @@ let isRadioPlaying = false;
 
 radioPlayer.addEventListener('error', (e) => {
   console.error('Radio error:', e);
-  showError("Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.");
+  alert('Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.');
   resetRadioButton();
 });
 radioPlayer.addEventListener('ended', resetRadioButton);
@@ -3291,44 +3155,47 @@ function enableCategoryDragDrop() {
   const wrap = document.getElementById("categories");
   if (!wrap) return;
 
+  // throttle + rAF για smoothness
+  let lastCatDragTime = 0;
   let rafId = null;
-  let currentDragElement = null;
 
+  // attach per-category dragstart/dragend
   document.querySelectorAll(".category").forEach(catEl => {
     catEl.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", catEl.dataset.cat || "");
       catEl.classList.add("dragging");
-      currentDragElement = catEl;
     });
-    
     catEl.addEventListener("dragend", () => {
       catEl.classList.remove("dragging");
-      currentDragElement = null;
-      
-      // Αποθήκευση ΜΟΝΟ όταν τελειώσει το drag
-      catOrder = [...document.querySelectorAll(".category")].map(c => c.dataset.cat);
-      saveData();
     });
   });
 
+  // single throttled handler on wrap
   wrap.addEventListener("dragover", e => {
     e.preventDefault();
-    
-    if (!currentDragElement) return;
-    
+    const now = Date.now();
+    if (now - lastCatDragTime < 60) return; // update κάθε ~60ms
+    lastCatDragTime = now;
+
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
+      const dragging = document.querySelector(".category.dragging");
+      if (!dragging) return;
       const others = [...wrap.querySelectorAll(".category:not(.dragging)")];
       const after = others.find(el => {
         const rect = el.getBoundingClientRect();
         return e.clientY <= rect.top + rect.height / 2;
       });
-      
-      if (after) wrap.insertBefore(currentDragElement, after);
-      else wrap.appendChild(currentDragElement);
-      
-      rafId = null;
+      if (after) wrap.insertBefore(dragging, after);
+      else wrap.appendChild(dragging);
     });
+  });
+
+  wrap.addEventListener("drop", () => {
+    // ενημέρωση catOrder και αποθήκευση
+    catOrder = [...document.querySelectorAll(".category")].map(c => c.dataset.cat);
+    saveData();
+    render();
   });
 }
 
@@ -3336,8 +3203,7 @@ function enableCategoryDragDrop() {
    📌 Drag & Drop Links (fix + throttle)
    =============================== */
 function enableLinkDragDrop() {
-  let currentDragCard = null;
-
+  // attach per-card handlers (setDragImage εδώ)
   document.querySelectorAll(".card").forEach(card => {
     card.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", JSON.stringify({
@@ -3345,43 +3211,37 @@ function enableLinkDragDrop() {
         idx: card.dataset.idx
       }));
       card.classList.add("dragging");
-      currentDragCard = card;
       e.dataTransfer.effectAllowed = "move";
       try { e.dataTransfer.setDragImage(card, 12, 12); } catch (err) { /* ignore */ }
     });
-    
     card.addEventListener("dragend", () => {
       card.classList.remove("dragging");
-      currentDragCard = null;
-      render(); // Render ΜΟΝΟ όταν τελειώσει το drag
     });
   });
 
+  // per-grid throttled dragover (separate throttle per grid)
   document.querySelectorAll(".grid").forEach(grid => {
-    let rafId = null;
-    
+    let lastGridDrag = 0;
     grid.addEventListener("dragover", e => {
       e.preventDefault();
-      
-      if (!currentDragCard) return;
-      
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const others = [...grid.querySelectorAll(".card:not(.dragging)")];
-        const after = others.find(el => {
-          const rect = el.getBoundingClientRect();
-          return e.clientY <= rect.top + rect.height / 2;
-        });
-        
-        if (after) grid.insertBefore(currentDragCard, after);
-        else grid.appendChild(currentDragCard);
-        
-        rafId = null;
+      const now = Date.now();
+      if (now - lastGridDrag < 60) return; // ~60ms
+      lastGridDrag = now;
+
+      const dragging = document.querySelector(".card.dragging");
+      if (!dragging) return;
+      const others = [...grid.querySelectorAll(".card:not(.dragging)")];
+      const after = others.find(el => {
+        const rect = el.getBoundingClientRect();
+        return e.clientY <= rect.top + rect.height / 2;
       });
+      if (after) grid.insertBefore(dragging, after);
+      else grid.appendChild(dragging);
     });
 
     grid.addEventListener("drop", e => {
       e.preventDefault();
+      // parse data, move item in categories
       let dataStr = e.dataTransfer.getData("text/plain");
       if (!dataStr) return;
       let data;
@@ -3393,15 +3253,15 @@ function enableLinkDragDrop() {
       const item = categories[fromCat].splice(fromIdx, 1)[0];
       if (!item) return;
       if (!categories[toCat]) categories[toCat] = [];
+      // new index equals DOM position
       const domIndex = [...grid.querySelectorAll(".card")].indexOf(grid.querySelector(".card.dragging"));
       const newIdx = domIndex === -1 ? categories[toCat].length : domIndex;
       categories[toCat].splice(newIdx, 0, item);
       saveData();
-      // ΜΗΝ καλείς render() εδώ - θα καλείται στο dragend
+      render();
     });
   });
 }
-     
 	
 
 
