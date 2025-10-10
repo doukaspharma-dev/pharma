@@ -41,14 +41,15 @@
   header h3 { margin:6px 0 0; font-size:13px; color:#bbb; font-weight:500; }
 
   /* -------------------------------------------------
-     4. TOPBAR (κουμπιά πάνω)
+     4. TOPBAR (κουμπιά πάνω)Ρυθμιση theme button
   ------------------------------------------------- */
   .topbar {
     display:flex; justify-content:center; align-items:center;
     gap:10px; margin:12px 0 18px; position:relative;
   }
-  .topbar-right {
-  margin-center: auto; /* το πάει δεξιά σωστά */
+ .topbar-right {
+  margin-left: 210px;
+  margin-right: -110px; /* Λίγο κενό από την άκρη */
 }
 
   /* -------------------------------------------------
@@ -843,12 +844,47 @@ header {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
+* Στυλ για το ρολόι χρώματα */
 .datetime-widget.editable-title:hover {
   background: linear-gradient(135deg, rgba(244, 162, 97, 0.3), rgba(42, 157, 244, 0.3));
   transform: scale(1.02);
 }
+.datetime-widget {
+    border: 2px solid var(--accent) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+    backdrop-filter: blur(10px);
+    background: var(--card) !important; /* Ίδιο φόντο με player */
+datetime-widget {
+    /* Αφαίρεσε το gradient και βάλε ίδιο φόντο με player */
+    background: var(--card) !important;
+    border: 2px solid var(--accent) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+    
+    /* Αφαίρεσε το gradient background */
+    background: var(--card) !important;
+}
 
+/* Αφαίρεσε το gradient class αν υπάρχει */
+.datetime-widget.gradient {
+    background: var(--card) !important;
+}
+    
+ 
+}
+.datetime-widget {
+    /* Υπάρχοντα στυλ... */
+    
+    /* Προσθήκη ίδιας γραμμής όπως ο player */
+    border: 2px solid var(--accent) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+    
+    /* Προαιρετικά - για ακόμα πιο όμορφη εμφάνιση */
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1) !important;
+}
 
   </style>
 </head>
@@ -858,6 +894,7 @@ header {
     <source src="assets/hello.mp3" type="audio/mpeg">
     <source src="assets/hello.wav" type="audio/wav">
   </audio>
+  
   <style>
     #paletteModal .actions-row {
       display: flex;
@@ -995,7 +1032,7 @@ header {
 .help-btn.default { background: #9b59b6 !important; }
 .help-btn.dark { background: #00bcd4 !important; }
 .help-btn.light { background: #2980b9 !important; }
-..help-btn.green { background: #2ecc71 !important; }
+.help-btn.green { background: #2ecc71 !important; }
 .help-btn.brown { background: #bd5b6b !important; }
 .help-btn.purple { background: #9b59b6 !important; }
 .help-btn.blue { background: #3498db !important; }
@@ -1156,7 +1193,7 @@ header {
   gap: 6px;
   flex-shrink: 0;
   position: relative;
-  left: 320px; /* <-- άλλαζε εδώ μέχρι να "κάτσει" σωστά */
+  left:320px; /* <-- άλλαζε εδώ μέχρι να "κάτσει" σωστά */
 }
 
 .volume-control {
@@ -1238,6 +1275,7 @@ header {
     <div class="time" id="currentTime">00:00:00</div>
     <div class="date" id="currentDate">Παρασκευή, 1 Ιανουαρίου</div>
 </div>
+
 
 </header>
 
@@ -1360,7 +1398,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.5.3c</span>
+  <span class="version">ver. 3.6.0p</span>
 </div>
 
 
@@ -2989,176 +3027,284 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 
 /* ===============================
-   📌 ZUCCARADIO PLAYER - ΕΝΗΜΕΡΩΜΕΝΟ (ΕΝΙΑΙΟ ΜΕ VOLUME)
+   📌 ZUCCARADIO PLAYER - ΕΝΗΜΕΡΩΜΕΝΟ (ΕΝΙΑΙΟ ΜΕ VOLUME + INTERFACE)
    =============================== */
 
-// === ΡΑΔΙΟ ===
-const radioPlayer = new Audio();
-radioPlayer.preload = "none";
+let radioPlayer = null;
 let isRadioPlaying = false;
+let radioAudio = null;
+let radioInterface = null;
 
-radioPlayer.addEventListener('error', (e) => {
-  console.error('Radio error:', e);
-  alert('Σφάλμα στην αναπαραγωγή. Δοκιμάστε ξανά.');
-  resetRadioButton();
-});
-radioPlayer.addEventListener('ended', resetRadioButton);
-
-function resetRadioButton() {
-  isRadioPlaying = false;
-  const btn = document.getElementById("zuccaradioBtn");
-  btn.classList.remove("playing");
-  btn.textContent = "🎵 Zuccaradio";
-  styleMainButton(btn);
-  btn.setAttribute("data-tooltip", "Ακούστε Zuccaradio");
-}
-
-function toggleRadio() {
-  const btn = document.getElementById("zuccaradioBtn");
-
-  if (!isRadioPlaying) {
-    console.log("Starting radio...");
-    radioPlayer.src = "https://stream.zuccaradio.com/stream?t=" + new Date().getTime();
-    radioPlayer.volume = 0.7;
-
-    const playPromise = radioPlayer.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        isRadioPlaying = true;
-        btn.classList.add("playing");
-        btn.textContent = "⏸ Zuccaradio";
-        styleMainButton(btn);
-        btn.setAttribute("data-tooltip", "Παύση Zuccaradio");
-      }).catch((error) => {
-        console.error("Play failed:", error);
-        alert("Δεν μπορώ να παίξω το ραδιόφωνο: " + error.message);
-        resetRadioButton();
-      });
-    }
-  } else {
-    console.log("Stopping radio...");
-    radioPlayer.pause();
-    radioPlayer.currentTime = 0;
-    resetRadioButton();
-  }
-}
-
-document.getElementById("zuccaradioBtn").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleRadio();
-});
-
-document.getElementById("welcomeSound").addEventListener("play", () => {
-  if (isRadioPlaying) toggleRadio();
-});
-window.addEventListener("beforeunload", () => {
-  if (isRadioPlaying) radioPlayer.pause();
-});
-
-// === ΒΟΗΘΗΤΙΚΟ: Στυλ κουμπιών (ίδιο με τα υπόλοιπα) ===
-function styleMainButton(btn) {
-  btn.style.padding = "8px 14px";
-  btn.style.fontSize = "14px";
-  btn.style.height = "36px";
-  btn.style.borderRadius = "10px";
-  btn.style.fontWeight = "700";
-  btn.style.background = "var(--accent)";
-  btn.style.color = "#fff";
-  btn.style.border = "none";
-  btn.style.boxShadow = "none";
-}
-
-// === VOLUME CONTROL (ΧΩΡΙΣ TOOLTIP) ===
-const volumeContainer = document.createElement("div");
-volumeContainer.className = "volume-container";
-
-const volumeIcon = document.createElement("span");
-volumeIcon.className = "volume-icon";
-volumeIcon.textContent = "🔊";
-volumeIcon.title = "Σίγαση/Ενεργοποίηση ήχου";
-
-const volumeControl = document.createElement("input");
-volumeControl.type = "range";
-volumeControl.className = "volume-control";
-volumeControl.min = "0";
-volumeControl.max = "1";
-volumeControl.step = "0.1";
-volumeControl.value = "0.7";
-volumeControl.title = "Ρύθμιση έντασης";
-
-volumeContainer.appendChild(volumeIcon);
-volumeContainer.appendChild(volumeControl);
-
-// --- ΔΗΜΙΟΥΡΓΙΑ ΝΕΑΣ ΣΕΙΡΑΣ: Zuccaradio → Help → Volume ---
-const radioButton = document.getElementById("zuccaradioBtn");
-const helpButton = document.getElementById("helpBtn");
-
-if (volumeContainer.parentNode) volumeContainer.parentNode.removeChild(volumeContainer);
-
-// Εφαρμόζουμε ίδιο στυλ και στα δύο
-styleMainButton(radioButton);
-styleMainButton(helpButton);
-
-// Εισαγωγή Help μετά το Radio
-radioButton.parentNode.insertBefore(helpButton, radioButton.nextSibling);
-
-// Εισαγωγή Volume ανάμεσα σε Help και Theme select
-const topbar = radioButton.closest(".topbar");
-topbar.insertBefore(volumeContainer, document.getElementById("themeSelect").parentNode);
-
-// === Volume λειτουργίες χωρίς tooltip ===
-volumeControl.addEventListener("input", (e) => {
-  radioPlayer.volume = e.target.value;
-  updateVolumeIcon(e.target.value);
-});
-
-volumeIcon.addEventListener("click", () => {
-  if (radioPlayer.volume > 0) {
-    radioPlayer.volume = 0;
-    volumeControl.value = 0;
-  } else {
-    radioPlayer.volume = 0.7;
-    volumeControl.value = 0.7;
-  }
-  updateVolumeIcon(volumeControl.value);
-});
-
-function updateVolumeIcon(volume) {
-  if (volume == 0) volumeIcon.textContent = "🔇";
-  else if (volume < 0.3) volumeIcon.textContent = "🔈";
-  else if (volume < 0.7) volumeIcon.textContent = "🔉";
-  else volumeIcon.textContent = "🔊";
-}
-updateVolumeIcon(volumeControl.value);
-
-// FIX BUTTON HEIGHTS - RUN THIS ON LOAD
-function fixButtonHeights() {
-    // Βρες όλα τα κουμπιά στην topbar
-    const topbarButtons = document.querySelectorAll('.topbar button, .topbar .zuccaradio-btn, .topbar .help-btn');
-    const themeSelect = document.getElementById('themeSelect');
+function initRadioPlayer() {
+    // Δημιουργία radio interface
+    createRadioInterface();  // Απλά ΚΑΛΕΣΕ τη function
     
-    // Όλα τα κουμπιά ίδιο ύψος
-    topbarButtons.forEach(button => {
-        button.style.height = '38px';
-        button.style.minHeight = '38px';
-        button.style.padding = '8px 14px';
-        button.style.lineHeight = '1';
-        button.style.display = 'flex';
-        button.style.alignItems = 'center';
-        button.style.justifyContent = 'center';
+    // Σύνδεση events
+    document.getElementById("zuccaradioBtn").addEventListener("click", toggleRadioInterface);
+    
+    // Volume control integration
+    const volumeControl = document.querySelector(".volume-control");
+    if (volumeControl) {
+        volumeControl.addEventListener("input", (e) => {
+            if (radioAudio) {
+                radioAudio.volume = e.target.value;
+                updateRadioInfo(`Ένταση: ${Math.round(radioAudio.volume * 100)}%`);
+            }
+        });
+    }
+}
+
+function createRadioInterface() {
+    radioInterface = document.createElement('div');
+    radioInterface.className = 'radio-player';
+    radioInterface.style.cssText = `
+        position: fixed;
+        top: 10px;  /* Λίγο κάτω από το header */
+        left: 10px;  /* Αριστερά */
+        transform: none;  /* Αφαίρεσε το transform */
+        background: var(--card);
+        border: 2px solid var(--accent);
+        border-radius: 12px;
+        padding: 15px;
+        z-index: 10000;
+        display: none;
+        min-width: 250px;  /* Πιο μικρό */
+        max-width: 250px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        color: var(--text);
+    `;
+    
+    radioInterface.innerHTML = `
+        <button class="close-radio" style="
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        ">&times;</button>
+        
+        <h3 style="margin: 0 0 12px 0; text-align: center; color: var(--accent); font-size: 16px;">🎵 Zuccaradio</h3>
+        
+        <div class="radio-controls" style="
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        ">
+            <button id="playRadio" style="
+                padding: 8px 12px;
+                background: var(--accent);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                flex: 1;
+            ">▶</button>
+            
+            <button id="stopRadio" style="
+                padding: 8px 12px;
+                background: #e74c3c;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                flex: 1;
+            ">⏹</button>
+        </div>
+        
+        <div class="volume-controls" style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        ">
+            <span style="font-size: 14px;">🔊</span>
+            <input type="range" id="radioVolume" min="0" max="1" step="0.1" value="0.7" style="
+                flex: 1;
+                accent-color: var(--accent);
+                height: 6px;
+            ">
+        </div>
+        
+        <div class="radio-info" style="
+            text-align: center;
+            font-size: 12px;
+            color: var(--text);
+            opacity: 0.8;
+            line-height: 1.3;
+        ">Ακούστε Zuccaradio</div>
+    `;
+    
+    document.body.appendChild(radioInterface);
+    
+    // Event listeners
+    radioInterface.querySelector('#playRadio').addEventListener('click', toggleRadioPlay);
+    radioInterface.querySelector('#stopRadio').addEventListener('click', stopRadio);
+    radioInterface.querySelector('#radioVolume').addEventListener('input', (e) => {
+        if (radioAudio) {
+            radioAudio.volume = e.target.value;
+            updateRadioInfo(`Ένταση: ${Math.round(radioAudio.volume * 100)}%`);
+        }
     });
+    radioInterface.querySelector('.close-radio').addEventListener('click', closeRadioInterface);
     
-    // Το dropdown
-    if (themeSelect) {
-        themeSelect.style.height = '38px';
-        themeSelect.style.padding = '0 10px';
-        themeSelect.style.display = 'flex';
-        themeSelect.style.alignItems = 'center';
+    // Βελτίωση hover effects
+    const closeBtn = radioInterface.querySelector('.close-radio');
+    closeBtn.addEventListener('mouseenter', function() {
+        this.style.background = 'rgba(255,255,255,0.1)';
+    });
+    closeBtn.addEventListener('mouseleave', function() {
+        this.style.background = 'none';
+    });
+}
+
+function toggleRadioInterface() {
+    if (radioInterface && radioInterface.style.display === 'block') {
+        closeRadioInterface();
+    } else {
+        openRadioInterface();
     }
 }
 
-// Τρέξε όταν φορτωθεί η σελίδα
-document.addEventListener('DOMContentLoaded', fixButtonHeights);
+function openRadioInterface() {
+    if (radioInterface) {
+        radioInterface.style.display = 'block';
+        // Update main button
+        document.getElementById("zuccaradioBtn").classList.add("active");
+    }
+}
+
+function closeRadioInterface() {
+    if (radioInterface) {
+        radioInterface.style.display = 'none';
+        document.getElementById("zuccaradioBtn").classList.remove("active");
+    }
+}
+
+function toggleRadioPlay() {
+    if (!isRadioPlaying) {
+        playRadio();
+    } else {
+        pauseRadio();
+    }
+}
+
+function playRadio() {
+    if (!radioAudio) {
+        radioAudio = new Audio('https://stream.zuccaradio.com/stream');
+        radioAudio.volume = document.querySelector('#radioVolume').value;
+        
+        radioAudio.addEventListener('loadstart', function() {
+            updateRadioInfo('Φόρτωση ραδιοφώνου...');
+        });
+        
+        radioAudio.addEventListener('canplay', function() {
+            updateRadioInfo('Αναπαραγωγή Zuccaradio...');
+        });
+        
+        radioAudio.addEventListener('error', function() {
+            updateRadioInfo('Σφάλμα φόρτωσης ραδιοφώνου');
+            resetRadioState();
+        });
+    }
+    
+    radioAudio.play().then(() => {
+        isRadioPlaying = true;
+        updatePlayButton();
+        updateRadioInfo('Αναπαραγωγή Zuccaradio...');
+        document.getElementById("zuccaradioBtn").classList.add("playing");
+        document.getElementById("zuccaradioBtn").textContent = "⏸ Zuccaradio";
+    }).catch(error => {
+        console.error('Radio play error:', error);
+        updateRadioInfo('Σφάλμα: Δεν μπορεί να ακουστεί το ραδιόφωνο');
+        resetRadioState();
+    });
+}
+
+function pauseRadio() {
+    if (radioAudio && isRadioPlaying) {
+        radioAudio.pause();
+        isRadioPlaying = false;
+        updatePlayButton();
+        updateRadioInfo('Παύση Zuccaradio');
+        document.getElementById("zuccaradioBtn").classList.remove("playing");
+        document.getElementById("zuccaradioBtn").textContent = "🎵 Zuccaradio";
+    }
+}
+
+function stopRadio() {
+    if (radioAudio) {
+        radioAudio.pause();
+        radioAudio.currentTime = 0;
+        resetRadioState();
+        updateRadioInfo('Ραδιόφωνο σταματημένο');
+    }
+}
+
+function resetRadioState() {
+    isRadioPlaying = false;
+    updatePlayButton();
+    document.getElementById("zuccaradioBtn").classList.remove("playing");
+    document.getElementById("zuccaradioBtn").textContent = "🎵 Zuccaradio";
+}
+
+function updatePlayButton() {
+    const playBtn = document.getElementById('playRadio');
+    if (playBtn) {
+        playBtn.textContent = isRadioPlaying ? '⏸' : '▶';
+    }
+}
+
+function updateRadioInfo(message) {
+    const infoElement = radioInterface.querySelector('.radio-info');
+    if (infoElement) {
+        infoElement.textContent = message;
+    }
+}
+
+// Κλείσιμο με ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && radioInterface && radioInterface.style.display === 'block') {
+        closeRadioInterface();
+    }
+});
+
+// Προσθήκη CSS styles
+const radioStyles = `
+.radio-player {
+    backdrop-filter: blur(10px);
+    background: rgba(var(--card-rgb), 0.9) !important;
+}
+
+.zuccaradio-btn.active {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+    transform: scale(1.05);
+}
+
+.zuccaradio-btn.playing {
+    background: linear-gradient(135deg, #00b894, #00a085) !important;
+    animation: pulse 1.5s infinite;
+}
+`;
+
+// Εισαγωγή styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = radioStyles;
+document.head.appendChild(styleSheet);
+
+// Αρχικοποίηση όταν φορτωθεί η σελίδα
+document.addEventListener('DOMContentLoaded', initRadioPlayer);
 setTimeout(fixButtonHeights, 1000);
 
 /* ===============================
