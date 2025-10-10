@@ -1360,7 +1360,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.5.6c</span>
+  <span class="version">ver. 3.5.3c</span>
 </div>
 
 
@@ -1921,7 +1921,15 @@ function render(){
     wrap.appendChild(sec);
   });
 }
+// 👉προσθήκη
+function disableAnchorDrag() {
+  document.querySelectorAll("a").forEach(a => {
+    a.setAttribute("draggable", "false");
+    a.addEventListener("dragstart", e => e.preventDefault());
+  });
+}
 
+document.addEventListener("DOMContentLoaded", disableAnchorDrag);
 
 
 /* ===============================
@@ -3154,36 +3162,27 @@ document.addEventListener('DOMContentLoaded', fixButtonHeights);
 setTimeout(fixButtonHeights, 1000);
 
 /* ===============================
-   📌 Drag & Drop Κατηγοριών (fix + throttle + rAF)
+   📌 Drag & Drop Κατηγοριών (ΕΓΓΥΗΜΕΝΗ ΛΥΣΗ)
    =============================== */
 function enableCategoryDragDrop() {
   const wrap = document.getElementById("categories");
   if (!wrap) return;
 
-  // ΑΠΟΦΥΓΗ ΔΗΜΙΟΥΡΓΙΑΣ ΣΥΝΤΟΜΕΥΣΕΩΝ
-  const preventShortcuts = function(e) {
-    if (e.target.closest('.category') || e.target.closest('#categories') || 
-        document.querySelector('.category.dragging')) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-    }
-  };
-
-  // Προσθήκη global event listeners για drag
-  document.addEventListener('dragover', preventShortcuts);
+  // COMPLETE PREVENTION OF DEFAULT BROWSER BEHAVIOR
+  document.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'none';
+  }, false);
+  
   document.addEventListener('drop', function(e) {
-    if (e.target.closest('.category') || e.target.closest('#categories') || 
-        document.querySelector('.category.dragging')) {
-      e.preventDefault();
-      return false;
-    }
-  });
+    e.preventDefault();
+    return false;
+  }, false);
 
-  // throttle + rAF για smoothness
+  // Our custom drag & drop implementation
   let lastCatDragTime = 0;
   let rafId = null;
 
-  // attach per-category dragstart/dragend
   document.querySelectorAll(".category").forEach(catEl => {
     catEl.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", catEl.dataset.cat || "");
@@ -3196,11 +3195,8 @@ function enableCategoryDragDrop() {
     });
   });
 
-  // single throttled handler on wrap
   wrap.addEventListener("dragover", e => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    
     const now = Date.now();
     if (now - lastCatDragTime < 60) return;
     lastCatDragTime = now;
@@ -3221,12 +3217,12 @@ function enableCategoryDragDrop() {
 
   wrap.addEventListener("drop", (e) => {
     e.preventDefault();
-    // ενημέρωση catOrder και αποθήκευση
     catOrder = [...document.querySelectorAll(".category")].map(c => c.dataset.cat);
     saveData();
     render();
   });
 }
+
 /* ===============================
    📌 Drag & Drop Links (fix + throttle)
    =============================== */
