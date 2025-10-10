@@ -1360,7 +1360,7 @@ header {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.5.5c</span>
+  <span class="version">ver. 3.5.6c</span>
 </div>
 
 
@@ -1921,15 +1921,7 @@ function render(){
     wrap.appendChild(sec);
   });
 }
-// 👉προσθήκη
-function disableAnchorDrag() {
-  document.querySelectorAll("a").forEach(a => {
-    a.setAttribute("draggable", "false");
-    a.addEventListener("dragstart", e => e.preventDefault());
-  });
-}
 
-document.addEventListener("DOMContentLoaded", disableAnchorDrag);
 
 
 /* ===============================
@@ -3168,6 +3160,25 @@ function enableCategoryDragDrop() {
   const wrap = document.getElementById("categories");
   if (!wrap) return;
 
+  // ΑΠΟΦΥΓΗ ΔΗΜΙΟΥΡΓΙΑΣ ΣΥΝΤΟΜΕΥΣΕΩΝ
+  const preventShortcuts = function(e) {
+    if (e.target.closest('.category') || e.target.closest('#categories') || 
+        document.querySelector('.category.dragging')) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+  };
+
+  // Προσθήκη global event listeners για drag
+  document.addEventListener('dragover', preventShortcuts);
+  document.addEventListener('drop', function(e) {
+    if (e.target.closest('.category') || e.target.closest('#categories') || 
+        document.querySelector('.category.dragging')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
   // throttle + rAF για smoothness
   let lastCatDragTime = 0;
   let rafId = null;
@@ -3176,8 +3187,10 @@ function enableCategoryDragDrop() {
   document.querySelectorAll(".category").forEach(catEl => {
     catEl.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", catEl.dataset.cat || "");
+      e.dataTransfer.effectAllowed = 'move';
       catEl.classList.add("dragging");
     });
+    
     catEl.addEventListener("dragend", () => {
       catEl.classList.remove("dragging");
     });
@@ -3186,8 +3199,10 @@ function enableCategoryDragDrop() {
   // single throttled handler on wrap
   wrap.addEventListener("dragover", e => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    
     const now = Date.now();
-    if (now - lastCatDragTime < 60) return; // update κάθε ~60ms
+    if (now - lastCatDragTime < 60) return;
     lastCatDragTime = now;
 
     if (rafId) cancelAnimationFrame(rafId);
@@ -3204,14 +3219,14 @@ function enableCategoryDragDrop() {
     });
   });
 
-  wrap.addEventListener("drop", () => {
+  wrap.addEventListener("drop", (e) => {
+    e.preventDefault();
     // ενημέρωση catOrder και αποθήκευση
     catOrder = [...document.querySelectorAll(".category")].map(c => c.dataset.cat);
     saveData();
     render();
   });
 }
-
 /* ===============================
    📌 Drag & Drop Links (fix + throttle)
    =============================== */
