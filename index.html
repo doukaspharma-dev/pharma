@@ -711,7 +711,7 @@ header {
   color: var(--accent);
   margin-bottom: 2px;
   font-family: 'Courier New', monospace;
-  text-shadow: 0 0 10px rgba(244, 162, 97, 0.3);
+  text-shadow: 0 0 10px rgba(44, 162, 97, 0.3);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -833,58 +833,14 @@ header {
   border: 1px solid rgba(159, 89, 243, 0.3);
 }
 
-/* Για περισσότερες κατηγορίες επαναλαμβάνουμε τα χρώματα */
-.category:nth-child(6) .category-title h2 {
-  background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(244, 162, 97, 0.1));
-  border: 1px solid rgba(244, 162, 97, 0.3);
-}
 
-/* Στυλ για το ρολόι όταν είναι editable */
-.datetime-widget.editable-title {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-* Στυλ για το ρολόι χρώματα */
-.datetime-widget.editable-title:hover {
-  background: linear-gradient(135deg, rgba(244, 162, 97, 0.3), rgba(42, 157, 244, 0.3));
-  transform: scale(1.02);
-}
-.datetime-widget {
-    border: 2px solid var(--accent) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
-    backdrop-filter: blur(10px);
-    background: var(--card) !important; /* Ίδιο φόντο με player */
-datetime-widget {
-    /* Αφαίρεσε το gradient και βάλε ίδιο φόντο με player */
-    background: var(--card) !important;
-    border: 2px solid var(--accent) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
-    
-    /* Αφαίρεσε το gradient background */
-    background: var(--card) !important;
-}
 
-/* Αφαίρεσε το gradient class αν υπάρχει */
-.datetime-widget.gradient {
-    background: var(--card) !important;
-}
+
+
+
     
  
-}
-.datetime-widget {
-    /* Υπάρχοντα στυλ... */
-    
-    /* Προσθήκη ίδιας γραμμής όπως ο player */
-    border: 2px solid var(--accent) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
-    
-    /* Προαιρετικά - για ακόμα πιο όμορφη εμφάνιση */
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.1) !important;
-}
+
 
   </style>
 </head>
@@ -1028,7 +984,7 @@ datetime-widget {
     background: var(--accent-hover, #8e44ad) !important;
     transform: translateY(-2px);
 }
-/* Help Button Theme Colors - ΟΛΑ ΤΑ THEMES */
+/* Help Button Theme Colors - 
 .help-btn.default { background: #9b59b6 !important; }
 .help-btn.dark { background: #00bcd4 !important; }
 .help-btn.light { background: #2980b9 !important; }
@@ -1047,7 +1003,7 @@ datetime-widget {
 .help-btn.purple:hover { background: #8e44ad !important; }
 .help-btn.blue:hover { background: #2980b9 !important; }
 .help-btn.orange:hover { background: #d35400 !important; }
-.help-btn.pink:hover { background: #fd79a8 !important; }
+.help-btn.pink:hover { background: #fd79a8 !important; }ΟΛΑ ΤΑ THEMES */
 
 /* Responsive βελτιώσεις help */
 @media (max-width: 768px) {
@@ -1244,8 +1200,77 @@ datetime-widget {
   transition: transform 0.15s ease;
 }
 
+/* Σταθερά κουμπιά στο footer */
+footer .btnrow {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 8px;
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
 
+footer .btnrow button {
+  padding: 10px 16px !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  height: 40px !important;
+  min-width: 160px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#postitWidgetBtn {
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #2c3e50;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+}
+#postitWidgetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
 
+#postitWidgetBtn.active {
+  background: linear-gradient(135deg, #00b894, #00a085) !important;
+  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3) !important;
+}
+.postit-widget {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: var(--card) !important;
+    border: 2px solid var(--accent) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    z-index: 10000 !important;
+    display: none !important;
+    width: 400px !important; /* Σταθερό πλάτος */
+    height: 500px !important; /* Σταθερό ύψος */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3) !important;
+    color: var(--text) !important;
+    backdrop-filter: blur(10px) !important;
+    resize: none !important; /* Απαγόρευση αλλαγής μεγέθους */
+    overflow: hidden !important;
+}
+
+.postit-list {
+    max-height: 350px !important;
+    height: 350px !important;
+    overflow-y: auto !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    background: rgba(255,255,255,0.05) !important;
+}
 
 </style>
   <!-- Bubbles  -->
@@ -1314,13 +1339,16 @@ datetime-widget {
 
 
 <footer>
+
   <div class="btnrow">
     <button id="addBtnFoot">+ Προσθήκη νέου link</button>
+    <!-- ΜΟΝΟ ΑΥΤΟ ΤΟ ΚΟΥΜΠΙ POST-IT -->
+    <button id="postitWidgetBtn" ">📝 Post-it</button>
   </div>
-  <div class="note-wrapper">
     <div class="note">Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®</div>
   </div>
 </footer>
+
 
 <!-- ===== MODAL ΝΕΟΥ LINK ===== -->
 <div class="modal" id="modalForm">
@@ -1398,7 +1426,7 @@ datetime-widget {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.6.0p</span>
+  <span class="version">ver. 3.8.7p</span>
 </div>
 
 
@@ -1496,6 +1524,10 @@ datetime-widget {
         <ul>
             
             <li>Νά βρίσκετε γρήγορα .........τον δρόμο σας!!</li>
+			<li> Προσθήκη Ρολόι ημερολόγιο  </li>
+			 <li> Προσθήκη ZuccaRadio  </li>
+			 <li> Προσθήκη Post-it </li>
+			  
         </ul>
     </div>
     
@@ -1515,6 +1547,9 @@ datetime-widget {
 
 
 <script>
+
+
+
 /* ===============================
    📌 Κατάσταση / Μεταβλητές
    =============================== */
@@ -1530,7 +1565,52 @@ let themeDefault = {
   bg1:"#1f1f1f", bg2:"#232429", card:"#2b2d33", text:"#eaeef5", accent:"#2f80ed"
 };
 
+/* ===============================
+   📌 FIX BUTTON HEIGHTS (ΛΕΙΠΟΥΣΑ ΣΥΝΑΡΤΗΣΗ)
+   =============================== */
+function fixButtonHeights() {
+    const buttons = document.querySelectorAll('.topbar button, .topbar .zuccaradio-btn, .topbar .help-btn');
+    buttons.forEach(btn => {
+        btn.style.height = '38px';
+        btn.style.minHeight = '38px';
+        btn.style.padding = '8px 14px';
+        btn.style.lineHeight = '1';
+        btn.style.display = 'inline-flex';
+        btn.style.alignItems = 'center';
+        btn.style.justifyContent = 'center';
+        btn.style.boxSizing = 'border-box';
+    });
+    
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+        themeSelect.style.height = '38px';
+        themeSelect.style.minHeight = '38px';
+        themeSelect.style.padding = '0 10px';
+        themeSelect.style.lineHeight = '38px';
+        themeSelect.style.boxSizing = 'border-box';
+    }
+}
 
+/* ===============================
+   📌 OPTIMIZE EXISTING ICONS (ΛΕΙΠΟΥΣΑ ΣΥΝΑΡΤΗΣΗ)
+   =============================== */
+async function optimizeAllExistingIcons() {
+    for (const cat in categories) {
+        for (const link of categories[cat]) {
+            if (link.iconType === "upload" && link.iconValue && 
+                link.iconValue.startsWith('data:image') && 
+                link.iconValue.length > 5000) {
+                
+                link.iconValue = await compressImageIfNeeded(link.iconValue, 64, 64, 0.7);
+            }
+        }
+    }
+}
+
+/* ===============================
+   📌 CATEGORY COLORS (ΛΕΙΠΟΥΣΑ ΜΕΤΑΒΛΗΤΗ)
+   =============================== */
+let categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}");
 
 /* ===============================
    📌 Default Favicon Generator
@@ -1959,15 +2039,7 @@ function render(){
     wrap.appendChild(sec);
   });
 }
-// 👉προσθήκη
-function disableAnchorDrag() {
-  document.querySelectorAll("a").forEach(a => {
-    a.setAttribute("draggable", "false");
-    a.addEventListener("dragstart", e => e.preventDefault());
-  });
-}
 
-document.addEventListener("DOMContentLoaded", disableAnchorDrag);
 
 
 /* ===============================
@@ -2678,7 +2750,7 @@ loadTheme();
 
 
 /* ===============================
-   📌 Auto-Backup System
+   📌 Auto-Backup System (ΕΝΗΜΕΡΩΜΕΝΟ ΜΕ POST-IT NOTES)
    =============================== */
 
 // Δημιουργία auto-backup κάθε φορά που αποθηκεύονται δεδομένα
@@ -2687,6 +2759,7 @@ function createAutoBackup() {
     categories: JSON.parse(JSON.stringify(categories)),
     catOrder: [...catOrder],
     theme: getTheme(),
+    postitNotes: JSON.parse(JSON.stringify(postitNotes)), // ΝΕΟ: Προσθήκη post-it notes
     timestamp: new Date().toLocaleString('el-GR')
   };
   
@@ -2704,11 +2777,10 @@ function createAutoBackup() {
   // Αποθήκευση backups
   localStorage.setItem("autoBackups", JSON.stringify(backups));
   
-  console.log("Auto-backup created:", backupData.timestamp);
+  console.log("Auto-backup created with post-it notes:", backupData.timestamp);
 }
 
 // Επαναφορά από auto-backup
-
 function restoreAutoBackup(index) {
   const backups = JSON.parse(localStorage.getItem("autoBackups") || "[]");
   
@@ -2719,7 +2791,7 @@ function restoreAutoBackup(index) {
   
   const backup = backups[index];
   
-  if (confirm(`Επαναφορά από backup της ${backup.timestamp}`)) {
+  if (confirm(`Επαναφορά από backup της ${backup.timestamp} (συμπεριλαμβανομένων σημειώσεων)`)) {
     pushHistory();
     
     // ✅ DATA VALIDATION & CLEANUP
@@ -2734,18 +2806,31 @@ function restoreAutoBackup(index) {
         desc: link.desc || "",
         iconType: link.iconType || "auto",
         iconValue: link.iconValue || null,
-        pinned: !!link.pinned  // εξασφαλίζει boolean
+        pinned: !!link.pinned
       }));
       catOrder.push(cat);
     });
+    
+    // ΝΕΟ: Επαναφορά post-it notes
+    if (backup.postitNotes) {
+      postitNotes = JSON.parse(JSON.stringify(backup.postitNotes));
+      savePostitNotes();
+    }
+    
+    // Εφαρμογή theme
+    if (backup.theme) {
+      applyTheme(backup.theme);
+      saveTheme(backup.theme);
+    }
     
     // Optimize εικόνων ΑΜΕΣΑ μετά το restore
     setTimeout(async () => {
       await optimizeAllExistingIcons();
       saveData();
       render();
+      loadPostitNotes(); // ΝΕΟ: Reload τις σημειώσεις
       updateUndoBtn();
-      alert("✅ Επαναφορά ολοκληρώθηκε! Τα εικονίδια βελτιστοποιήθηκαν.");
+      alert("✅ Επαναφορά ολοκληρώθηκε! Κατηγορίες και σημειώσεις επαναφέρθηκαν.");
     }, 100);
   }
 }
@@ -2760,7 +2845,8 @@ function showAutoBackups() {
 
   let msg = "Διαθέσιμα Auto-Backups:\n\n";
   backups.forEach((b, i) => {
-    msg += `${i}: ${b.timestamp} (${Object.keys(b.categories).length} κατηγορίες)\n`;
+    const noteCount = b.postitNotes ? b.postitNotes.length : 0;
+    msg += `${i}: ${b.timestamp} (${Object.keys(b.categories).length} κατηγορίες, ${noteCount} σημειώσεις)\n`;
   });
   msg += "\nΠληκτρολόγησε 0,1,2,3,4 για να διαλέξεις:";
 
@@ -2783,8 +2869,112 @@ document.getElementById("autoBackupBtn").addEventListener("click", showAutoBacku
 // Δημιουργία αρχικού backup κατά την εκκίνηση
 setTimeout(createAutoBackup, 1000);
 
+/* ===============================
+   📌 MANUAL BACKUP/RESTORE (ΕΝΗΜΕΡΩΜΕΝΟ ΜΕ POST-IT NOTES)
+   =============================== */
 
+// Manual backup - Ενημέρωση για να περιλαμβάνει post-it notes
+document.getElementById("backupBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify({
+    categories: JSON.parse(JSON.stringify(categories)),
+    catOrder: [...catOrder],
+    theme: getTheme(),
+    postitNotes: JSON.parse(JSON.stringify(postitNotes)), // ΝΕΟ: Προσθήκη post-it notes
+    version: 4
+  }, null, 2)], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "bookmarks_and_notes_backup.json";
+  a.click();
+};
 
+// Manual restore - Ενημέρωση για να διαχειρίζεται post-it notes
+document.getElementById("restoreBtn").onclick = () => {
+  const choice = confirm("OK: Επαναφορά από JSON backup\nCancel: Εισαγωγή από HTML σελιδοδείκτες");
+  const inp = document.createElement("input");
+  inp.type = "file"; 
+  inp.accept = choice ? ".json" : ".html,.htm,.txt";
+  inp.onchange = () => {
+    const r = new FileReader();
+    r.onload = () => {
+      if (choice) {
+        try {
+          const d = JSON.parse(r.result);
+          if (d.categories && d.catOrder) {
+            pushHistory();
+            
+            // Επαναφορά κατηγοριών
+            categories = d.categories;
+            catOrder = d.catOrder;
+            
+            // ΝΕΟ: Επαναφορά post-it notes αν υπάρχουν
+            if (d.postitNotes) {
+              postitNotes = d.postitNotes;
+              savePostitNotes();
+            }
+            
+            // Εφαρμογή theme
+            if (d.theme) {
+              applyTheme(d.theme);
+              saveTheme(d.theme);
+            }
+            
+            saveData();
+            render();
+            loadPostitNotes(); // ΝΕΟ: Φόρτωση σημειώσεων
+            updateUndoBtn();
+            
+            alert("✅ Επαναφορά ολοκληρώθηκε! Κατηγορίες και σημειώσεις επαναφέρθηκαν.");
+          } else { 
+            alert("Μη έγκυρο JSON."); 
+          }
+        } catch { 
+          alert("Μη έγκυρο JSON."); 
+        }
+      } else {
+        // HTML import (παραμένει ίδιο όπως πριν)
+        const merge = confirm("OK: Συγχώνευση (δεν προσθέτει διπλά)\nCancel: Αντικατάσταση");
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(r.result,"text/html");
+        const anchors = Array.from(doc.querySelectorAll("a[href]"));
+        if(anchors.length===0){ alert("Δεν βρέθηκαν links στο HTML."); return; }
+        if(!merge){ pushHistory(); categories={}; catOrder=[]; }
+
+        function closestHeading(el){
+          let cur=el; for(let i=0;i<4 && cur;i++, cur=cur.previousElementSibling){
+            if(/H[1-3]/.test(cur.tagName)) return cur.textContent.trim();
+          }
+          let p=el.parentElement; while(p){
+            const h = p.querySelector("h3,h2,h1"); if(h) return h.textContent.trim();
+            p=p.parentElement;
+          }
+          return "Εισαγωγή";
+        }
+
+        let added=0;
+        anchors.forEach(a=>{
+          let href=a.getAttribute("href")||"";
+          if(!href) return;
+          if(!/^https?:\/\//i.test(href) && !/^www\./i.test(href)) return;
+          const url = normalizeUrl(href);
+          const name = (a.getAttribute("title")||a.textContent||"").trim();
+          const desc = "";
+          const cat = closestHeading(a);
+          if(!(categories[cat])){ categories[cat]=[]; catOrder.push(cat); }
+          const ok = dedupeAdd(cat, {url,name,desc,iconType:"auto",iconValue:null,pinned:false});
+          if(ok) added++;
+        });
+
+        saveData(); 
+        render(); 
+        updateUndoBtn();
+        alert("Εισαγωγή HTML ολοκληρώθηκε. Προστέθηκαν "+added+" links.");
+      }
+    };
+    r.readAsText(inp.files[0]);
+  };
+  inp.click();
+};
 
 
 /* ===============================
@@ -2815,18 +3005,6 @@ function playWelcomeOnInteraction() {
   }
 }
 
-// Προσθήκη event listeners για πρώτη αλληλεπίδραση
-window.addEventListener('load', function() {
-  // Περίμενε λίγο και μετά παίξε με το πρώτο click/scroll/touch
-  setTimeout(() => {
-    document.addEventListener('click', playWelcomeOnInteraction, { once: true });
-    document.addEventListener('scroll', playWelcomeOnInteraction, { once: true });
-    document.addEventListener('touchstart', playWelcomeOnInteraction, { once: true });
-    
-    // Fallback: auto-play μετά από 3 δευτερόλεπτα
-    setTimeout(playWelcomeOnInteraction, 3000);
-  }, 1000);
-});
 
 /* ===============================
    📌 ΕΠΕΞΕΡΓΑΣΙΑ ΥΠΟΤΙΤΛΟΥ ΜΕ DOUBLE-CLICK
@@ -2955,31 +3133,7 @@ document.querySelectorAll("input[type=color]").forEach(input => {
 });
 
 
-function changeTheme(theme) {
-    const root = document.documentElement;
-    const helpBtn = document.getElementById('helpBtn');
-    
-    console.log('🔄 Αλλαγή theme σε:', theme); // DEBUG
-    console.log('📌 Help button classes πριν:', helpBtn?.className); // DEBUG
-    
-    // Remove existing theme classes
-    root.className = '';
-    
-    // Apply new theme
-    if (theme !== 'default') {
-        root.classList.add(theme + '-theme');
-    }
-    
-    // Ενημέρωση help button
-    if (helpBtn) {
-        helpBtn.classList.remove('default', 'dark', 'light', 'green', 'brown', 'purple', 'blue', 'orange', 'pink');
-        helpBtn.classList.add(theme);
-        console.log('🎨 Help button classes μετά:', helpBtn.className); // DEBUG
-    }
-    
-    // Save theme preference
-    localStorage.setItem('selectedTheme', theme);
-}
+
 
 // update palette swatches initial
 ["bg1","bg2","card","text","accent"].forEach(id=>{
@@ -3287,7 +3441,7 @@ const radioStyles = `
     background: rgba(var(--card-rgb), 0.9) !important;
 }
 
-.zuccaradio-btn.active {
+.zuccaradio- {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
     transform: scale(1.05);
 }
@@ -3432,9 +3586,405 @@ function enableLinkDragDrop() {
     });
   });
 }
-	
+// Αρχικοποίηση όλων των νέων λειτουργιών
+document.addEventListener('DOMContentLoaded', function() {
+  // Μετακίνηση post-it button στο footer
+  setTimeout(() => {
+    const postitBtn = document.getElementById('postitWidgetBtn');
+    const addBtnFoot = document.getElementById('addBtnFoot');
+    
+    if (postitBtn && addBtnFoot) {
+      // Το post-it button θα μείνει στο footer όπως ορίστηκε στο HTML
+      console.log("Post-it button positioned in footer");
+    }
+    
+    // Προσθήκη backup buttons στο post-it widget
+    addPostitBackupButtons();
+    
+    // Ενημέρωση auto-backup system
+    console.log("Enhanced backup system activated");
+  }, 1000);
+});
+
+// Αποφυγή zoom και resize στα widgets
+document.addEventListener('wheel', function(e) {
+  if (e.target.closest('.postit-widget') || e.target.closest('.radio-player')) {
+    e.preventDefault();
+  }
+}, { passive: false });	
 
 
 </script>
+<!-- ======= POST-IT PANEL (TOP-DOWN VERSION / ANIMATED) ======= -->
+<style>
+:root {
+  --bg: #0f1a28;
+  --card: #1e2a3a;
+  --accent: #ffd700;
+  --text: #f5f5f5;
+  --border: rgba(255,255,255,0.1);
+}
+
+/* === 🟨 Κουμπί εμφάνισης (τετράγωνο) === */
+/* 👉 Μπορείς να αλλάξεις bottom/right για θέση στην οθόνη */
+#togglePostitPanel {
+  position: fixed;
+  bottom:100px; /* 👉 άλλαξε το για να το μετακινήσεις κάθετα */
+  right: 30px;   /* 👉 άλλαξε το για να το μετακινήσεις οριζόντια */
+  z-index: 1100;
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #2c3e50;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+  transition: all 0.3s ease;
+}
+#togglePostitPanel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+
+/* === Πάνελ === */
+#postitWrapper {
+  position: fixed;
+  top: 30px;
+  right: 15px;
+  width: 300px;
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  display: none;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Κεφαλίδα === */
+.postit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.postit-header h3 {
+  margin: 0;
+  color: var(--accent);
+  font-size: 16px;
+}
+.postit-header button {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* === Περιοχή Εισαγωγής === */
+.postit-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+#postitText {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff475;
+  color: #0047ab;
+  font-size: 15px;
+  font-weight: 600;
+}
+#postitDate {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff475;
+  color: #0047ab;
+  font-size: 14px;
+  font-weight: 600;
+}
+#postitText:focus, #postitDate:focus { outline: none; border-color: var(--accent); }
+
+/* === Χρώματα === */
+.color-picker {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.color-option {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.color-option.active { border-color: var(--accent); }
+color-yellow { background: #fff685; }
+.color-blue { background: #9be8ff; }
+.color-green { background: #b8fca8; }
+.color-pink { background: #ffc7da; }
+.color-orange { background: #ffdb94; }
+.color-purple { background: #e9c8ff; 
+}
+
+/* === Κουμπί Προσθήκης === */
+#addPostit {
+  background: var(--accent);
+  color: #222;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#addPostit:hover { background: #ffec80; }
+
+/* === Λίστα Σημειώσεων === */
+.postit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.postit-item {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+/* 🎞️ Animation εμφάνισης Post-it */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === Χρώματα σημειώσεων === */
+.color-yellow { background: #fff475; }
+.color-blue { background: #a0e7ff; }
+.color-green { background: #b6fbb6; }
+.color-pink { background: #ffc1dc; }
+.color-orange { background: #ffd6a5; }
+.color-purple { background: #e6ccff; }
+
+/* === Ημερομηνία + Ενέργειες πάνω δεξιά === */
+.postit-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.postit-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d35400;
+}
+.postit-actions {
+  display: flex;
+  gap: 5px;
+}
+.postit-actions button {
+  background: rgba(0,0,0,0.15);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 3px 6px;
+  font-size: 12px;
+  transition: 0.2s;
+}
+.postit-actions button:hover { background: rgba(0,0,0,0.3); }
+
+
+
+#postitWidgetBtn {
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #2c3e50;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+  transition: all 0.3s ease;
+}
+#postitWidgetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+</style>
+
+
+
+
+
+<!-- ======= HTML ======= -->
+
+
+<div id="postitWrapper">
+  <div class="postit-header">
+    <h3>🗒️ Post-it</h3>
+    <button id="closePostit">×</button>
+  </div>
+
+  <div class="postit-input-section">
+    <input type="text" id="postitText" placeholder="Γράψε κάτι...">
+    <input type="date" id="postitDate">
+    <div class="color-picker">
+      <div class="color-option color-yellow active" data-color="yellow"></div>
+      <div class="color-option color-blue" data-color="blue"></div>
+      <div class="color-option color-green" data-color="green"></div>
+      <div class="color-option color-pink" data-color="pink"></div>
+      <div class="color-option color-orange" data-color="orange"></div>
+      <div class="color-option color-purple" data-color="purple"></div>
+    </div>
+    <button id="addPostit">➕ Προσθήκη</button>
+	<button id="clearNotes">🧹 Καθαρισμός</button>
+  </div>
+  ΄
+
+  <div id="postitContainer" class="postit-container"></div>
+</div>
+
+<!-- ======= JAVASCRIPT ======= -->
+<script>
+let postitNotes = JSON.parse(localStorage.getItem("postitNotes") || "[]");
+let selectedColor = "yellow";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dateInput = document.getElementById("postitDate");
+  dateInput.value = new Date().toISOString().slice(0, 10);
+  
+  document.getElementById("clearNotes").addEventListener("click", () => {
+  if (confirm("Θες να διαγράψεις όλες τις σημειώσεις;")) {
+    localStorage.removeItem("postitNotes");
+    postitNotes = [];
+    renderNotes();
+  }
+});
+
+
+const toggleBtn = document.getElementById("postitWidgetBtn"); // πορτοκαλί κουμπί στο footer
+const wrapper = document.getElementById("postitWrapper");
+const closeBtn = document.getElementById("closePostit");
+
+toggleBtn.addEventListener("click", () => {
+  if (wrapper.classList.contains("open")) {
+    wrapper.classList.remove("open");
+    setTimeout(() => wrapper.style.display = "none", 300);
+  } else {
+    wrapper.style.display = "block";
+    setTimeout(() => wrapper.classList.add("open"), 10);
+  }
+});
+closeBtn.addEventListener("click", () => wrapper.style.display = "none");
+
+
+  document.querySelectorAll(".color-option").forEach(opt => {
+    opt.addEventListener("click", () => {
+      document.querySelectorAll(".color-option").forEach(o => o.classList.remove("active"));
+      opt.classList.add("active");
+      selectedColor = opt.dataset.color;
+    });
+  });
+
+  document.getElementById("addPostit").addEventListener("click", addPostit);
+  renderNotes();
+});
+
+function addPostit() {
+  const text = document.getElementById("postitText").value.trim();
+  const date = document.getElementById("postitDate").value;
+  if (!text) return alert("Γράψε κάτι πρώτα!");
+  postitNotes.unshift({ text, date, color: selectedColor });
+  saveNotes();
+  renderNotes();
+  document.getElementById("postitText").value = "";
+}
+
+function renderNotes() {
+  const container = document.getElementById("postitContainer");
+  container.innerHTML = "";
+  postitNotes.forEach((note, i) => {
+    const el = document.createElement("div");
+    el.className = `postit-item color-${note.color}`;
+el.innerHTML = `
+  <div class="postit-top">
+    <div class="postit-date">📅 ${formatDate(note.date)}</div>
+    <div class="postit-actions">
+      <button onclick="editNote(${i})">✏️</button>
+      <button onclick="changeDate(${i})">📅</button>
+      <button onclick="deleteNote(${i})">🗑️</button>
+    </div>
+  </div>
+  <div class="postit-text"></div>
+`;
+el.querySelector(".postit-text").textContent = note.text;
+
+    container.appendChild(el);
+  });
+}
+
+function formatDate(dateString) {
+  const d = new Date(dateString);
+  return d.toLocaleDateString("el-GR");
+}
+
+function editNote(i) {
+  const newText = prompt("Επεξεργασία:", postitNotes[i].text);
+  if (newText) {
+    postitNotes[i].text = newText.trim();
+    saveNotes();
+    renderNotes();
+  }
+}
+
+function changeDate(i) {
+  const newDate = prompt("Νέα ημερομηνία (YYYY-MM-DD):", postitNotes[i].date);
+  if (newDate && !isNaN(new Date(newDate))) {
+    postitNotes[i].date = newDate;
+    saveNotes();
+    renderNotes();
+  } else {
+    alert("Μη έγκυρη ημερομηνία!");
+  }
+}
+
+function deleteNote(i) {
+  if (confirm("Διαγραφή σημείωσης;")) {
+    postitNotes.splice(i, 1);
+    saveNotes();
+    renderNotes();
+  }
+}
+
+function saveNotes() {
+  localStorage.setItem("postitNotes", JSON.stringify(postitNotes));
+}
+
+</script>
+
+
 </body>
 </html>
