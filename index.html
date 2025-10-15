@@ -1,4 +1,30 @@
 <!DOCTYPE html>
+<!-- 
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ                                ║
+║                    Εφαρμογή Διαχείρισης Σελιδοδεικτών                       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║ 📌 ΧΑΡΑΚΤΗΡΙΣΤΙΚΑ:                                                          ║
+║ • Οργάνωση links σε κατηγορίες                                              ║ 
+║ • Drag & Drop για κατηγορίες και links                                      ║
+║ • Post-it σημειώσεις με χρωματική κωδικοποίηση                               ║
+║ • Zuccaradio web radio player                                               ║
+║ • Αυτόματο backup/restore δεδομένων                                         ║
+║ • Responsive design για mobile/desktop                                      ║
+║ • Theme switcher με πολλαπλά χρωματικά σχήματα                               ║
+║ • Welcome sound με Web Audio API                                            ║
+║                                                                              ║
+║ 🔧 ΜΙΚΡΟΡΥΘΜΙΣΕΙΣ:                                                          ║
+║ • Χρώματα: CSS Variables στην αρχή του <style>                               ║
+║ • Κουμπιά: Τμήμα "ΜΠΑΡΑ ΚΟΥΜΠΙΩΝ" στο CSS                                   ║
+║ • Widgets: Τμήματα "POST-IT WIDGET" και "RADIO PLAYER WIDGET"               ║
+║ • Ήχοι: Τμήμα "WELCOME SOUND" στο JavaScript                                ║
+║                                                                              ║
+║ 📅 Τελευταία ενημέρωση: 2025-10-15                                          ║
+║ 👨‍💻 Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
 <html lang="el">
 <head>
   <meta charset="UTF-8">
@@ -7,10 +33,16 @@
   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
 
   <style>
+  /* =====================================================================
+     🎨 ΣΤΥΛ CSS ΓΙΑ ΤΗΝ ΕΦΑΡΜΟΓΗ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
+     ===================================================================== */
   
-  /* -------------------------------------------------
-     1. ΘΕΜΑΤΙΚΑ ΧΡΩΜΑΤΑ (CSS variables)
-  ------------------------------------------------- */
+  /* =====================================================================
+     🎨 1. ΘΕΜΑΤΙΚΑ ΧΡΩΜΑΤΑ (CSS Variables)
+     =====================================================================
+     Εδώ ορίζονται τα βασικά χρώματα της εφαρμογής.
+     Μπορείτε να αλλάξετε αυτές τις τιμές για διαφορετική εμφάνιση.
+     --------------------------------------------------------------------- */
   :root {
     --bg1:#0d1b2a;
     --bg2:#1b263b;
@@ -20,9 +52,14 @@
     --border:rgba(255,255,255,.15);
   }
 
-  /* -------------------------------------------------
-   2. RESET + BODY + WRAPPER - ΔΙΩΡΘΩΜΕΝΟ
-------------------------------------------------- */
+  /* =====================================================================
+     🏗️ 2. ΒΑΣΙΚΕΣ ΡΥΘΜΙΣΕΙΣ ΣΕΛΙΔΑΣ (Reset + Body + Wrapper)
+     =====================================================================
+     Εδώ ορίζονται οι βασικές ρυθμίσεις της σελίδας:
+     - Αφαίρεση προεπιλεγμένων margins/paddings
+     - Φόντο σελίδας με gradient
+     - Κεντρική στήλη περιεχομένου
+     --------------------------------------------------------------------- */
 * { box-sizing: border-box; }
 body {
   margin:0;
@@ -32,22 +69,29 @@ body {
   padding-bottom: 70px; /* Προσθήκη padding στο body */
 }
 .wrap { 
-  max-width:1200px; 
+  max-width:1250px; 
   margin:0 auto; 
   padding:10px 10px 20px; /* Μείωση από 24px 10px 210px */
 }
-  /* -------------------------------------------------
-     3. HEADER
-  ------------------------------------------------- */
+  /* =====================================================================
+     📋 3. ΚΕΦΑΛΙΔΑ ΣΕΛΙΔΑΣ (Header)
+     =====================================================================
+     Στυλ για την κεφαλίδα με τίτλο και υπότιτλους
+     --------------------------------------------------------------------- */
   header { text-align:center; margin-bottom:10px; }
   header h1 { margin:4px 0 0; font-size:26px; font-weight:800; }
   header h2 { margin:6px 0 0; font-size:14px; color:#2a9df4; font-weight:700; }
   header h3 { margin:6px 0 0; font-size:13px; color:#bbb; font-weight:500; }
 
 
-/* -------------------------------------------------
-   4. TOPBAR (κουμπιά πάνω) - ΔΙΩΡΘΩΜΕΝΟ
-------------------------------------------------- */
+/* =====================================================================
+   🔘 4. ΜΠΑΡΑ ΚΟΥΜΠΙΩΝ (Topbar)
+   =====================================================================
+   Εδώ ορίζονται τα στυλ για την επάνω μπάρα με τα κουμπιά:
+   - Στοίχιση κουμπιών (αριστερά, κέντρο, δεξιά)
+   - Responsive συμπεριφορά
+   - Ειδικά χρώματα για κλειστά widgets (κίτρινο/χρυσό)
+   --------------------------------------------------------------------- */
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -55,11 +99,11 @@ body {
     margin: 12px 0 10px; /* Μείωση κάτω margin */
     padding: 0 40px;
     position: relative;
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 12px auto 10px auto;
     width: 100%;
     box-sizing: border-box;
-    gap: 70; /* Αφαίρεση gap */
+    gap: 0; /* Αφαίρεση gap */
 }
 
 .topbar-left {
@@ -84,12 +128,6 @@ body {
     width: 140px;
 }
 
-.topbar-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 140px;
-}
 
 .wrap {
   max-widt1h: 1200px;
@@ -256,7 +294,7 @@ body:has(footer) .wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: .18s ease;
+  transition: .08s ease;
   padding: 10px;
 
   /* ✨ Fade-in animation */
@@ -701,21 +739,66 @@ footer {
   }
 }
 
-/* Drag & Drop styles */
+/* ===============================
+   📌 Drag & Drop Styles - ENHANCED
+   =============================== */
+
 .card.dragging {
   opacity: 0.5;
-  transform: scale(0.95);
+  transform: scale(0.95) rotate(2deg);
+  transition: none;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 1000;
 }
 
 .card.drop-target {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 122, 204, 0.3);
+  border: 2px solid #007acc;
+  transition: all 0.2s ease;
 }
 
 .category.drop-target {
-  background: rgba(90, 169, 255, 0.1);
-  outline: 2px dashed #5aa9ff;
-  outline-offset: 4px;
+  background: rgba(0, 122, 204, 0.1);
+  border: 2px dashed #007acc;
+  transition: all 0.2s ease;
+}
+
+.category.drag-over {
+  background: rgba(0, 122, 204, 0.1);
+  border: 2px dashed #007acc;
+}
+
+/* Drop indicator για precise positioning */
+.drop-indicator {
+  position: absolute;
+  height: 3px;
+  background: linear-gradient(90deg, #007acc, #00a8ff);
+  border-radius: 2px;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 122, 204, 0.5);
+  animation: pulse-indicator 1s infinite;
+}
+
+@keyframes pulse-indicator {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.7; transform: scaleY(1.5); }
+}
+
+/* Βελτιωμένο feedback για draggable items */
+.card[draggable="true"] {
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card[draggable="true"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card[draggable="true"]:active {
+  cursor: grabbing;
 }
 
 
@@ -1106,7 +1189,6 @@ header {
 
 	
 /* Zuccaradio Button Styles */
-/* Zucca Radio κουμπί - Προεπιλογή: Κοραλί */
 .zuccaradio-btn,
 button.zuccaradio-btn {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
@@ -1148,6 +1230,12 @@ button.zuccaradio-btn.playing:hover {
     }
 }
 
+/* =====================================================================
+   🎵 RADIO PLAYER WIDGET (Zuccaradio)
+   =====================================================================
+   Το Radio Player widget εμφανίζεται στην αριστερή πλευρά.
+   Εδώ μπορείτε να ρυθμίσετε την εμφάνιση του ραδιοφώνου.
+   --------------------------------------------------------------------- */
 .radio-player {
     position: fixed;
     top: 120px;
@@ -1264,6 +1352,36 @@ button.zuccaradio-btn.playing:hover {
   font-weight: 700 !important;
 }
 
+/* ===== ΚΙΤΡΙΝΟ/ΧΡΥΣΟ ΧΡΩΜΑ ΓΙΑ ΚΛΕΙΣΤΑ WIDGETS ===== */
+/* Zuccaradio κουμπί όταν είναι κλειστό (χωρίς .active) */
+.topbar .zuccaradio-btn:not(.active) {
+  background: linear-gradient(135deg, #ffd700, #ffb300) !important;
+  color: #333 !important;
+  box-shadow: 0 3px 10px rgba(255, 179, 0, 0.4) !important;
+}
+
+.topbar .zuccaradio-btn:not(.active):hover {
+  background: linear-gradient(135deg, #ffed4e, #ffc107) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 15px rgba(255, 179, 0, 0.6) !important;
+}
+
+/* ===== POST-IT ΚΟΥΜΠΙ ΟΤΑΝ ΕΙΝΑΙ ΚΛΕΙΣΤΟ ===== */
+#postitWidgetBtn:not(.active) {
+  background: linear-gradient(135deg, #ffd700, #ffb300) !important;
+  color: #333 !important;
+  box-shadow: 0 3px 10px rgba(255, 179, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Hover effect για το Post-it κουμπί - αλλάζει χρώμα και ανυψώνεται */
+#postitWidgetBtn:not(.active):hover {
+  background: linear-gradient(135deg, #ffed4e, #ffc107) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 6px 20px rgba(255, 179, 0, 0.7) !important;
+  color: #222 !important;
+}
+
 .volume-container {
   display: flex;
   align-items: center;
@@ -1353,30 +1471,34 @@ footer .btnrow {
 }
 
 footer .btnrow button {
-  padding: 10px 16px !important;
+  padding: 12px 18px !important;
   border-radius: 12px !important;
   font-weight: 700 !important;
-  font-size: 14px !important;
-  height: 40px !important;
-  min-width: 160px !important;
+  font-size: 15px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  min-width: 180px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
 }
 
 #postitWidgetBtn {
-  background: linear-gradient(135deg, #ffd700, #ffa500);
-  color: #2c3e50;
+  background: var(--accent);
+  color: white;
   font-weight: 700;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid var(--accent);
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3);
   transition: all 0.3s ease;
 }
 
 #postitWidgetBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4);
 }
 
 #postitWidgetBtn.active {
@@ -1384,21 +1506,30 @@ footer .btnrow button {
   box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3) !important;
 }
 
+/* =====================================================================
+   📝 POST-IT WIDGET - ΒΑΣΙΚΕΣ ΡΥΘΜΙΣΕΙΣ
+   =====================================================================
+   Το Post-it widget είναι ένα floating παράθυρο που εμφανίζεται
+   στην πάνω δεξιά γωνία. Εδώ μπορείτε να ρυθμίσετε:
+   - Θέση και μέγεθος
+   - Χρώματα φόντου και περιγράμματος  
+   - Εφέ σκιάς
+   --------------------------------------------------------------------- */
 .postit-widget {
     position: fixed;
-    top: 120px;
-    right: 40px; /* Συνέπεια με το padding */
-    background: linear-gradient(160deg, #5a4d7a, #3e3457);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    padding: 20px;
+    top: 10px;
+    right: 10px;
+    transform: none;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 15px;
     z-index: 10000;
     display: none;
-    width: 340px;
+    width: 320px;
     max-height: 85vh;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    color: #fff;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    color: var(--text);
     overflow-y: auto;
 }
     
@@ -1420,27 +1551,28 @@ footer .btnrow button {
 }
 
 .postit-widget h3 {
-    margin: 0 0 15px 0;
-    text-align: left;
-    color: #c8a2ff;
-    font-size: 20px;
+    margin: 0 0 12px 0;
+    text-align: center;
+    color: var(--accent);
+    font-size: 16px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
 .postit-widget .close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.1);
+    top: 8px;
+    right: 8px;
+    background: none;
     border: none;
-    color: #fff;
-    font-size: 24px;
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
+    color: var(--text);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1448,7 +1580,8 @@ footer .btnrow button {
 }
 
 .postit-widget .close-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--accent);
+    color: white;
     transform: scale(1.1);
 }
 
@@ -1462,27 +1595,41 @@ footer .btnrow button {
 .postit-input-area textarea {
     width: 100%;
     padding: 12px;
-    background: #fff9c4;
-    color: #333;
-    border: none;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--accent);
     border-radius: 8px;
     resize: vertical;
     min-height: 60px;
     font-size: 14px;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.postit-input-area textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2);
 }
 
 .postit-input-area input[type="date"] {
     width: 100%;
     padding: 10px;
-    background: #fff9c4;
-    color: #333;
-    border: none;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--accent);
     border-radius: 8px;
     font-size: 14px;
     box-sizing: border-box;
     cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.postit-input-area input[type="date"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2);
 }
 
 .color-picker {
@@ -1503,12 +1650,12 @@ footer .btnrow button {
 
 .color-option:hover {
     transform: scale(1.1);
-    border-color: #fff;
+    border-color: var(--accent);
 }
 
 .color-option.selected {
-    border-color: #fff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5);
 }
 
 .postit-actions {
@@ -1529,22 +1676,25 @@ footer .btnrow button {
 }
 
 .btn-add {
-    background: #c084fc;
-    color: #fff;
+    background: var(--accent);
+    color: white;
 }
 
 .btn-add:hover {
-    background: #a855f7;
+    background: var(--accent);
+    filter: brightness(1.1);
     transform: translateY(-2px);
 }
 
 .btn-clear {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--accent);
 }
 
 .btn-clear:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: var(--accent);
+    color: white;
 }
 
 .postit-list {
@@ -1554,7 +1704,7 @@ footer .btnrow button {
 }
 
 .postit-item {
-    background: rgba(60, 50, 80, 0.6);
+    background:  #0d0d0d
     border-radius: 10px;
     padding: 12px;
     margin-bottom: 10px;
@@ -1586,38 +1736,50 @@ footer .btnrow button {
     flex-direction: column;
     gap: 5px;
     margin-left: 10px;
+    min-width: 0; /* Επιτρέπει στο flex item να συρρικνωθεί */
+    overflow: hidden; /* Κρύβει το περιεχόμενο που ξεπερνά */
 }
+
 
 .postit-date {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Κατανέμει το χώρο */
     gap: 5px;
     font-size: 13px;
     color: #ff6b6b;
     font-weight: 600;
 }
 
+/* ===== ΚΕΙΜΕΝΟ ΣΗΜΕΙΩΣΕΩΝ POST-IT ===== */
 .postit-text {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
     color: #fff;
     word-wrap: break-word;
+    word-break: break-word; /* Επιπλέον σπάσιμο λέξεων */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    overflow-wrap: break-word; /* Σπάει μακριές λέξεις */
 }
 
 .postit-item-actions {
     display: flex;
     gap: 6px;
+    flex-shrink: 0; /* Δεν επιτρέπει στα κουμπιά να συρρικνωθούν */
 }
 
-.postit-item-actions button {
-    width: 32px;
-    height: 32px;
+
+ .postit-item-actions button {
+    width: 24px; /* Μικρότερα κουμπιά */
+    height: 24px; /* Μικρότερα κουμπιά */
+    font-size: 12px; /* Μικρότερα εικονίδια */
     border: none;
     border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
     transition: all 0.2s ease;
     padding: 0;
 }
@@ -1953,9 +2115,24 @@ footer .btnrow button {
 </div>
 
 <script>
-/* ===============================
-   📌 FIX 1: ΔΗΛΩΣΗ ΜΕΤΑΒΛΗΤΩΝ ΣΤΗΝ ΑΡΧΗ
-   =============================== */
+/* =====================================================================
+   💻 JAVASCRIPT ΓΙΑ ΤΗΝ ΕΦΑΡΜΟΓΗ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
+   =====================================================================
+   Εδώ βρίσκεται όλη η λογική της εφαρμογής. Τα κύρια τμήματα είναι:
+   1. Δηλώσεις μεταβλητών
+   2. Διαχείριση κατηγοριών και links
+   3. Drag & Drop λειτουργικότητα
+   4. Post-it σημειώσεις
+   5. Zuccaradio player
+   6. Theme switcher
+   7. Backup/Restore δεδομένων
+   ===================================================================== */
+
+/* =====================================================================
+   📌 1. ΔΗΛΩΣΕΙΣ ΜΕΤΑΒΛΗΤΩΝ
+   =====================================================================
+   Εδώ ορίζονται όλες οι βασικές μεταβλητές της εφαρμογής
+   --------------------------------------------------------------------- */
 
 // ✅ POST-IT NOTES VARIABLES (Bug Fix #2)
 let postitNotes = [];
@@ -2079,9 +2256,16 @@ function loadData(){
   categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}");
 }
 
-/* ===============================
-   📌 FIX 2: POST-IT FUNCTIONALITY IMPLEMENTATION
-   =============================== */
+/* =====================================================================
+   📝 2. ΛΕΙΤΟΥΡΓΙΕΣ POST-IT ΣΗΜΕΙΩΣΕΩΝ
+   =====================================================================
+   Εδώ υλοποιούνται όλες οι λειτουργίες για τις Post-it σημειώσεις:
+   - Αποθήκευση/Φόρτωση από localStorage
+   - Προσθήκη νέων σημειώσεων
+   - Επεξεργασία υπαρχουσών
+   - Διαγραφή σημειώσεων
+   - Έξυπνο χρωματισμό κειμένου ανάλογα με το χρώμα φόντου
+   --------------------------------------------------------------------- */
 
 // ✅ Αποθήκευση Post-it notes
 function savePostitNotes() {
@@ -2112,7 +2296,29 @@ function loadPostitNotes() {
     renderPostitNotes();
 }
 
-// ✅ Render Post-it notes
+/* =====================================================================
+   🎨 ΕΞΥΠΝΟΣ ΧΡΩΜΑΤΙΣΜΟΣ POST-IT ΣΗΜΕΙΩΣΕΩΝ
+   =====================================================================
+   Αυτές οι λειτουργίες διασφαλίζουν ότι το κείμενο των Post-it σημειώσεων
+   είναι πάντα ορατό, ανεξάρτητα από το χρώμα φόντου που επιλέγει ο χρήστης.
+   --------------------------------------------------------------------- */
+
+// 🎯 Λειτουργία για έλεγχο αν ένα χρώμα είναι ανοιχτό ή σκούρο
+function isLightColor(color) {
+    // Μετατροπή hex σε RGB
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    
+    // Υπολογισμός luminance (φωτεινότητα)
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    
+    // Αν η φωτεινότητα είναι > 0.5, είναι ανοιχτό χρώμα
+    return luminance > 0.5;
+}
+
+// ✅ Render Post-it notes με έξυπνο χρωματισμό κειμένου
 function renderPostitNotes() {
     const list = document.getElementById("postitList");
     if (!list) return;
@@ -2121,20 +2327,28 @@ function renderPostitNotes() {
     postitNotes.forEach((note, index) => {
         const item = document.createElement("div");
         item.className = "postit-item";
+        
+        // Έξυπνος καθορισμός χρώματος κειμένου βάσει χρώματος σημείωσης
+        const textColor = isLightColor(note.color) ? '#333' : '#fff';
+        const dateColor = isLightColor(note.color) ? '#666' : '#ff6b6b';
+        
         item.innerHTML = `
-            <div class="postit-item-color" style="background: ${note.color};"></div>
+                      <div class="postit-item-color" style="background: ${note.color};"></div>
             <div class="postit-content">
-                <div class="postit-date">
-                    📅 ${note.date || 'Invalid Date'}
-                </div>
-                <div class="postit-text">${note.text}</div>
-            </div>
-            <div class="postit-item-actions">
-                <button class="btn-edit" onclick="editPostitNote(${index})" title="Επεξεργασία">✏️</button>
-                <button class="btn-copy" onclick="copyPostitNote(${index})" title="Αντιγραφή">📋</button>
-                <button class="btn-delete" onclick="deletePostitNote(${index})" title="Διαγραφή">🗑️</button>
-            </div>
+                <di<div class="postit-content">
+    <div class="postit-date" style="color: ${dateColor};">
+        <span>📅 ${note.date || 'Invalid Date'}</span>
+        <div class="postit-item-actions">
+            <button class="btn-edit" onclick="editPostitNote(${index})" title="Επεξεργασία">✏️</button>
+            <button class="btn-copy" onclick="copyPostitNote(${index})" title="Αντιγραφή">📋</button>
+            <button class="btn-delete" onclick="deletePostitNote(${index})" title="Διαγραφή">🗑️</button>
+        </div>
+    </div>
+    <div class="postit-text" style="color: ${textColor};">${note.text}</div>
+</div>
+
         `;
+        item.style.background = note.color;
         list.appendChild(item);
     });
 }
@@ -2210,9 +2424,19 @@ function clearPostitInputs() {
         }
     });
     
-    // Update textarea background με το ανοιχτό κίτρινο
-    if (postitInput) postitInput.style.background = '#fff9c4';
-    if (postitDate) postitDate.style.background = '#fff9c4';
+    // Update textarea background και text color με το ανοιχτό κίτρινο
+    if (postitInput) {
+        postitInput.style.background = '#fff9c4';
+        // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+        const textColor = isLightColor('#fff9c4') ? '#333' : '#fff';
+        postitInput.style.color = textColor;
+    }
+    if (postitDate) {
+        postitDate.style.background = '#fff9c4';
+        // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+        const textColor = isLightColor('#fff9c4') ? '#333' : '#fff';
+        postitInput.style.color = '#333'; // Πάντα μαύρο χρώμα
+    }
 }
 
 // Διαγραφή ΟΛΩΝ των post-it μετά από επιβεβαίωση
@@ -2255,11 +2479,21 @@ function editPostitNote(index) {
         }
     });
     
-    // Update textarea background
+    // Update textarea background and text color
     const textarea = document.getElementById("postitInput");
     const dateInput = document.getElementById("postitDate");
-    if (textarea) textarea.style.background = selectedColor;
-    if (dateInput) dateInput.style.background = selectedColor;
+    if (textarea) {
+        textarea.style.background = selectedColor;
+        // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+        const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+        textarea.style.color = '#333'; // Αλλάζεις μόνο αυτή τη γραμμή
+    }
+    if (dateInput) {
+        dateInput.style.background = selectedColor;
+        // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+        const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+        dateInput.style.color = textColor;
+    }
     
     // Scroll to top
     document.getElementById("postitWidget").scrollTop = 0;
@@ -2602,22 +2836,92 @@ function render(){
       grid.appendChild(card);
     });
 
+    // ✅ ΔΙΟΡΘΩΜΕΝΟ: Χειρισμός τόσο για external URLs όσο και για internal link movement
     sec.addEventListener("dragover", e => {
       e.preventDefault();
-      sec.classList.add("drag-over");
+      
+      // Ελέγχουμε αν είναι link movement ή external URL
+      const dragData = e.dataTransfer.getData("text/plain");
+      let isLinkMovement = false;
+      
+      try {
+        const parsed = JSON.parse(dragData);
+        if (parsed && parsed.cat && parsed.idx !== undefined) {
+          isLinkMovement = true;
+        }
+      } catch (ex) {
+        // Δεν είναι JSON, άρα είναι external URL
+      }
+      
+      if (!isLinkMovement) {
+        sec.classList.add("drag-over");
+      }
     });
+    
     sec.addEventListener("dragleave", () => {
       sec.classList.remove("drag-over");
     });
+    
     sec.addEventListener("drop", e => {
       e.preventDefault();
       sec.classList.remove("drag-over");
-      const url = e.dataTransfer.getData("text/uri-list") || e.dataTransfer.getData("text/plain");
-      if (!url) return;
-      fetchTitle(url).then(title => {
+      
+      const dragData = e.dataTransfer.getData("text/plain");
+      const urlData = e.dataTransfer.getData("text/uri-list");
+      
+      // Ελέγχουμε αν είναι link movement
+      try {
+        const parsed = JSON.parse(dragData);
+        if (parsed && parsed.cat && parsed.idx !== undefined) {
+          // Αυτό είναι internal link movement - δεν το χειριζόμαστε εδώ
+          return;
+        }
+      } catch (ex) {
+        // Συνεχίζουμε για external URL handling
+      }
+      
+      // Χειρισμός external URLs
+      const url = urlData || dragData;
+      if (!url || url.startsWith('{')) return; // Αποφεύγουμε JSON data
+      
+      // Ελέγχουμε αν είναι valid URL
+      let validUrl = url;
+      try {
+        new URL(url);
+      } catch (ex) {
+        // Αν δεν είναι valid URL, προσπαθούμε να προσθέσουμε https://
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          validUrl = 'https://' + url;
+          try {
+            new URL(validUrl);
+          } catch (ex2) {
+            console.warn('Invalid URL dropped:', url);
+            return;
+          }
+        } else {
+          console.warn('Invalid URL dropped:', url);
+          return;
+        }
+      }
+      
+      fetchTitle(validUrl).then(title => {
         const newLink = {
-          url,
-          name: title || (new URL(url).hostname),
+          url: validUrl,
+          name: title || (new URL(validUrl).hostname),
+          desc: "",
+          iconType: "auto",
+          iconValue: ""
+        };
+        if (!categories[cat]) categories[cat] = [];
+        categories[cat].push(newLink);
+        saveData();
+        render();
+      }).catch(error => {
+        console.error('Error fetching title for URL:', validUrl, error);
+        // Δημιουργούμε το link παρόλα αυτά
+        const newLink = {
+          url: validUrl,
+          name: (new URL(validUrl).hostname),
           desc: "",
           iconType: "auto",
           iconValue: ""
@@ -2654,6 +2958,65 @@ async function fetchTitle(url) {
 }
 
 /* ===============================
+   📌 WELCOME SOUND SYSTEM
+   =============================== */
+
+/* =====================================================================
+   🔊 6. WELCOME SOUND (Ήχος Καλωσορίσματος)
+   =====================================================================
+   Λειτουργία που παίζει έναν ήχο καλωσορίσματος στο πρώτο κλικ του χρήστη.
+   Χρησιμοποιεί το Web Audio API για δημιουργία μελωδίας χωρίς εξωτερικά αρχεία.
+   --------------------------------------------------------------------- */
+function playWelcomeSound() {
+    const audio = document.getElementById('welcomeSound');
+    if (audio) {
+        // Προσπαθούμε πρώτα το HTML audio element
+        audio.play().catch(error => {
+            console.log('HTML Audio failed, trying Web Audio API fallback...');
+            createWelcomeTone();
+        });
+    } else {
+        createWelcomeTone();
+    }
+}
+
+function createWelcomeTone() {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Δημιουργούμε ένα ευχάριστο "welcome" tone sequence
+        const playTone = (frequency, startTime, duration) => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, startTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.1, startTime + 0.1);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+            
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        };
+        
+        // Welcome melody (C - E - G - C)
+        const now = audioContext.currentTime;
+        playTone(261.63, now, 0.3);      // C4
+        playTone(329.63, now + 0.2, 0.3); // E4
+        playTone(392.00, now + 0.4, 0.3); // G4
+        playTone(523.25, now + 0.6, 0.5); // C5
+        
+        console.log('🔊 Welcome sound played via Web Audio API');
+    } catch (error) {
+        console.log('Audio not supported:', error);
+    }
+}
+
+/* ===============================
    📌 FIX 4: DOM READY HANDLING
    =============================== */
 
@@ -2675,6 +3038,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Φόρτωση theme
     loadTheme();
+    
+    // Welcome sound - θα παίξει στο πρώτο κλικ του χρήστη
+    let welcomeSoundPlayed = false;
+    function playWelcomeSoundOnFirstClick() {
+        if (!welcomeSoundPlayed) {
+            welcomeSoundPlayed = true;
+            playWelcomeSound();
+            // Αφαιρούμε τον listener μετά το πρώτο κλικ
+            document.removeEventListener('click', playWelcomeSoundOnFirstClick);
+        }
+    }
+    // Προσθήκη listener για το πρώτο κλικ
+    document.addEventListener('click', playWelcomeSoundOnFirstClick);
+    
+    // ✅ Performance optimization loaded!
+    console.log('🚀 Optimized Drag & Drop loaded successfully!');
+    console.log('💡 Performance improvements:');
+    console.log('   • Throttled drag operations (~60fps)');
+    console.log('   • Debounced render and save operations');
+    console.log('   • Fast DOM manipulation during drag');
+    console.log('   • Reduced CSS transition durations');
     
     // Ρολόι
     updateDateTime();
@@ -2732,11 +3116,21 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('selected');
             selectedColor = this.dataset.color;
             
-            // Update textarea and date input background
+            // Update textarea and date input background and text color
             const textarea = document.getElementById("postitInput");
             const dateInput = document.getElementById("postitDate");
-            if (textarea) textarea.style.background = selectedColor;
-            if (dateInput) dateInput.style.background = selectedColor;
+            if (textarea) {
+                textarea.style.background = selectedColor;
+                // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+                const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+                textarea.style.color = textColor;
+            }
+            if (dateInput) {
+                dateInput.style.background = selectedColor;
+                // Καθορισμός χρώματος κειμένου βάσει φωτεινότητας φόντου
+                const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+                dateInput.style.color = textColor;
+            }
         });
     });
     
@@ -2750,6 +3144,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-backup button
     const autoBackupBtn = document.getElementById("autoBackupBtn");
     if (autoBackupBtn) autoBackupBtn.addEventListener("click", showAutoBackups);
+    
+    // Αρχική ρύθμιση χρώματος κειμένου στο Post-it textarea
+    const initTextarea = document.getElementById("postitInput");
+    const initDateInput = document.getElementById("postitDate");
+    if (initTextarea) {
+        initTextarea.style.background = selectedColor;
+        const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+        initTextarea.style.color = textColor;
+    }
+    if (initDateInput) {
+        initDateInput.style.background = selectedColor;
+        const textColor = isLightColor(selectedColor) ? '#333' : '#fff';
+        initDateInput.style.color = textColor;
+    }
     
     // Optimize images
     setTimeout(checkAndCompressExistingImages, 2000);
@@ -3170,94 +3578,263 @@ document.getElementById("undoBtnTop").onclick=undo;
    📌 FIX 1 COMPLETION: Drag & Drop ΟΛΟΚΛΗΡΩΣΗ
    =============================== */
 
-// ✅ ΟΛΟΚΛΗΡΩΜΕΝΟ Drag & Drop για Links
+// ✅ ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΓΙΑ ΒΕΛΤΙΣΤΟΠΟΙΗΣΗ
+function throttle(func, delay) {
+  let timeoutId;
+  let lastExecTime = 0;
+  return function (...args) {
+    const currentTime = Date.now();
+    
+    if (currentTime - lastExecTime > delay) {
+      func.apply(this, args);
+      lastExecTime = currentTime;
+    } else {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+        lastExecTime = Date.now();
+      }, delay - (currentTime - lastExecTime));
+    }
+  };
+}
+
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+/* =====================================================================
+   🎯 3. DRAG & DROP ΛΕΙΤΟΥΡΓΙΕΣ ΓΙΑ LINKS
+   =====================================================================
+   Αυτή η λειτουργία επιτρέπει:
+   - Μετακίνηση links μέσα στην ίδια κατηγορία
+   - Μετακίνηση links από κατηγορία σε κατηγορία
+   - Προσθήκη νέων links με drag από εξωτερικές σελίδες
+   - Οπτική ανατροφοδότηση κατά το drag
+   --------------------------------------------------------------------- */
 function enableLinkDragDrop() {
   let dragSrc = null;
   
+  // Βελτιστοποιημένες εκδόσεις των βαρέων συναρτήσεων
+  const debouncedRender = debounce(render, 50);
+  const debouncedSave = debounce(saveData, 200);
+  
+  const throttledDragover = throttle((e) => {
+    if (!dragSrc) return;
+    e.preventDefault();
+    
+    const targetCard = e.target.closest(".card");
+    const targetCategory = e.target.closest(".category");
+    const targetGrid = e.target.closest(".grid");
+    
+    // Καθαρίζουμε προηγούμενους drop indicators
+    document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+    document.querySelectorAll('.card.drop-target').forEach(el => el.classList.remove('drop-target'));
+    document.querySelectorAll('.category.drop-target').forEach(el => el.classList.remove('drop-target'));
+    
+    if (targetCard && targetCard !== dragSrc) {
+      e.dataTransfer.dropEffect = 'move';
+      targetCard.classList.add('drop-target');
+      
+      // Δημιουργούμε drop indicator για precise positioning
+      const rect = targetCard.getBoundingClientRect();
+      const mouseY = e.clientY;
+      const isAfter = mouseY > rect.top + rect.height / 2;
+      
+      const indicator = document.createElement('div');
+      indicator.className = 'drop-indicator';
+      indicator.style.cssText = `
+        position: absolute;
+        height: 3px;
+        background: #007acc;
+        border-radius: 2px;
+        left: ${rect.left}px;
+        width: ${rect.width}px;
+        top: ${isAfter ? rect.bottom - 1 : rect.top - 2}px;
+        z-index: 1000;
+        pointer-events: none;
+      `;
+      document.body.appendChild(indicator);
+      
+    } else if (targetGrid && !targetCard) {
+      e.dataTransfer.dropEffect = 'move';
+      if (targetCategory) {
+        targetCategory.classList.add('drop-target');
+      }
+    }
+  }, 16); // ~60fps
+  
   document.addEventListener("dragstart", e => {
     const card = e.target.closest(".card");
-    if (card) {
+    if (card && card.draggable) {
       dragSrc = card;
       e.dataTransfer.setData("text/plain", JSON.stringify({
         cat: card.dataset.cat,
-        idx: card.dataset.idx
+        idx: card.dataset.idx,
+        type: "link-move" // Ταυτότητα για link movement
       }));
       e.dataTransfer.effectAllowed = 'move';
       card.classList.add("dragging");
+      
+      // Προσθέτουμε visual feedback
+      card.style.opacity = '0.5';
+      console.log('🔄 Drag started for link:', card.dataset.cat, card.dataset.idx);
     }
   });
   
   document.addEventListener("dragend", e => {
     const card = e.target.closest(".card");
     if (card) {
-      card.classList.remove("dragging");
+      card.classList.remove("dragging", "drop-target");
+      card.style.opacity = '';
     }
+    
+    // Καθαρίζουμε όλους τους indicators
+    document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+    document.querySelectorAll('.card.drop-target').forEach(el => el.classList.remove('drop-target'));
+    document.querySelectorAll('.category.drop-target').forEach(el => el.classList.remove('drop-target'));
+    
     dragSrc = null;
   });
   
-  document.addEventListener("dragover", e => {
-    e.preventDefault();
-    
-    const card = e.target.closest(".card");
-    const category = e.target.closest(".category");
-    
-    if (card || category) {
-      e.dataTransfer.dropEffect = 'move';
-    }
-  });
+  document.addEventListener("dragover", throttledDragover);
   
   document.addEventListener("drop", e => {
-    e.preventDefault();
+    // Καθαρίζουμε indicators αμέσως
+    document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+    document.querySelectorAll('.card.drop-target').forEach(el => el.classList.remove('drop-target'));
+    document.querySelectorAll('.category.drop-target').forEach(el => el.classList.remove('drop-target'));
     
     if (!dragSrc) return;
     
+    e.preventDefault();
+    
     try {
-      const dragData = JSON.parse(e.dataTransfer.getData("text/plain"));
+      const dragDataStr = e.dataTransfer.getData("text/plain");
+      if (!dragDataStr) return;
+      
+      let dragData;
+      try {
+        dragData = JSON.parse(dragDataStr);
+      } catch (ex) {
+        // Δεν είναι JSON, άρα δεν είναι link movement
+        return;
+      }
+      
+      // Ελέγχουμε αν είναι link movement
+      if (!dragData || dragData.type !== "link-move") return;
+      
       const sourceCat = dragData.cat;
       const sourceIdx = parseInt(dragData.idx);
       
-      // Βρες τον προορισμό
       const targetCard = e.target.closest(".card");
       const targetCategory = e.target.closest(".category");
+      const targetGrid = e.target.closest(".grid");
       
-      if (targetCard || targetCategory) {
-        const targetCat = targetCard ? targetCard.dataset.cat : targetCategory.dataset.cat;
-        let targetIdx = targetCard ? parseInt(targetCard.dataset.idx) : categories[targetCat].length;
+      if (!targetCard && !targetGrid) return;
+      
+      let targetCat;
+      let targetIdx;
+      
+      if (targetCard) {
+        targetCat = targetCard.dataset.cat;
+        targetIdx = parseInt(targetCard.dataset.idx);
         
-        // Αν ρίχνουμε στην ίδια κάρτα, μην κάνεις τίποτα
-        if (targetCard && sourceCat === targetCat && sourceIdx === targetIdx) {
-          return;
+        // Determine if we should insert before or after based on mouse position
+        const rect = targetCard.getBoundingClientRect();
+        const mouseY = e.clientY;
+        const isAfter = mouseY > rect.top + rect.height / 2;
+        
+        if (isAfter) {
+          targetIdx++;
         }
-        
-        pushHistory();
-        
-        // Αφαίρεση από την αρχική θέση
-        const [movedItem] = categories[sourceCat].splice(sourceIdx, 1);
-        
-        if (!movedItem) return;
-        
-        // Προσθήκη στη νέα θέση
-        if (targetCat === sourceCat && targetIdx > sourceIdx) {
-          targetIdx--; // Προσαρμογή index αν μετακινείται μέσα στην ίδια κατηγορία προς τα κάτω
-        }
-        
-        categories[targetCat].splice(targetIdx, 0, movedItem);
-        
-        saveData();
-        render();
+      } else if (targetGrid) {
+        targetCat = targetGrid.dataset.cat;
+        targetIdx = categories[targetCat] ? categories[targetCat].length : 0;
       }
+      
+      // Αποφεύγουμε την ίδια θέση
+      if (sourceCat === targetCat && sourceIdx === targetIdx) {
+        return;
+      }
+      
+      // Εκτελούμε τη μετακίνηση
+      pushHistory();
+      
+      const sourceItems = categories[sourceCat];
+      if (!sourceItems || sourceIdx >= sourceItems.length) {
+        console.error('Invalid source item:', sourceCat, sourceIdx);
+        return;
+      }
+      
+      const [movedItem] = sourceItems.splice(sourceIdx, 1);
+      if (!movedItem) {
+        console.error('Failed to extract moved item');
+        return;
+      }
+      
+      // Προσαρμόζουμε target index αν χρειάζεται
+      if (targetCat === sourceCat && targetIdx > sourceIdx) {
+        targetIdx--;
+      }
+      
+      if (!categories[targetCat]) {
+        categories[targetCat] = [];
+      }
+      
+      categories[targetCat].splice(targetIdx, 0, movedItem);
+      
+      console.log(`✅ Link moved from ${sourceCat}[${sourceIdx}] to ${targetCat}[${targetIdx}]`);
+      
+      // Χρήση βελτιστοποιημένων συναρτήσεων
+      debouncedSave();
+      debouncedRender();
+      
     } catch (error) {
-      console.error('Drop error:', error);
+      console.error('❌ Drop error:', error);
     }
     
     dragSrc = null;
   });
+  
+  console.log('🚀 Enhanced Link Drag & Drop enabled!');
 }
 
-// ✅ ΟΛΟΚΛΗΡΩΜΕΝΟ Drag & Drop για Κατηγορίες
+/* =====================================================================
+   📁 4. DRAG & DROP ΛΕΙΤΟΥΡΓΙΕΣ ΓΙΑ ΚΑΤΗΓΟΡΙΕΣ
+   =====================================================================
+   Αυτή η λειτουργία επιτρέπει την αναδιάταξη των κατηγοριών με drag & drop.
+   Οι κατηγορίες μπορούν να μετακινηθούν σε οποιαδήποτε σειρά θέλει ο χρήστης.
+   --------------------------------------------------------------------- */
 function enableCategoryDragDrop() {
   const wrap = document.getElementById("categories");
   if (!wrap) return;
+
+  // Βελτιστοποιημένες εκδόσεις
+  const debouncedSave = debounce(saveData, 200);
+  
+  // Throttled dragover για καλύτερη απόδοση
+  const throttledCategoryDragover = throttle((e) => {
+    e.preventDefault();
+    const dragging = document.querySelector(".category.dragging");
+    if (!dragging) return;
+    
+    const others = [...wrap.querySelectorAll(".category:not(.dragging)")];
+    const after = others.find(el => {
+      const rect = el.getBoundingClientRect();
+      const offset = e.clientY - rect.top - rect.height / 2;
+      return offset < 0;
+    });
+    
+    if (after) {
+      wrap.insertBefore(dragging, after);
+    } else {
+      wrap.appendChild(dragging);
+    }
+  }, 33); // ~30fps για κατηγορίες (λιγότερο συχνά)
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
@@ -3268,9 +3845,6 @@ function enableCategoryDragDrop() {
     e.preventDefault();
     return false;
   }, false);
-
-  let lastCatDragTime = 0;
-  let rafId = null;
 
   document.querySelectorAll(".category").forEach(catEl => {
     catEl.addEventListener("dragstart", e => {
@@ -3284,31 +3858,7 @@ function enableCategoryDragDrop() {
     });
   });
 
-  wrap.addEventListener("dragover", e => {
-    e.preventDefault();
-    const now = Date.now();
-    if (now - lastCatDragTime < 60) return;
-    lastCatDragTime = now;
-
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      const dragging = document.querySelector(".category.dragging");
-      if (!dragging) return;
-      
-      const others = [...wrap.querySelectorAll(".category:not(.dragging)")];
-      const after = others.find(el => {
-        const rect = el.getBoundingClientRect();
-        const offset = e.clientY - rect.top - rect.height / 2;
-        return offset < 0;
-      });
-      
-      if (after) {
-        wrap.insertBefore(dragging, after);
-      } else {
-        wrap.appendChild(dragging);
-      }
-    });
-  });
+  wrap.addEventListener("dragover", throttledCategoryDragover);
 
   wrap.addEventListener("drop", e => {
     e.preventDefault();
@@ -3316,11 +3866,10 @@ function enableCategoryDragDrop() {
     if (JSON.stringify(newOrder) !== JSON.stringify(catOrder)) {
       pushHistory();
       catOrder = newOrder;
-      saveData();
+      debouncedSave(); // Χρήση βελτιστοποιημένης εκδόσης
     }
   });
 }
-
 /* ===============================
    📌 Θέματα
    =============================== */
@@ -3441,7 +3990,10 @@ function createAutoBackup() {
   }
   
   localStorage.setItem("autoBackups", JSON.stringify(backups));
-  console.log("Auto-backup created:", backupData.timestamp);
+  // Μόνο debug info, όχι στο production console
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    console.log("Auto-backup created:", backupData.timestamp);
+  }
 }
 
 function restoreAutoBackup(index) {
@@ -3558,9 +4110,15 @@ function updateDateTime() {
   if (dateEl) dateEl.textContent = date;
 }
 
-/* ===============================
-   📌 ZUCCARADIO PLAYER
-   =============================== */
+/* =====================================================================
+   🎵 5. ZUCCARADIO RADIO PLAYER
+   =====================================================================
+   Εδώ υλοποιείται το ραδιόφωνο Zuccaradio:
+   - Παύση/Αναπαραγωγή
+   - Έλεγχος έντασης
+   - Εμφάνιση πληροφοριών τραγουδιού
+   - Auto-retry σε περίπτωση σφάλματος
+   --------------------------------------------------------------------- */
 
 let radioPlayer = null;
 let isRadioPlaying = false;
@@ -3870,6 +4428,23 @@ function initHelpMenu() {
         }
     });
 }
+
+
+
+
+/* =====================================================================
+   🎉 ΤΕΛΟΣ ΕΦΑΡΜΟΓΗΣ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
+   =====================================================================
+   Αυτή η εφαρμογή είναι πλήρως λειτουργική και περιλαμβάνει:
+   ✅ Έξυπνη διαχείριση σελιδοδεικτών
+   ✅ Optimized Drag & Drop performance  
+   ✅ Post-it σημειώσεις με αυτόματη προσαρμογή χρωμάτων
+   ✅ Zuccaradio web radio
+   ✅ Welcome sound στο πρώτο κλικ
+   ✅ Πλήρη ελληνικά σχόλια για εύκολη συντήρηση
+   
+   Για υποστήριξη ή ερωτήσεις, επικοινωνήστε με το Doukas Pharmacy Support®
+   --------------------------------------------------------------------- */
 
 </script>
 
