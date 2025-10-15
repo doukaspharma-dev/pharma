@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!-- 
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -124,8 +125,10 @@ body {
 .topbar-right {
     display: flex;
     align-items: center;
+    align-items: center;
     justify-content: flex-end;
     width: 140px;
+    position: relative; /* Για να δουλέψει το absolute positioning */
 }
 
 
@@ -173,8 +176,16 @@ body:has(footer) .wrap {
   button:active { transform:scale(0.97); }
 
   /* Dropdown επιλογής theme */
-  #themeSelect {
-    padding:6px 10px; border-radius:8px; border:1px solid var(--border);
+    #themeSelect {
+   position: absolute !important;
+    top: -20px; /* Ρύθμισε ανάλογα με το ύψος του header */
+	
+    right: -55%; /* Κεντράρισμα */
+    transform: translateX(50%); /* Για ακριβές κεντράρισμα */
+    z-index: 1000;
+}
+
+    padding:6px 10px; border-radius:8px; border:2px solid var(--border);
     background:var(--card); color:var(--text); font-weight:600; cursor:pointer;
   }
   #theme-toggle {
@@ -1475,8 +1486,8 @@ footer .btnrow button {
   border-radius: 12px !important;
   font-weight: 700 !important;
   font-size: 15px !important;
-  height: 42px !important;
-  min-height: 42px !important;
+  height: 38px !important;
+  min-height: 38px !important;
   min-width: 180px !important;
   display: flex !important;
   align-items: center !important;
@@ -1698,9 +1709,9 @@ footer .btnrow button {
 }
 
 .postit-list {
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 5px;
+   max-height: calc(100vh - 200px); /* Αφήνει χώρο για header και footer */
+    overflow-y: auto; /* Εμφανίζει scrollbar όταν χρειάζεται */
+    flex-grow: 1; /* Επιτρέπει στη λίστα να μεγαλώνει */
 }
 
 .postit-item {
