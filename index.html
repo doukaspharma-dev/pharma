@@ -891,7 +891,9 @@ footer {
 
 /* -------------------------------------------------
    12. ΡΟΛΟΙ - ΗΜΕΡΟΜΗΝΙΑ (ΔΕΞΙΑ ΣΕ ΙΔΙΑ ΓΡΑΜΜΗ)
+   === Ομοιόμορφο στυλ + φωτεινό περίγραμμα ===
 ------------------------------------------------- */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -901,34 +903,76 @@ header {
   padding: 0 10px 0 50px;
 }
 
+/* ===== Στυλ ρολογιού ===== */
 .datetime-widget {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 14px;
+  position: relative;
+  background: rgba(30, 30, 30, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  padding: 12px 18px;
+  min-width: 180px;
   text-align: center;
-  min-width: 160px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
   margin-left: 10px;
+  transition: all 0.25s ease-in-out;
+  overflow: hidden;
 }
 
+/* --- Neon φωτεινή γραμμή γύρω από το πλαίσιο --- */
+.datetime-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(
+    130deg,
+    rgba(0, 255, 204, 0.6),
+    rgba(0, 136, 255, 0.6),
+    rgba(0, 255, 204, 0.6)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+/* Εφέ hover */
+.datetime-widget:hover::before {
+  opacity: 0.8;
+}
+
+.datetime-widget:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Ώρα */
 .datetime-widget .time {
   font-size: 24px;
   font-weight: 700;
   color: var(--accent);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  text-shadow: 0 0 12px rgba(44, 162, 97, 0.3);
   font-family: 'Courier New', monospace;
-  text-shadow: 0 0 10px rgba(44, 162, 97, 0.3);
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* Ημερομηνία */
 .datetime-widget .date {
   font-size: 16px;
   font-weight: 600;
-  color: var(--text);
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.85;
 }
 
 /* Κεντρικό content */
@@ -949,7 +993,7 @@ header {
     text-align: center;
     padding: 0 10px;
   }
-  
+
   .datetime-widget {
     margin-left: 0;
     order: -1;
@@ -957,23 +1001,20 @@ header {
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .logo-title {
     flex-direction: column;
     margin-left: 0;
   }
 }
 
+/* Animation για παλμό ώρας */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.8; }
 }
 
-/* Εναλλακτικό στυλ με gradient */
-.datetime-widget.gradient {
-  background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(42, 157, 244, 0.2));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+
 
 /* ===== ΧΡΩΜΑΤΙΣΤΟ ΦΩΝΤΟ ΜΟΝΟ ΓΙΑ ΤΟ ΟΝΟΜΑ ΚΑΤΗΓΟΡΙΑΣ ===== */
 .category-title {
@@ -1247,22 +1288,68 @@ button.zuccaradio-btn.playing:hover {
    Το Radio Player widget εμφανίζεται στην αριστερή πλευρά.
    Εδώ μπορείτε να ρυθμίσετε την εμφάνιση του ραδιοφώνου.
    --------------------------------------------------------------------- */
+/* === ZUCCARADIO POPUP PLAYER (διάφανο frosted εφέ) === */
 .radio-player {
     position: fixed;
     top: 120px;
-    left: 40px; /* Συνέπεια με το padding */
+    left: 40px;
     transform: none;
-    background: var(--card);
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    padding: 15px;
+
+    /* ✨ βασικό γυάλινο εφέ ✨ */
+    background: rgba(30, 30, 30, 0.7);      /* ημιδιαφανές γκρι */
+    backdrop-filter: blur(14px) saturate(160%); /* θόλωση & ζωηρά χρώματα */
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 16px;
     z-index: 10000;
     display: none;
     min-width: 250px;
     max-width: 250px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+
+    /* ✨ βάθος & glow ✨ */
+    box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.05);
     color: var(--text);
+    transition: all 0.3s ease;
+    overflow: hidden;  /* Για να λειτουργήσει το neon border */
 }
+
+/* Προαιρετικό εφέ hover (σαν να “ξυπνά” λίγο το γυαλί) */
+.radio-player:hover {
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.55),
+      inset 0 1px 2px rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* --- Neon φωτεινή γραμμή γύρω από το ZuccaRadio --- */
+.radio-player::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 107, 107, 0.6),
+    rgba(0, 184, 148, 0.6),
+    rgba(255, 107, 107, 0.6)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.radio-player:hover::before {
+  opacity: 0.8;
+}
+
+
 
 /* ===== Volume Control ===== */
 .volume-container {
@@ -1517,6 +1604,11 @@ footer .btnrow button {
   box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3) !important;
 }
 
+
+
+
+
+
 /* =====================================================================
    📝 POST-IT WIDGET - ΒΑΣΙΚΕΣ ΡΥΘΜΙΣΕΙΣ
    =====================================================================
@@ -1527,25 +1619,49 @@ footer .btnrow button {
    - Εφέ σκιάς
    --------------------------------------------------------------------- */
 .postit-widget {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    transform: none;
-    background: var(--card);
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    padding: 15px;
-    z-index: 10000;
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    transform: none !important;
+    background: rgba(30, 30, 30, 0.3);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 16px;
+    z-index: 10001 !important;
     display: none;
-    width: 320px;
-    max-height: 85vh;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    width: 320px !important;
+    max-height: 85vh !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
     color: var(--text);
-    overflow-y: auto;
-}
-    
-    /* Αντίσταση στο zoom - παραμένει σταθερό σε μέγεθος */
+    overflow-y: auto !important;
     transform-origin: top right;
+}
+
+/* --- Neon φωτεινή γραμμή γύρω από το Post-it --- */
+.postit-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(
+    130deg,
+    rgba(244, 162, 97, 0.6),
+    rgba(42, 157, 244, 0.6),
+    rgba(244, 162, 97, 0.6)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.postit-widget:hover::before {
+  opacity: 0.8;
 }
 
 /* Zoom resistance για Post-it Widget */
@@ -1611,7 +1727,7 @@ footer .btnrow button {
     border: 1px solid var(--accent);
     border-radius: 8px;
     resize: vertical;
-    min-height: 60px;
+    min-height: 50px;
     font-size: 14px;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
@@ -1651,8 +1767,8 @@ footer .btnrow button {
 }
 
 .color-option {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 8px;
     cursor: pointer;
     border: 3px solid transparent;
@@ -1840,6 +1956,7 @@ footer .btnrow button {
     background: rgba(255, 255, 255, 0.3);
 }
 
+
   </style>
 </head>
 <body>
@@ -1990,7 +2107,7 @@ footer .btnrow button {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.9.5a</span>
+  <span class="version">ver. 3.9.1c</span>
 </div>
 
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
@@ -4153,16 +4270,19 @@ function createRadioInterface() {
         top: 10px;
         left: 10px;
         transform: none;
-        background: var(--card);
-        border: 2px solid var(--accent);
-        border-radius: 12px;
-        padding: 15px;
+        background: rgba(30, 30, 30, 0.3);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 14px;
+        padding: 16px;
         z-index: 10000;
         display: none;
         min-width: 250px;
         max-width: 250px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         color: var(--text);
+        overflow: hidden;
     `;
     
     radioInterface.innerHTML = `
