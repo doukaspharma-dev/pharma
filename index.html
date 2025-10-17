@@ -79,8 +79,8 @@ body {
      =====================================================================
      Στυλ για την κεφαλίδα με τίτλο και υπότιτλους
      --------------------------------------------------------------------- */
-  header { text-align:center; margin-bottom:10px; }
-  header h1 { margin:4px 0 0; font-size:26px; font-weight:800; }
+  header { text-align:center; margin-bottom:8px; }
+  header h1 { margin:4px 0 0; font-size:28px; font-weight:800; }
   header h2 { margin:6px 0 0; font-size:14px; color:#2a9df4; font-weight:700; }
   header h3 { margin:6px 0 0; font-size:13px; color:#bbb; font-weight:500; }
 
@@ -97,14 +97,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 12px 0 10px; /* Μείωση κάτω margin */
-    padding: 0 40px;
+    margin: 12px 0 10px; /* Μείωση κάτω margin topbar */
+    padding:8px;   /* Μείωση κάτω margin */
     position: relative;
-    max-width: 1250px;
-    margin: 12px auto 10px auto;
+    max-width: 1200px;  /* Δεξια αριστερά themeSelect*/
+    margin: 20px auto 10px auto;
     width: 100%;
     box-sizing: border-box;
-    gap: 0; /* Αφαίρεση gap */
+    gap: 0 /* Αφαίρεση gap */
 }
 
 .topbar-left {
@@ -127,7 +127,7 @@ body {
     align-items: center;
     align-items: center;
     justify-content: flex-end;
-    width: 140px;
+    width: 300px; /* Μειωμένο width για μόνο το ρολόγι */
     position: relative; /* Για να δουλέψει το absolute positioning */
 }
 
@@ -175,22 +175,39 @@ body:has(footer) .wrap {
   button:hover { opacity:0.85; }
   button:active { transform:scale(0.97); }
 
-  /* Dropdown επιλογής theme */
-    #themeSelect {
-   position: absolute !important;
-    top: -20px; /* Ρύθμισε ανάλογα με το ύψος του header */
-	
-    right: 50%; /* Κεντράρισμα */
-    transform: translateX(50%); /* Για ακριβές κεντράρισμα */
-    z-index: 1000;
-}
-
-    padding:6px 10px; border-radius:8px; border:2px solid var(--border);
-    background:var(--card); color:var(--text); font-weight:600; cursor:pointer;
+  /* Theme Selector κάτω από το ρολόγι - ευθυγραμμισμένο με τα κουμπιά */
+  .theme-selector-below-clock {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    padding-right: 20px; /* Ευθυγράμμιση με τα κουμπιά της topbar */
+  }
+  
+  .theme-selector-below-clock #themeSelect {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 140px;
+    height: 30px;
+    min-height:38px;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+  .theme-selector-below-clock #themeSelect:hover {
+    opacity: 0.85;
+  }
+  .theme-selector-below-clock #themeSelect:active {
+    transform: scale(0.97);
   }
   #theme-toggle {
   position: relative;
 }
+
 
 
 /* -------------------------------------------------
@@ -1525,9 +1542,11 @@ button.zuccaradio-btn.playing:hover {
 .topbar #themeSelect {
     height: 38px !important;
     min-height: 38px !important;
-    padding: 0 10px !important;
+    padding: 0 20px !important;
     line-height: 38px !important;
     box-sizing: border-box !important;
+	width: 150px !important;
+    min-width: 150px !important;
 }
 
 .volume-container {
@@ -2107,7 +2126,7 @@ footer .btnrow button {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.9.1c</span>
+  <span class="version">ver. 3.9.4a</span>
 </div>
 
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
