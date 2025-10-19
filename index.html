@@ -32,6 +32,7 @@
   <title>Τα δικά μου χρήσιμα</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
+  
 
   <style>
   /* =====================================================================
@@ -61,6 +62,8 @@
      - Φόντο σελίδας με gradient
      - Κεντρική στήλη περιεχομένου
      --------------------------------------------------------------------- */
+
+	 
 * { box-sizing: border-box; }
 body {
   margin:0;
@@ -97,11 +100,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 12px 0 10px; /* Μείωση κάτω margin topbar */
+    margin: 12px 10px; 
     padding:8px;   /* Μείωση κάτω margin */
     position: relative;
     max-width: 1200px;  /* Δεξια αριστερά themeSelect*/
-    margin: 20px auto 10px auto;
+    margin: 20px auto 30px auto; /* Μείωση πάνω κάτω margin topbar */
     width: 100%;
     box-sizing: border-box;
     gap: 0 /* Αφαίρεση gap */
@@ -608,6 +611,7 @@ body:has(footer) .wrap {
   margin-top: 10px;
 }
 
+ .grid {
   transition: max-height 0.3s ease, opacity 0.3s ease;
   overflow: hidden;
   max-height: 9999px;
@@ -618,6 +622,10 @@ body:has(footer) .wrap {
   max-height: 0;
   opacity: 0;
   pointer-events: none;
+}
+
+.grid {
+  transition: all 0.4s ease;
 }
 
 .toggle-btn {
@@ -1975,10 +1983,103 @@ footer .btnrow button {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* === Degrande φόντο προς τα κάτω νεο!!!!=== */
+:root {
+  --bg3: #3d3f6e; /* πιο ανοιχτό φόντο για degrande */
+}
+
+body {
+  background: linear-gradient(to bottom, var(--bg1) 0%, var(--bg2) 50%, #2c3e50 100%);
+}
+
+/* =====================================================================
+   💡 TIP BANNER SYSTEM
+   =====================================================================
+   Στυλ για το σύστημα εμφάνισης τυχαίων συμβουλών
+   --------------------------------------------------------------------- */
+.tip-banner {
+  background: rgba(0, 168, 107, 0.15);  /* Πράσινο διαφανές φόντο */
+  border: 1px solid rgba(0, 168, 107, 0.4);  /* Πράσινο border */
+  color: #00ff88;  /* Πράσινο κείμενο */
+  font-size: 20px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  animation: tipSlideIn 0.3s ease-out;
+  position: absolute;
+  top: 55px;  /* Κάτω από την topbar */
+  left: 30%;
+  transform: translateX(-50%);
+  max-width: 400px;
+  z-index: 1000;
+  white-space: nowrap;
+}
+/* Το πράσινο dot στα αριστερά */
+.tip-banner::before {
+  content: '●';
+  color: #00a86b;
+  font-size: 16px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Hover effect */
+.tip-banner:hover {
+  background: rgba(0, 168, 107, 0.25);
+  border-color: rgba(0, 168, 107, 0.6);
+}
+.tip-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(244, 162, 97, 0.4);
+  animation-play-state: paused;
+}
+
+.tip-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: tipShimmer 3s infinite;
+}
+
+@keyframes tipSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tipShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Responsive για tip banner */
+@media (max-width: 768px) {
+  .tip-banner {
+    margin: 10px 10px;
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+}
+
+
+
+
+
+
 
   </style>
 </head>
 <body>
+
  <!-- Audio element - κρυφό -->
   <audio id="welcomeSound" preload="auto" style="display: none;">
     <source src="assets/hello.mp3" type="audio/mpeg">
@@ -2011,8 +2112,10 @@ footer .btnrow button {
 </header>
 
 <div class="topbar">
-  <!-- Αριστερά - Κενό -->
-  <div class="topbar-left"></div>
+  <!-- Αριστερά - ΕΔΩ ΜΠΑΙΝΕΙ ΤΟ TIP BANNER -->
+  <div class="topbar-left">
+    <div id="tip-banner" class="tip-banner" style="display: none;"></div>
+  </div>
   
   <!-- Κεντρικά κουμπιά -->
   <div class="topbar-center">
@@ -2023,6 +2126,7 @@ footer .btnrow button {
     <button id="zuccaradioBtn" class="zuccaradio-btn" data-tooltip="Ακούστε Zuccaradio">🎵 Zuccaradio</button>
     <button class="nav-btn help-btn default" id="helpBtn" data-tooltip="Διάβασέ με">💡 Βοήθεια</button>
   </div>
+
   
   <!-- Δεξιά - Theme Selector -->
   <div class="topbar-right">
@@ -2126,7 +2230,7 @@ footer .btnrow button {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 3.9.4a</span>
+  <span class="version">ver. 4.0.1t</span>
 </div>
 
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
@@ -2276,6 +2380,95 @@ footer .btnrow button {
    ===================================================================== */
 
 /* =====================================================================
+   💡 TIPS SYSTEM - ΣΥΣΤΗΜΑ ΤΥΧΑΙΩΝ ΣΥΜΒΟΥΛΩΝ
+   =====================================================================
+   Εδώ προσθέτεις τα δικά σου tips και διαχειρίζεται η εμφάνισή τους
+   --------------------------------------------------------------------- */
+
+// 🎯 ΕΔΩ ΠΡΟΣΘΕΤΕΙΣ ΤΑ TIPS ΣΟΥ:
+const userTips = [
+  "  💡 🖱️ Σύρε links από τον browser σου απευθείας στις κατηγορίες!",
+  "  💡 💾 Χρησιμοποίησε Backup/Restore για να διατηρήσεις τα δεδομένα σου ασφαλή!",
+  "  💡 🎨 Δοκίμασε διαφορετικά themes από το dropdown menu!",
+  "  💡 📝 Χρησιμοποίησε τα Post-it για γρήγορες σημειώσεις!",
+  "  💡 🎵 Ανακάλυψε νέα υπέροχη μουσική από το Zuccaradio player!",
+  "  💡 📱 Η εφαρμογή είναι responsive - δουλεύει τέλεια και σε κινητά!",
+  "  💡 ⚡ Κάνε click πάνω δεξια σε κατηγορία για να την επεξεργαστείς!",
+  "  💡 🔄 Μετακίνησε κατηγορίες με drag & drop για καλύτερη οργάνωση!",
+  "  💡 ❤️ Μόλις προστεθεί μια νέα λειτουργία θα ενημερωθείτε αμεσα εδώ !"
+];
+
+let currentTipIndex = 0;
+let tipDisplayTimer = null;
+let tipInterval = null;
+
+// Εμφάνιση tip banner
+function showTip(tipText) {
+  const banner = document.getElementById('tip-banner');
+  if (!banner) return;
+  
+  banner.textContent = tipText;
+  banner.style.display = 'block';
+  
+  // Αυτόματη απόκρυψη μετά από 5 δευτερόλεπτα
+  if (tipDisplayTimer) clearTimeout(tipDisplayTimer);
+  tipDisplayTimer = setTimeout(() => {
+    banner.style.display = 'none';
+  }, 5000);
+}
+
+// Εμφάνιση τυχαίου tip
+function showRandomTip() {
+  if (userTips.length === 0) return;
+  
+  const randomIndex = Math.floor(Math.random() * userTips.length);
+  showTip(userTips[randomIndex]);
+}
+
+// Έναρξη του tip system
+function initTipsSystem() {
+  // Εμφάνιση πρώτου tip μετά από 3 δευτερόλεπτα
+  setTimeout(() => {
+    showRandomTip();
+  }, 3000);
+  
+  // Στη συνέχεια, εμφάνιση tip κάθε 30-60 δευτερόλεπτα
+  tipInterval = setInterval(() => {
+    showRandomTip();
+  }, Math.random() * 30000 + 30000); // 30-60 δευτερόλεπτα
+}
+
+// Παύση tips όταν κάνει hover στο banner
+document.addEventListener('DOMContentLoaded', () => {
+  const banner = document.getElementById('tip-banner');
+  if (banner) {
+    banner.addEventListener('mouseenter', () => {
+      if (tipDisplayTimer) {
+        clearTimeout(tipDisplayTimer);
+      }
+    });
+    
+    banner.addEventListener('mouseleave', () => {
+      tipDisplayTimer = setTimeout(() => {
+        banner.style.display = 'none';
+      }, 2000);
+    });
+  }
+});
+
+// Εκκίνηση του tips system μετά τη φόρτωση της σελίδας
+document.addEventListener('DOMContentLoaded', initTipsSystem);
+
+/* --------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+/* =====================================================================
    📌 1. ΔΗΛΩΣΕΙΣ ΜΕΤΑΒΛΗΤΩΝ
    =====================================================================
    Εδώ ορίζονται όλες οι βασικές μεταβλητές της εφαρμογής
@@ -2299,6 +2492,8 @@ let themeDefault = {
 };
 let categoryColors = JSON.parse(localStorage.getItem("categoryColors") || "{}");
 let firstLoad = true;
+
+
 
 /* ===============================
    📌 FIX 3: FUNCTION DECLARATIONS BEFORE USE
@@ -3019,9 +3214,15 @@ function render(){
       // Ελέγχουμε αν είναι link movement
       try {
         const parsed = JSON.parse(dragData);
-        if (parsed && parsed.cat && parsed.idx !== undefined) {
-          // Αυτό είναι internal link movement - δεν το χειριζόμαστε εδώ
-          return;
+     
+
+
+
+
+
+	 if (parsed && parsed.cat && parsed.idx !== undefined) {
+        // Αυτό είναι internal link movement - δεν το χειριζόμαστε εδώ
+		return false;
         }
       } catch (ex) {
         // Συνεχίζουμε για external URL handling
@@ -3029,7 +3230,7 @@ function render(){
       
       // Χειρισμός external URLs
       const url = urlData || dragData;
-      if (!url || url.startsWith('{')) return; // Αποφεύγουμε JSON data
+   if (!url || url.startsWith('{')) return false; // Αποφεύγουμε JSON data
       
       // Ελέγχουμε αν είναι valid URL
       let validUrl = url;
@@ -3043,11 +3244,11 @@ function render(){
             new URL(validUrl);
           } catch (ex2) {
             console.warn('Invalid URL dropped:', url);
-            return;
+         return false;
           }
         } else {
           console.warn('Invalid URL dropped:', url);
-          return;
+          return false;
         }
       }
       
@@ -3770,8 +3971,11 @@ function enableLinkDragDrop() {
   const debouncedSave = debounce(saveData, 200);
   
   const throttledDragover = throttle((e) => {
-    if (!dragSrc) return;
-    e.preventDefault();
+    if (!dragSrc) {
+  e.preventDefault();
+  return false;
+}
+   
     
     const targetCard = e.target.closest(".card");
     const targetCategory = e.target.closest(".category");
@@ -3849,30 +4053,36 @@ function enableLinkDragDrop() {
   
   document.addEventListener("dragover", throttledDragover);
   
-  document.addEventListener("drop", e => {
-    // Καθαρίζουμε indicators αμέσως
-    document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
-    document.querySelectorAll('.card.drop-target').forEach(el => el.classList.remove('drop-target'));
-    document.querySelectorAll('.category.drop-target').forEach(el => el.classList.remove('drop-target'));
-    
-    if (!dragSrc) return;
-    
-    e.preventDefault();
+ document.addEventListener("drop", e => {
+  e.preventDefault();    // ✅ ΜΕΤΑΚΙΝΗΣΗ ΕΔΩΩΩ!
+  
+  document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+  document.querySelectorAll('.card.drop-target').forEach(el => el.classList.remove('drop-target'));
+  document.querySelectorAll('.category.internal-drag-over').forEach(el => el.classList.remove('internal-drag-over'));
+  
+  if (!dragSrc) return;  // ✅ ΤΩΡΑ ΜΠΟΡΕΙ ΝΑ ΚΑΝΕΙ RETURN ΜΕΤΑ ΤΟ PREVENT
     
     try {
       const dragDataStr = e.dataTransfer.getData("text/plain");
-      if (!dragDataStr) return;
+      if (!dragDataStr) {
+  e.preventDefault();
+  return false;
+}
       
       let dragData;
       try {
         dragData = JSON.parse(dragDataStr);
       } catch (ex) {
         // Δεν είναι JSON, άρα δεν είναι link movement
-        return;
+        e.preventDefault();
+return false;
       }
       
       // Ελέγχουμε αν είναι link movement
-      if (!dragData || dragData.type !== "link-move") return;
+      if (!dragData || dragData.type !== "link-move") {
+  e.preventDefault();
+  return false;
+}
       
       const sourceCat = dragData.cat;
       const sourceIdx = parseInt(dragData.idx);
@@ -3983,19 +4193,30 @@ function enableCategoryDragDrop() {
     }
   }, 33); // ~30fps για κατηγορίες (λιγότερο συχνά)
 
-  document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'none';
-  }, false);
-  
-  document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
 
+
+
+// Απόλυτη προστασία από συντομεύσεις - εκτελείται ΠΡΙΝ όλους τους άλλους handlers
+document.addEventListener('drop', function(e) {
+  // Πάντα αποτρέπουμε το default browser behavior (shortcuts)
+  e.preventDefault();
+}, true); // true = capture phase, εκτελείται πρώτος
+
+// Μετά αφήνουμε τους specific handlers να κάνουν τη δουλειά τους
+document.addEventListener('drop', function(e) {
+  // Αυτός ο handler δεν κάνει τίποτα - απλώς υπάρχει για συμβατότητα
+}, false);
+
+  
+ 
+ 
+ 
   document.querySelectorAll(".category").forEach(catEl => {
     catEl.addEventListener("dragstart", e => {
-      e.dataTransfer.setData("text/plain", catEl.dataset.cat || "");
+     e.dataTransfer.setData("text/plain", JSON.stringify({
+  cat: catEl.dataset.cat,
+  type: "category-move"
+}));
       e.dataTransfer.effectAllowed = 'move';
       catEl.classList.add("dragging");
     });
@@ -4595,6 +4816,9 @@ function initHelpMenu() {
    
    Για υποστήριξη ή ερωτήσεις, επικοινωνήστε με το Doukas Pharmacy Support®
    --------------------------------------------------------------------- */
+
+
+
 
 </script>
 
