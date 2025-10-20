@@ -32,9 +32,10 @@
   <title>Τα δικά μου χρήσιμα</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
-  
+ 
 
   <style>
+  
   /* =====================================================================
      🎨 ΣΤΥΛ CSS ΓΙΑ ΤΗΝ ΕΦΑΡΜΟΓΗ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
      ===================================================================== */
@@ -61,9 +62,8 @@
      - Αφαίρεση προεπιλεγμένων margins/paddings
      - Φόντο σελίδας με gradient
      - Κεντρική στήλη περιεχομένου
-     --------------------------------------------------------------------- */
-
-	 
+     --------------------------------------------------------------------- */ 
+ 	 
 * { box-sizing: border-box; }
 body {
   margin:0;
@@ -84,7 +84,7 @@ body {
      --------------------------------------------------------------------- */
   header { text-align:center; margin-bottom:8px; }
   header h1 { margin:4px 0 0; font-size:28px; font-weight:800; }
-  header h2 { margin:6px 0 0; font-size:14px; color:#2a9df4; font-weight:700; }
+  header h2 { margin:6px 0 0; font-size:16px; color:#2a9df4; font-weight:700; }
   header h3 { margin:6px 0 0; font-size:13px; color:#bbb; font-weight:500; }
 
 
@@ -100,18 +100,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 12px 10px; 
+    margin: 10px 10px; 
     padding:8px;   /* Μείωση κάτω margin */
     position: relative;
     max-width: 1200px;  /* Δεξια αριστερά themeSelect*/
     margin: 20px auto 30px auto; /* Μείωση πάνω κάτω margin topbar */
     width: 100%;
     box-sizing: border-box;
-    gap: 0 /* Αφαίρεση gap */
+    gap: 0/* Αφαίρεση gap */
 }
 
 .topbar-left {
-    width: 70px;
+    width:-40px;
     display: flex;
     justify-content: flex-start;
 }
@@ -128,11 +128,14 @@ body {
 .topbar-right {
     display: flex;
     align-items: center;
-    align-items: center;
     justify-content: flex-end;
-    width: 300px; /* Μειωμένο width για μόνο το ρολόγι */
-    position: relative; /* Για να δουλέψει το absolute positioning */
+    gap: 8px; /* Κενό μεταξύ των στοιχείων */
+    width: auto; /* Αλλαγή από 300px σε auto */
+    position: relative;
+    flex-wrap: nowrap; /* Να μην τυλίγονται */
+    min-width: 250px; /* Ελάχιστο πλάτος */
 }
+
 
 
 .wrap {
@@ -179,12 +182,12 @@ body:has(footer) .wrap {
   button:active { transform:scale(0.97); }
 
   /* Theme Selector κάτω από το ρολόγι - ευθυγραμμισμένο με τα κουμπιά */
-  .theme-selector-below-clock {
+.theme-selector-below-clock {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
-    padding-right: 20px; /* Ευθυγράμμιση με τα κουμπιά της topbar */
-  }
+    transform: translateY(15px);  /* <-- ΠΡΟΣΘΕΣΤΕ ΑΥΤΟ */
+    padding-right: 20px;
+}
   
   .theme-selector-below-clock #themeSelect {
     padding: 8px 10px;
@@ -2008,7 +2011,7 @@ body {
   animation: tipSlideIn 0.3s ease-out;
   position: absolute;
   top: 55px;  /* Κάτω από την topbar */
-  left: 30%;
+  left: 40%;
   transform: translateX(-50%);
   max-width: 400px;
   z-index: 1000;
@@ -2066,19 +2069,170 @@ body {
   .tip-banner {
     margin: 10px 10px;
     padding: 10px 15px;
-    font-size: 13px;
+    font-size: 16px;
   }
 }
 
 
 
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1 !important;
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7) contrast(1.4); /* Ρυθμίσεις φωτεινότητας */
+  opacity: 0.7;
+}
+
+/* Προσθέστε blur effect */
+.video-background.blurred video {
+  filter: blur(3px) brightness(0.6);
+}
+
+/* Βελτίωση απόδοσης */
+.video-background video {
+  transform: translateZ(0); /* Hardware acceleration */
+  will-change: opacity;
+}
+
+/* Hide στο mobile για καλύτερη απόδοση */
+@media (max-width: 768px) {
+  .video-background {
+    display: none;
+  }
+  body {
+    background: linear-gradient(160deg,var(--bg1),var(--bg2));
+  }
+}
+
+/* CSS για video toggle κουμπί */
+#videoToggle {
+  background: #e74c3c !important; /* Κόκκινο όταν OFF */
+  color: white !important;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#videoToggle.video-on {
+  background: #27ae60 !important; /* Πράσινο όταν ON */
+}
+
+#videoToggle:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Κλάση για απόκρυψη video */
+.video-background.hidden {
+  display: none !important;
+}
+
+/* Responsive topbar */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.topbar-center {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;  /* Απόσταση ανάμεσα στα κουμπιά */
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* Σε μικρές οθόνες, στοίβαξε τα κουμπιά */
+@media (max-width: 1200px) {
+  .topbar-center button {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+}
+.wrap {
+  position: relative !important;
+  z-index: 100 !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* 🎬🔊 Ομοιόμορφα κουμπιά Video & Audio στο topbar */
+#videoToggle, #audioButton {
+    background: #e74c3c !important;
+    color: white !important;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 6px 12px !important;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px !important;
+    min-width: 75px;
+    text-align: center;
+    white-space: nowrap; /* Να μην σπάει το κείμενο */
+    flex-shrink: 0; /* Να μην συρρικνώνονται */
+    margin: 0; /* Αφαίρεση όλων των margins */
+}
+
+#videoToggle.video-on, #audioButton.audio-on {
+    background: #27ae60 !important;
+}
+
+#videoToggle:hover, #audioButton:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+#audioButton.audio-on {
+  background: #27ae60 !important; /* Πράσινο όταν ON */
+}
+
+#audioButton.audio-off {
+  background: #e74c3c !important; /* Κόκκινο όταν OFF */
+}
+
+#videoToggle:hover, #audioButton:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
 
 
 
 
-  </style>
-</head>
-<body>
+ </style>
+	
+ <!-- Video background -->
+<div class="video-background" style="z-index: -9999 !important; pointer-events: none !important;">
+ <video autoplay muted loop playsinline>
+  
+    <source src="assets/render.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+</div>	
+	
+  
+
+
+
+  
+  
+
+
 
  <!-- Audio element - κρυφό -->
   <audio id="welcomeSound" preload="auto" style="display: none;">
@@ -2090,6 +2244,7 @@ body {
 <div class="bubbles">
   <span></span><span></span><span></span><span></span><span></span>
 </div>
+
 
 <div class="wrap" style="padding-bottom: 10px;">
 
@@ -2121,24 +2276,25 @@ body {
   <div class="topbar-center">
     <button id="addBtnTop">+ Προσθήκη νέου link</button>
     <button id="undoBtnTop" class="gray" disabled>↩ Αναίρεση</button>
-    <button id="backupBtn">Backup</button>
-    <button id="restoreBtn">Restore</button>
+    <button id="backupBtn">Αποθήκευση</button>
+    <button id="restoreBtn">Επαναφορά</button>
     <button id="zuccaradioBtn" class="zuccaradio-btn" data-tooltip="Ακούστε Zuccaradio">🎵 Zuccaradio</button>
     <button class="nav-btn help-btn default" id="helpBtn" data-tooltip="Διάβασέ με">💡 Βοήθεια</button>
-  </div>
+	
 
   
   <!-- Δεξιά - Theme Selector -->
   <div class="topbar-right">
+   <button id="videoToggle" onclick="toggleVideo()">📹 Video</button>
+   <button id="audioButton" onclick="toggleVideoAudio()">🔇 Audio</button>
     <select id="themeSelect">
-      <option value="dark">Dark 🌙</option>
-      <option value="light">Light ☀️</option>
-      <option value="green">Green 🌵</option>
-      <option value="brown">Brown ☕</option>
+      <option value="dark">Dark     🌙</option>
+      <option value="light">Light   ☀️</option>
+      <option value="green">Green   🌵</option>
+      <option value="brown">Brown   ☕</option>
       <option value="purple">Purple 🪀</option>
-      <option value="blue">Blue 🌊</option>
-      <option value="orange">Orange 🍊</option>
-      <option value="pink">Pink 🌸</option>
+       <option value="orange">Orange🍊</option>
+      <option value="pink">Pink     🌸</option>
     </select>
   </div>
 </div>
@@ -2230,7 +2386,7 @@ body {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 4.0.1t</span>
+  <span class="version">ver. 4.1.0s</span>
 </div>
 
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
@@ -2365,6 +2521,10 @@ body {
     </div>
 </div>
 
+
+
+
+
 <script>
 /* =====================================================================
    💻 JAVASCRIPT ΓΙΑ ΤΗΝ ΕΦΑΡΜΟΓΗ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
@@ -2387,15 +2547,15 @@ body {
 
 // 🎯 ΕΔΩ ΠΡΟΣΘΕΤΕΙΣ ΤΑ TIPS ΣΟΥ:
 const userTips = [
-  "  💡 🖱️ Σύρε links από τον browser σου απευθείας στις κατηγορίες!",
-  "  💡 💾 Χρησιμοποίησε Backup/Restore για να διατηρήσεις τα δεδομένα σου ασφαλή!",
-  "  💡 🎨 Δοκίμασε διαφορετικά themes από το dropdown menu!",
-  "  💡 📝 Χρησιμοποίησε τα Post-it για γρήγορες σημειώσεις!",
-  "  💡 🎵 Ανακάλυψε νέα υπέροχη μουσική από το Zuccaradio player!",
-  "  💡 📱 Η εφαρμογή είναι responsive - δουλεύει τέλεια και σε κινητά!",
-  "  💡 ⚡ Κάνε click πάνω δεξια σε κατηγορία για να την επεξεργαστείς!",
-  "  💡 🔄 Μετακίνησε κατηγορίες με drag & drop για καλύτερη οργάνωση!",
-  "  💡 ❤️ Μόλις προστεθεί μια νέα λειτουργία θα ενημερωθείτε αμεσα εδώ !"
+  "  💡Νέο:  🖱️ Σύρε links από τον browser σου απευθείας στις κατηγορίες!",
+  "  💡Tip:  💾 Χρησιμοποίησε Backup/Restore για να διατηρήσεις τα δεδομένα σου ασφαλή!",
+  "  💡Tip:  🎨 Δοκίμασε διαφορετικά themes από το dropdown menu!",
+  "  💡Tip:  📝 Χρησιμοποίησε τα Post-it για γρήγορες σημειώσεις!",
+  "  💡Tip:  🎶 Ανακάλυψε νέα υπέροχη μουσική από το Zuccaradio player!",
+  "  💡Tip:  📱 Η εφαρμογή είναι responsive - δουλεύει τέλεια και σε κινητά!",
+  "  💡Tip:  ⚡ Κάνε click πάνω δεξια σε κατηγορία για να την επεξεργαστείς!",
+  "  💡Tip:  🔄 Μετακίνησε κατηγορίες με drag & drop για καλύτερη οργάνωση!",
+  "  💡Tip:  ❤️ Μόλις προστεθεί μια νέα λειτουργία θα ενημερωθείτε αμεσα εδώ !"
 ];
 
 let currentTipIndex = 0;
@@ -2410,7 +2570,7 @@ function showTip(tipText) {
   banner.textContent = tipText;
   banner.style.display = 'block';
   
-  // Αυτόματη απόκρυψη μετά από 5 δευτερόλεπτα
+  // Αυτόματη απόκρυψη μετά από 6 δευτερόλεπτα
   if (tipDisplayTimer) clearTimeout(tipDisplayTimer);
   tipDisplayTimer = setTimeout(() => {
     banner.style.display = 'none';
@@ -3975,8 +4135,7 @@ function enableLinkDragDrop() {
   e.preventDefault();
   return false;
 }
-   
-    
+ 
     const targetCard = e.target.closest(".card");
     const targetCategory = e.target.closest(".category");
     const targetGrid = e.target.closest(".grid");
@@ -4801,8 +4960,132 @@ function initHelpMenu() {
 }
 
 
+// Προσθέστε αυτό στο τέλος του JavaScript
+function setupVideoBackground() {
+  const video = document.querySelector('.video-background video');
+  if (video) {
+
+    // Ρύθμιση ταχύτητας αναπαραγωγής
+    video.playbackRate = 0.9; // Πιο αργό video
+    function toggleVideoBlur() {
+  const container = document.querySelector('.video-background');
+  container.classList.toggle('blurred');
+}
+
+    // Ρύθμιση διαφάνειας με κουμπί
+    window.adjustVideoOpacity = function(opacity) {
+      video.style.opacity = opacity;
+    };
+  }
+}
+
+// Καλέστε τη συνάρτηση όταν φορτώσει η σελίδα
+document.addEventListener('DOMContentLoaded', setupVideoBackground);
+
+// 🎬 Video toggle function - ΜΕ AUTO-PLAY FIX
+function toggleVideo() {
+    const videoBackground = document.querySelector('.video-background');
+    const toggleButton = document.getElementById('videoToggle');
+    const audioButton = document.getElementById('audioButton');
+    const video = document.querySelector('.video-background video'); // Προσθήκη video element
+    
+    if (!videoBackground || !toggleButton) {
+        console.log('Δεν βρέθηκαν elements');
+        return;
+    }
+    
+    // Έλεγχος αν το video είναι κρυφό
+    if (videoBackground.style.display === 'none' || videoBackground.classList.contains('hidden')) {
+        // ΕΝΕΡΓΟΠΟΙΗΣΗ VIDEO
+        videoBackground.style.display = 'block';
+        videoBackground.classList.remove('hidden');
+        toggleButton.textContent = '📹 Video';
+        toggleButton.classList.remove('video-off');
+        toggleButton.classList.add('video-on');
+        
+        // 🎬 ΕΚΚΙΝΗΣΗ VIDEO MANUALLY
+        if (video) {
+            video.currentTime = 0; // Reset στην αρχή
+            video.play().catch(e => console.log('Autoplay blocked:', e));
+            console.log('Video ξεκίνησε να παίζει');
+        }
+        
+        // Εμφάνιση audio button
+        if (audioButton) {
+            audioButton.style.display = 'inline-block';
+        }
+        
+        console.log('Video ενεργοποιημένο');
+    } else {
+        // ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ VIDEO
+        videoBackground.style.display = 'none';
+        videoBackground.classList.add('hidden');
+        toggleButton.textContent = '📹 Video';
+        toggleButton.classList.remove('video-on');
+        toggleButton.classList.add('video-off');
+        
+        // 🛑 ΣΤΑΜΑΤΗΜΑ VIDEO
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+            console.log('Video σταμάτησε');
+        }
+        
+        // Απόκρυψη audio button
+        if (audioButton) {
+            audioButton.style.display = 'none';
+        }
+        
+        console.log('Video απενεργοποιημένο');
+    }
+}
+
+// 🔊 Audio toggle function για το video
+function toggleVideoAudio() {
+    const video = document.querySelector('.video-background video');
+    const button = document.getElementById('audioButton');
+    
+    if (!video || !button) {
+        console.log('Δεν βρέθηκε video ή audio button');
+        return;
+    }
+    
+    if (video.muted) {
+        // ΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ
+        video.muted = false;
+        video.volume = 1.0; // Ρύθμιση έντασης στο maximum
+        button.innerHTML = '🔊 Audio';
+        button.classList.remove('audio-off');
+        button.classList.add('audio-on');
+        console.log('Ήχος ενεργοποιημένος');
+    } else {
+        // ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ
+        video.muted = true;
+        button.innerHTML = '🔇 Audio';
+        button.classList.remove('audio-on');
+        button.classList.add('audio-off');
+        console.log('Ήχος απενεργοποιημένος');
+    }
+}
 
 
+
+// 🎯 Αρχική κατάσταση κουμπιών
+document.addEventListener('DOMContentLoaded', function() {
+    const videoBackground = document.querySelector('.video-background');
+    const audioButton = document.getElementById('audioButton');
+    const toggleButton = document.getElementById('videoToggle');
+    
+    // Ορισμός αρχικής κατάστασης
+    if (videoBackground && audioButton && toggleButton) {
+        if (videoBackground.style.display === 'none' || videoBackground.classList.contains('hidden')) {
+            audioButton.style.display = 'none';
+            toggleButton.classList.add('video-off');
+        } else {
+            toggleButton.classList.add('video-on');
+        }
+    }
+});
 /* =====================================================================
    🎉 ΤΕΛΟΣ ΕΦΑΡΜΟΓΗΣ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
    =====================================================================
