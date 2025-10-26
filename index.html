@@ -26,9 +26,11 @@
 ║ 👨‍💻 Φτιαγμένο με αγάπη από το Doukas Pharmacy Support®                      ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
-<html lang="el">
-<head>
+
+  <html lang="el">
+  <head>
   <meta charset="UTF-8">
+
   <title>Τα δικά μου χρήσιμα</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/logo.png">
@@ -68,6 +70,9 @@
 body {
   margin:0;
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  background-size: 100% 100%;      /* Αποφυγή επανάληψης gradient */
+  background-repeat: no-repeat;    /* Αποφυγή tiling */
+  background-attachment: fixed;    /* Σταθερό κατά το scroll */
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
   padding-bottom: 70px; /* Προσθήκη padding στο body */
@@ -104,7 +109,7 @@ body {
     padding:8px;   /* Μείωση κάτω margin */
     position: relative;
     max-width: 1200px;  /* Δεξια αριστερά themeSelect*/
-    margin: 20px auto 30px auto; /* Μείωση πάνω κάτω margin topbar */
+    margin: 30px auto 33px auto; /* Μείωση πάνω κάτω margin topbar */
     width: 100%;
     box-sizing: border-box;
     gap: 0/* Αφαίρεση gap */
@@ -129,7 +134,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px; /* Κενό μεταξύ των στοιχείων */
+    gap: 6px; /* Κενό μεταξύ των στοιχείων */
     width: auto; /* Αλλαγή από 300px σε auto */
     position: relative;
     flex-wrap: nowrap; /* Να μην τυλίγονται */
@@ -139,7 +144,7 @@ body {
 
 
 .wrap {
-  max-widt1h: 1200px;
+  max-widt1h: 1250px;
   margin:  auto;
   padding: 12px 0 120px; /* Μείωση κάτω padding από 210px σε 120px */
   width: 100%;
@@ -185,7 +190,7 @@ body:has(footer) .wrap {
 .theme-selector-below-clock {
     display: flex;
     justify-content: flex-end;
-    transform: translateY(15px);  /* <-- ΠΡΟΣΘΕΣΤΕ ΑΥΤΟ */
+    transform: translateY 15px;  /* <-- ΠΡΟΣΘΕΣΤΕ ΑΥΤΟ */
     padding-right: 20px;
 }
   
@@ -234,10 +239,6 @@ body:has(footer) .wrap {
     border-radius:14px; padding:10px;
   }
   .category.drag-over { outline:2px dashed #5aa9ff; outline-offset:4px; }
-  
-
-
-
 
 /* ===== Στυλ για τίτλο κατηγορίας ===== */
 
@@ -355,6 +356,49 @@ body:has(footer) .wrap {
     transform: translateY(0);
   }
 }
+
+
+
+  /*background & shadow */
+
+.card {
+  border-radius: 12px;
+  gap: 6px;
+  width: 95%;
+  aspect-ratio: 1/1;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s ease;
+  padding: 10px;
+  
+  /* ✨ Soft background & shadow */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(244, 162, 97, 0.08);
+  
+  /* 🌊 Floating animation */
+  animation: fadeInUp 0.6s ease forwards, cardFloat 3s ease-in-out infinite;
+}
+
+/* Animation για απαλό "πλωτό" εφέ */
+@keyframes cardFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+
+
+
+
+
 
 
   /* -------------------------------------------------
@@ -719,7 +763,6 @@ footer {
              colorShift 8s linear infinite;
 }
 
-
 /* Κίνηση */
 @keyframes scroll-right {
   0%   { transform: translateX(-100vw); }
@@ -761,8 +804,6 @@ footer {
   from { width: 0 }
   to   { width: 100% }
 }
-
-
 
 .card {
   opacity: 0;
@@ -841,11 +882,7 @@ footer {
 }
 
 
-
-
-
-
-/* ✅ Διορθώσεις για hover στις κάρτες */
+/* ✅ διορθώσεις για hover στις κάρτες */
 
 /* Το link μέσα στην κάρτα δεν κάνει scale */
 .card a:not(.fav):not(.del):not(.edit):hover {
@@ -925,10 +962,11 @@ footer {
 header {
   display: flex;
   justify-content: space-between;
+  gap: 30px;
   align-items: center;
   margin-bottom: 10px;
   position: relative;
-  padding: 0 10px 0 50px;
+  padding: 0 10px 0 40px;
 }
 
 /* ===== Στυλ ρολογιού ===== */
@@ -1636,9 +1674,6 @@ footer .btnrow button {
 
 
 
-
-
-
 /* =====================================================================
    📝 POST-IT WIDGET - ΒΑΣΙΚΕΣ ΡΥΘΜΙΣΕΙΣ
    =====================================================================
@@ -1942,7 +1977,7 @@ footer .btnrow button {
 }
 
 .btn-edit {
-    background: rgba(255, 165, 0, 0.3);
+    background: rgba(255, 166, 0, 0.279);
 }
 
 .btn-edit:hover {
@@ -1993,75 +2028,164 @@ footer .btnrow button {
 
 body {
   background: linear-gradient(to bottom, var(--bg1) 0%, var(--bg2) 50%, #2c3e50 100%);
+  background-size: 100% 100%;      /* Αποφυγή επανάληψης gradient */
+  background-repeat: no-repeat;    /* Αποφυγή tiling */
+  background-attachment: fixed;    /* Σταθερό κατά το scroll */
 }
 
 /* =====================================================================
-   💡 TIP BANNER SYSTEM
+   💡 TIP BANNER SYSTEM - ΡΥΘΜΙΣΕΙΣ
    =====================================================================
    Στυλ για το σύστημα εμφάνισης τυχαίων συμβουλών
    --------------------------------------------------------------------- */
+
+/* 📦 CONTAINER - Το κουτί που περιέχει το tip banner
+   ----------------------------------------------------------------- */
+.tip-banner-container {
+  width: 100%;
+  max-width: 1200px;           /* Μέγιστο πλάτος container */
+  
+  /* 🔧 ΚΕΝΟ ΑΠΟ ΤΑ ΚΟΥΜΠΙΑ - ΑΛΛΑΞΤΕ ΕΔΩ! */
+  margin: -35px auto 15px auto;  /* 5px πάνω (από κουμπιά), 15px κάτω (μέχρι κατηγορίες) */
+                               /* Αλλάξτε το 5px για να αλλάξετε το κενό από τα κουμπιά */
+  
+  padding: 0 40px;             /* Αποστάσεις από άκρα σελίδας (αριστερά/δεξιά) */
+  position: relative;
+  
+  /* 📏 ΥΨΟΣ ΧΩΡΟΥ - Αλλάξτε αν θέλετε περισσότερο/λιγότερο ύψος */
+  height: 50px;                /* Ύψος του χώρου για το banner */
+  
+  overflow: visible;           /* Επιτρέπει το banner να φαίνεται έξω από το container */
+}
+
+/* 🎯 TIP BANNER - Το μήνυμα που εμφανίζεται
+   ----------------------------------------------------------------- */
 .tip-banner {
+  /* 🎨 ΧΡΩΜΑΤΑ */
   background: rgba(0, 168, 107, 0.15);  /* Πράσινο διαφανές φόντο */
-  border: 1px solid rgba(0, 168, 107, 0.4);  /* Πράσινο border */
-  color: #00ff88;  /* Πράσινο κείμενο */
-  font-size: 20px;
-  font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  animation: tipSlideIn 0.3s ease-out;
+  border: 1px solid rgba(0, 168, 107, 0.4);  /* Πράσινο περίγραμμα */
+  color: #00ff88;                        /* Πράσινο κείμενο */
+  
+  /* 📝 ΚΕΙΜΕΝΟ */
+  font-size: 20px;             /* Μέγεθος γραμματοσειράς - αλλάξτε για μεγαλύτερο/μικρότερο */
+  font-weight: 600;            /* Πάχος γραμματοσειράς (400=κανονικό, 700=bold) */
+  white-space: nowrap;         /* Το κείμενο δεν σπάει σε γραμμές */
+  
+  /* 📐 ΔΙΑΣΤΑΣΕΙΣ */
+  padding: 12px 20px;          /* Εσωτερικά κενά (πάνω/κάτω αριστερά/δεξιά) */
+  border-radius: 12px;         /* Στρογγυλά άκρα */
+  
+  /* 🎭 ΕΦΦΕ */
+  backdrop-filter: blur(10px); /* Θόλωμα φόντου πίσω από το banner */
+  box-shadow: 0 4px 15px rgba(0, 168, 107, 0.3);  /* Σκιά */
+  
+  /* 📍 ΤΟΠΟΘΕΤΗΣΗ */
   position: absolute;
-  top: 55px;  /* Κάτω από την topbar */
-  left: 40%;
-  transform: translateX(-50%);
-  max-width: 400px;
-  z-index: 1000;
-  white-space: nowrap;
+  top: 0;                      /* Κολλάει στην κορυφή του container */
+  right: 100%;                 /* Ξεκινάει από έξω δεξιά (κρυμμένο) */
+  z-index: 1000;               /* Στρώμα εμφάνισης (πάνω από άλλα στοιχεία) */
+  
+  /* 🎬 ANIMATION - Κίνηση από δεξιά προς τη μέση */
+  animation: slideFromRight 1s ease-out forwards;
+  /* 1s = διάρκεια, ease-out = επιβράδυνση στο τέλος, forwards = μένει στο τέλος */
 }
-/* Το πράσινο dot στα αριστερά */
+
+/* 🔴 ΠΡΑΣΙΝΟ DOT - Το κουκκίδα στα αριστερά
+   ----------------------------------------------------------------- */
 .tip-banner::before {
-  content: '●';
-  color: #00a86b;
-  font-size: 16px;
-  margin-right: 10px;
+  content: '●';                /* Το σύμβολο (μπορείτε να το αλλάξετε) */
+  color: #00a86b;              /* Χρώμα dot */
+  font-size: 16px;             /* Μέγεθος dot */
+  margin-right: 10px;          /* Απόσταση από το κείμενο */
   font-weight: bold;
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;  /* Παλμός κάθε 2 δευτερόλεπτα */
 }
 
-/* Hover effect */
+/* 🖱️ HOVER EFFECT - Όταν περνάει το ποντίκι από πάνω
+   ----------------------------------------------------------------- */
 .tip-banner:hover {
-  background: rgba(0, 168, 107, 0.25);
-  border-color: rgba(0, 168, 107, 0.6);
-}
-.tip-banner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(244, 162, 97, 0.4);
-  animation-play-state: paused;
+  background: rgba(0, 168, 107, 0.25);       /* Πιο έντονο φόντο */
+  border-color: rgba(0, 168, 107, 0.6);      /* Πιο έντονο περίγραμμα */
+  box-shadow: 0 6px 20px rgba(0, 168, 107, 0.5);  /* Μεγαλύτερη σκιά */
+  animation: none;                            /* Σταματάει το slide animation */
 }
 
-.tip-banner::before {
-  content: '';
+/* 🎪 ΧΟΡΟΠΗΔΗΜΑ ΚΕΙΜΕΝΟΥ - Bounce effect στο hover
+   ----------------------------------------------------------------- */
+.tip-banner:hover::after {
+  content: attr(data-text);    /* Παίρνει το κείμενο από το data-text attribute */
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  animation: tipShimmer 3s infinite;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  animation: bounce 0.6s ease-in-out infinite;  /* Χοροπηδάει κάθε 0.6 δευτ. */
 }
 
-@keyframes tipSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* 👻 Κρύβουμε το αρχικό κείμενο όταν χοροπηδάει
+   ----------------------------------------------------------------- */
+.tip-banner:hover {
+  color: transparent;          /* Κρύβουμε το κείμενο */
+}
+.tip-banner:hover::before {
+  color: transparent;          /* Κρύβουμε το dot */
+}
+.tip-banner:hover::after {
+  color: #00ff88;              /* Εμφανίζουμε το νέο κείμενο που χοροπηδάει */
 }
 
-@keyframes tipShimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+/* 🎬 ANIMATIONS - Κινήσεις και εφέ
+   ====================================================================== */
+
+/* 1️⃣ SLIDE FROM RIGHT - Κίνηση από δεξιά προς τη μέση
+   ----------------------------------------------------------------- */
+@keyframes slideFromRight {
+  0% {
+    right: 100%;               /* Αρχίζει εντελώς έξω από τη σελίδα (δεξιά) */
+    opacity: 0;                /* Αόρατο στην αρχή */
+  }
+  100% {
+    right: 50%;                /* Καταλήγει στο κέντρο (50% από δεξιά) */
+    transform: translateX(50%); /* Μετακίνηση για να κεντραριστεί τέλεια */
+    opacity: 1;                /* Πλήρως ορατό στο τέλος */
+  }
+  /* 💡 ΣΥΜΒΟΥΛΗ: Αλλάξτε το right: 50% σε 40% ή 60% για να το μετακινήσετε */
+}
+
+/* 2️⃣ BOUNCE - Χοροπήδημα κειμένου (hover effect)
+   ----------------------------------------------------------------- */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);   /* Κανονική θέση */
+  }
+  25% {
+    transform: translateY(-5px); /* Ανεβαίνει 5px */
+  }
+  50% {
+    transform: translateY(0);   /* Επιστροφή στη θέση */
+  }
+  75% {
+    transform: translateY(-3px); /* Μικρό ανέβασμα */
+  }
+  /* 💡 ΣΥΜΒΟΥΛΗ: Αλλάξτε τα -5px/-3px για πιο έντονο ή ήπιο χοροπήδημα */
+}
+
+/* 3️⃣ PULSE - Παλμός για το πράσινο dot
+   ----------------------------------------------------------------- */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;                 /* Πλήρης φωτεινότητα */
+    transform: scale(1);        /* Κανονικό μέγεθος */
+  }
+  50% {
+    opacity: 0.6;               /* Μειωμένη φωτεινότητα */
+    transform: scale(1.2);      /* Μεγαλώνει κατά 20% */
+  }
+  /* 💡 ΣΥΜΒΟΥΛΗ: Αλλάξτε το scale(1.2) για μεγαλύτερο/μικρότερο παλμό */
 }
 
 /* Responsive για tip banner */
@@ -2094,7 +2218,7 @@ body {
 
 /* Προσθέστε blur effect */
 .video-background.blurred video {
-  filter: blur(3px) brightness(0.6);
+  filter: blur(2px) brightness(0.8);
 }
 
 /* Βελτίωση απόδοσης */
@@ -2182,11 +2306,11 @@ body {
     font-weight: 600;
     cursor: pointer;
     font-size: 13px !important;
-    min-width: 75px;
+    min-width: 85px;
     text-align: center;
     white-space: nowrap; /* Να μην σπάει το κείμενο */
     flex-shrink: 0; /* Να μην συρρικνώνονται */
-    margin: 0; /* Αφαίρεση όλων των margins */
+    margin: 4px; /* Αφαίρεση όλων των margins */
 }
 
 #videoToggle.video-on, #audioButton.audio-on {
@@ -2214,6 +2338,188 @@ body {
 
 
 
+
+/* === AUTO-NAVIGATION VISUAL EFFECTS === */
+
+/* Κύρια κάρτα - ασφαλές positioning */
+.card.autonav-highlight {
+  position: relative;
+}
+
+/* 🟦 Μπλε γραμμή γύρω γύρω - border effect */
+.card.autonav-highlight::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 3px solid #4a90e2;
+  border-radius: 10px;
+  animation: autonavBlueGlow 1s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 🟡 Χρυσή γραμμή στο κάτω μέρος */
+
+.card.autonav-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    #ffd700, 
+    #ffa500, 
+    #ffd700, 
+    transparent
+  );
+  border-radius: 2px;
+  animation: autonavGlow 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 🔵 Animation για τη μπλε γραμμή */
+@keyframes autonavBlueGlow {
+  0%, 100% { 
+    opacity: 0.7; 
+    box-shadow: 0 0 12px rgba(74, 144, 226, 0.6);
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1; 
+    box-shadow: 0 0 25px rgba(74, 144, 226, 0.9), 0 0 35px rgba(74, 144, 226, 0.5);
+    transform: scale(1.02);
+  }
+}
+
+/* 🔶 Animation για τη χρυσή γραμμή */
+@keyframes autonavGlow {
+  0%, 100% { 
+    opacity: 1; 
+    box-shadow: 0 0 10px #ffd700; 
+    transform: scaleX(1);
+  }
+  50% { 
+    opacity: 0.8; 
+    box-shadow: 0 0 20px #ffa500; 
+    transform: scaleX(1.1);
+  }
+}
+
+
+
+/* =====================================================================
+   ☀️ 15. WIDGET ΚΑΙΡΟΥ (Weather Widget)
+   ===================================================================== */
+
+/* Θέση αριστερά απο την επωνυμία και στυλ Glass-morphism */
+
+.weather-widget {
+  position: relative;
+  background: rgba(30, 30, 30, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  padding: 12px 18px;
+  min-width: 150px;
+  text-align: center;
+  flex-shrink: 0;
+  margin-right: 30px;
+  transition: all 0.25s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Neon effect (χρησιμοποιεί πορτοκαλί/κίτρινο τόνο) */
+.weather-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 165, 0, 0.6), /* Χρώμα που ταιριάζει με τον καιρό (ήλιος/accent) */
+    rgba(255, 255, 0, 0.6),
+    rgba(255, 165, 0, 0.6)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.weather-widget:hover::before {
+  opacity: 0.8;
+}
+
+.weather-widget:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.weather-widget .location {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent); /* Χρησιμοποιεί το accent color */
+    margin-bottom: 5px;
+}
+
+.weather-widget .temp-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.weather-widget .temperature {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    text-shadow: 0 0 8px rgba(244, 162, 97, 0.4);
+}
+
+.weather-widget .weather-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.weather-widget .condition {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive adjustment: Στις μικρές οθόνες τοποθετείται πρώτο στη στήλη */
+@media (max-width: 768px) {
+  .weather-widget {
+    margin: 0 auto 10px auto;
+    order: -2;
+  }
+  
+  /* Πρέπει να ενημερώσετε και το header/logo-title για να υποστηρίζει και τα δύο widgets */
+  header {
+    /* Εάν χρειάζεται, αφαιρέστε το flex-shrink: 0; από το datetime-widget για να χωρέσει */
+  }
+}
+
+
  </style>
 	
  <!-- Video background -->
@@ -2225,13 +2531,6 @@ body {
   <div class="video-overlay"></div>
 </div>	
 	
-  
-
-
-
-  
-  
-
 
 
  <!-- Audio element - κρυφό -->
@@ -2249,6 +2548,20 @@ body {
 <div class="wrap" style="padding-bottom: 10px;">
 
 <header>
+
+
+<div class="weather-widget">
+    <div id="weatherLocation" class="location">Φόρτωση...</div>
+    <div class="temp-icon">
+        <span id="weatherTemp" class="temperature">--°C</span>
+        <img id="weatherIcon" src="" alt="Κατάσταση Καιρού" class="weather-icon">
+    </div>
+    <div id="weatherCondition" class="condition">--</div>
+</div>
+
+
+
+
   <div class="logo-title">
     <img src="assets/logo.png" alt="Logo">
     <div class="titles">
@@ -2264,12 +2577,14 @@ body {
     <div class="date" id="currentDate">Παρασκευή, 1 Ιανουαρίου</div>
 </div>
 
+
+
+
 </header>
 
 <div class="topbar">
-  <!-- Αριστερά - ΕΔΩ ΜΠΑΙΝΕΙ ΤΟ TIP BANNER -->
+  <!-- Αριστερά -->
   <div class="topbar-left">
-    <div id="tip-banner" class="tip-banner" style="display: none;"></div>
   </div>
   
   <!-- Κεντρικά κουμπιά -->
@@ -2288,18 +2603,25 @@ body {
    <button id="videoToggle" onclick="toggleVideo()">📹 Video</button>
    <button id="audioButton" onclick="toggleVideoAudio()">🔇 Audio</button>
     <select id="themeSelect">
-      <option value="dark">Dark     🌙</option>
-      <option value="light">Light   ☀️</option>
+      <option value="dark">Dark     🌙</option>      
       <option value="green">Green   🌵</option>
       <option value="brown">Brown   ☕</option>
       <option value="purple">Purple 🪀</option>
-       <option value="orange">Orange🍊</option>
+	  <option value="blue">Blue     🌊</option>
+      <option value="orange">Orange 🍊</option>
+	  <option value="light">Light   ☀️</option>
       <option value="pink">Pink     🌸</option>
     </select>
   </div>
 </div>
   
 </div>
+
+<!-- TIP BANNER - Τοποθετείται ακριβώς εδώ, μεταξύ topbar και categories -->
+<div class="tip-banner-container">
+  <div id="tip-banner" class="tip-banner" style="display: none;"></div>
+</div>
+
 <div id="categories"></div>
 </div>
 
@@ -2386,7 +2708,7 @@ body {
 </div>
 
 <div class="theme-toggle-wrapper">
-  <span class="version">ver. 4.1.0s</span>
+  <span class="version">ver. 4.1.4f</span>
 </div>
 
 <!-- ===== MODAL ΠΑΛΕΤΑΣ ΧΡΩΜΑΤΩΝ ===== -->
@@ -2453,12 +2775,26 @@ body {
     <h2>📚 Οδηγίες Χρήσης</h2>
     
     <div class="help-section">
+	<h3>👍 Μια εφαρμογή πλήρως λειτουργική που περιλαμβάνει:</h3>
+	<ul>
+  <p> ✅ Έξυπνη διαχείριση σελιδοδεικτών</p>
+  <p> ✅ Optimized Drag & Drop performance  </p>
+ <p>  ✅ Post-it σημειώσεις με αυτόματη προσαρμογή χρωμάτων</p>
+ <p>  ✅ Zuccaradio web radio</p>
+  <p> ✅ Welcome sound στο πρώτο κλικ</p>
+  <p> ✅ Πλήρη ελληνικά σχόλια για εύκολη εκμάθηση</p>
+  <p> ✅ Auto-Navigation system με τυχαίο highlight</p>
+   <ul>
+   
+  <li> Για υποστήριξη ή ερωτήσεις, επικοινωνήστε με το Doukas Pharmacy Support®</li>
+	
         <h3>🎴 Πώς να χρησιμοποιήσετε τα shortcuts</h3>
         <p>Για εύκολο χειρισμό των αγαπημένων σας sites</p>
         <ul>
             <li>Χρησιμοποιήστε τα κουμπιά <strong>"Επόμενη"</strong> και <strong>"Προηγούμενη"</strong> για πλοήγηση</li>
         </ul>
     </div>
+	
     
     <div class="help-section">
         <h3>💡 Συμβουλές Μάθησης</h3>
@@ -2551,11 +2887,12 @@ const userTips = [
   "  💡Tip:  💾 Χρησιμοποίησε Backup/Restore για να διατηρήσεις τα δεδομένα σου ασφαλή!",
   "  💡Tip:  🎨 Δοκίμασε διαφορετικά themes από το dropdown menu!",
   "  💡Tip:  📝 Χρησιμοποίησε τα Post-it για γρήγορες σημειώσεις!",
+  "  🔑​Tip:  🌝 ​Να μην ξεχνάς να χαμογελάς κάνει τους άλλους να ανησυχούν!",
   "  💡Tip:  🎶 Ανακάλυψε νέα υπέροχη μουσική από το Zuccaradio player!",
   "  💡Tip:  📱 Η εφαρμογή είναι responsive - δουλεύει τέλεια και σε κινητά!",
   "  💡Tip:  ⚡ Κάνε click πάνω δεξια σε κατηγορία για να την επεξεργαστείς!",
   "  💡Tip:  🔄 Μετακίνησε κατηγορίες με drag & drop για καλύτερη οργάνωση!",
-  "  💡Tip:  ❤️ Μόλις προστεθεί μια νέα λειτουργία θα ενημερωθείτε αμεσα εδώ !"
+  "  💡Tip:  ❤️ Μόλις προστεθεί μια νέα λειτουργία θα ενημερωθείτε άμεσα εδώ !"
 ];
 
 let currentTipIndex = 0;
@@ -2568,13 +2905,20 @@ function showTip(tipText) {
   if (!banner) return;
   
   banner.textContent = tipText;
+  banner.setAttribute('data-text', tipText);  // Για το hover effect
   banner.style.display = 'block';
+  
+  // Reset animation
+  banner.style.animation = 'none';
+  setTimeout(() => {
+    banner.style.animation = 'slideFromRight 1s ease-out forwards';
+  }, 10);
   
   // Αυτόματη απόκρυψη μετά από 6 δευτερόλεπτα
   if (tipDisplayTimer) clearTimeout(tipDisplayTimer);
   tipDisplayTimer = setTimeout(() => {
     banner.style.display = 'none';
-  }, 5000);
+  }, 6000);
 }
 
 // Εμφάνιση τυχαίου tip
@@ -5085,7 +5429,197 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleButton.classList.add('video-on');
         }
     }
+	// 🎯 Auto-Navigation: Εκκίνηση του auto-navigation system
+initAutoNavigation();
 });
+
+
+
+
+
+
+// === AUTO-NAVIGATION SYSTEM - ΔΙΟΡΘΩΜΕΝΟ ===
+// 🔧 ΡΥΘΜΙΣΕΙΣ: IDLE_THRESHOLD=60s, CYCLE_INTERVAL=25s
+
+let autoNavigationEnabled = false;
+let lastHighlightedCard = null;
+let idleTimer = null;
+let autoCycleTimer = null;
+
+// ⏰ Χρονικές Ρυθμίσεις (ΤΑΧΥΤΗΤΑ)
+const IDLE_THRESHOLD = 30000;      // 60 δευτερόλεπτα = 1 λεπτό αδράνεια
+const CYCLE_INTERVAL = 10000;      // 25 δευτερόλεπτα αλλαγή κάρτας
+
+// 🎯 Τυχαία Επισήμανση Κάρτας
+function highlightRandomCard() {
+  const cards = document.querySelectorAll('.card');
+  if (cards.length === 0) return;
+
+  // Αφαίρεση προηγούμενης επισήμανσης
+  if (lastHighlightedCard) {
+    lastHighlightedCard.classList.remove('autonav-highlight');
+  }
+
+  // Επιλογή νέας τυχαίας κάρτας
+  let randomCard;
+  do {
+    randomCard = cards[Math.floor(Math.random() * cards.length)];
+  } while (randomCard === lastHighlightedCard && cards.length > 1);
+
+  // Εφαρμογή νέας επισήμανσης
+  randomCard.classList.add('autonav-highlight');
+  lastHighlightedCard = randomCard;
+}
+
+// 🚀 Idle Detection Setup
+function setupIdleDetection() {
+  // Επαναφορά timer
+  if (idleTimer) clearTimeout(idleTimer);
+
+  // Νέος timer
+  idleTimer = setTimeout(() => {
+    if (!autoNavigationEnabled) {  // 🔧 ΔΙΟΡΘΩΣΗ: Έλεγχος αν δεν είναι ήδη ενεργό
+      autoNavigationEnabled = true;
+      console.log('🎯 Auto-Navigation: Ενεργοποιήθηκε λόγω αδράνειας');
+      startAutoCycle();
+    }
+  }, IDLE_THRESHOLD);
+}
+
+// 🔄 Reset Idle Timer
+function resetIdleTimer() {
+  // 🔧 ΔΙΟΡΘΩΣΗ: Πάντα κάνε reset στον timer
+  setupIdleDetection();
+  
+  // 🔧 ΔΙΟΡΘΩΣΗ: Σταμάτα αν το auto-navigation είναι ενεργό
+  if (autoNavigationEnabled) {
+    console.log('⏸️ Auto-Navigation: Σταμάτησε λόγω δραστηριότητας');
+    autoNavigationEnabled = false;
+    if (autoCycleTimer) clearInterval(autoCycleTimer);
+    if (lastHighlightedCard) {
+      lastHighlightedCard.classList.remove('autonav-highlight');
+      lastHighlightedCard = null;
+    }
+  }
+}
+
+// 🎮 Start Auto Cycle
+function startAutoCycle() {
+  if (autoCycleTimer) clearInterval(autoCycleTimer);
+  
+  highlightRandomCard(); // Πρώτη επισήμανση
+  autoCycleTimer = setInterval(highlightRandomCard, CYCLE_INTERVAL);
+}
+
+// 🎯 Κύρια Συνάρτηση Εκκίνησης
+function initAutoNavigation() {
+  console.log('🚀 Auto-Navigation System: Εκκίνηση...');
+  
+  // Event Listeners για user activity
+  ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+    document.addEventListener(event, () => {
+      resetIdleTimer();  // 🔧 ΔΙΟΡΘΩΣΗ: Κάλεσε πάντα τη resetIdleTimer
+    }, { passive: true });
+  });
+  
+  
+  // ΕΝΣΩΜΑΤΩΣΗ 3/3: Κώδικας JavaScript για Λήψη Δεδομένων Καιρού
+
+// ⚠️ ΠΡΟΣΟΧΗ: Θέλετε να αντικαταστήσετε:
+// 1. ΤΟ ΚΛΕΙΔΙ (YOUR_API_KEY) με το δικό σας κλειδί API από το OpenWeatherMap.
+// 2. ΤΗΝ ΠΟΛΗ (Athens,gr) με την πόλη που θέλετε να εμφανίζεται.
+
+const API_KEY = "3223af2ac93eb986a413910d73fda803"; // <-- Αλλάξτε εδώ!
+const CITY_NAME = "Athens,gr";   // <-- Αλλάξτε εδώ (π.χ. "Thessaloniki,gr")
+const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&units=metric&lang=el&appid=${API_KEY}`;
+
+// Αντιστοίχιση κωδικών OpenWeatherMap με εικονίδια
+// Μπορείτε να χρησιμοποιήσετε τα επίσημα εικονίδια της OWM ή να βρείτε δικά σας.
+// Εδώ χρησιμοποιούμε τα επίσημα. 
+const OWM_ICON_URL = "https://openweathermap.org/img/wn/";
+
+function updateWeatherWidget() {
+    // Έλεγχος για κλειδί API
+    // (Αν το κλειδί είναι ακόμα το placeholder 'YOUR_API_KEY', εμφανίζει μήνυμα)
+    if (API_KEY === "YOUR_API_KEY") {
+        const weatherLocation = document.getElementById('weatherLocation');
+        const weatherTemp = document.getElementById('weatherTemp');
+        if (weatherLocation) weatherLocation.textContent = "API Key λείπει!";
+        if (weatherTemp) weatherTemp.textContent = "⚠️";
+        return;
+    }
+    
+    fetch(weatherUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod === 200 && data.weather && data.weather[0]) {
+                const temp = Math.round(data.main.temp);
+                const condition = data.weather[0].description;
+                const city = data.name;
+                const iconCode = data.weather[0].icon;
+
+                const weatherLocation = document.getElementById('weatherLocation');
+                const weatherTemp = document.getElementById('weatherTemp');
+                const weatherCondition = document.getElementById('weatherCondition');
+                const weatherIcon = document.getElementById('weatherIcon');
+                
+                if (weatherLocation) weatherLocation.textContent = city;
+                if (weatherTemp) weatherTemp.textContent = `${temp}°C`;
+                if (weatherCondition) weatherCondition.textContent = condition.charAt(0).toUpperCase() + condition.slice(1);
+                
+                // Έλεγχος αν το iconCode είναι valid πριν θέσουμε το src
+                if (weatherIcon && iconCode && typeof iconCode === 'string' && iconCode.length > 0) {
+                    weatherIcon.src = `${OWM_ICON_URL}${iconCode}@2x.png`;
+                    weatherIcon.alt = condition;
+                } else {
+                    // Καθαρισμός του src αν δεν υπάρχει valid iconCode
+                    if (weatherIcon) weatherIcon.src = '';
+                }
+            } else {
+                const weatherLocation = document.getElementById('weatherLocation');
+                const weatherTemp = document.getElementById('weatherTemp');
+                if (weatherLocation) weatherLocation.textContent = "Πόλη/Key Λάθος";
+                if (weatherTemp) weatherTemp.textContent = "--°C";
+                console.error("Weather API error:", data.message);
+            }
+        })
+        .catch(error => {
+            const weatherLocation = document.getElementById('weatherLocation');
+            const weatherTemp = document.getElementById('weatherTemp');
+            if (weatherLocation) weatherLocation.textContent = "Σφάλμα Δικτύου";
+            if (weatherTemp) weatherTemp.textContent = "--°C";
+            console.error("Fetch error:", error);
+        });
+}
+
+// Εκτελέστε την ενημέρωση μια φορά με την φόρτωση της σελίδας
+updateWeatherWidget();
+
+// Ενημερώστε τον καιρό κάθε 10 λεπτά (600000 ms)
+setInterval(updateWeatherWidget, 600000);
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  // Εκκίνηση idle detection
+  setupIdleDetection();
+  
+  console.log('✅ Auto-Navigation System: Έτοιμο! Περιμένει 60s αδράνεια...');
+}
+
+
+
+
+
+
+
 /* =====================================================================
    🎉 ΤΕΛΟΣ ΕΦΑΡΜΟΓΗΣ "ΤΑ ΔΙΚΑ ΜΟΥ ΧΡΗΣΙΜΑ"
    =====================================================================
@@ -5096,6 +5630,8 @@ document.addEventListener('DOMContentLoaded', function() {
    ✅ Zuccaradio web radio
    ✅ Welcome sound στο πρώτο κλικ
    ✅ Πλήρη ελληνικά σχόλια για εύκολη συντήρηση
+   ✅ Auto-Navigation system με τυχαίο highlight
+   
    
    Για υποστήριξη ή ερωτήσεις, επικοινωνήστε με το Doukas Pharmacy Support®
    --------------------------------------------------------------------- */
