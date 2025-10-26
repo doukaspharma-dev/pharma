@@ -134,7 +134,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px; /* Κενό μεταξύ των στοιχείων */
+    gap: 8px; /* Κενό μεταξύ των στοιχείων */
     width: auto; /* Αλλαγή από 300px σε auto */
     position: relative;
     flex-wrap: nowrap; /* Να μην τυλίγονται */
@@ -144,7 +144,7 @@ body {
 
 
 .wrap {
-  max-widt1h: 1250px;
+  max-widt1h: 1200px;
   margin:  auto;
   padding: 12px 0 120px; /* Μείωση κάτω padding από 210px σε 120px */
   width: 100%;
@@ -190,7 +190,7 @@ body:has(footer) .wrap {
 .theme-selector-below-clock {
     display: flex;
     justify-content: flex-end;
-    transform: translateY 15px;  /* <-- ΠΡΟΣΘΕΣΤΕ ΑΥΤΟ */
+    transform: translateY(15px);  /* <-- ΠΡΟΣΘΕΣΤΕ ΑΥΤΟ */
     padding-right: 20px;
 }
   
@@ -1674,6 +1674,9 @@ footer .btnrow button {
 
 
 
+
+
+
 /* =====================================================================
    📝 POST-IT WIDGET - ΒΑΣΙΚΕΣ ΡΥΘΜΙΣΕΙΣ
    =====================================================================
@@ -1977,7 +1980,7 @@ footer .btnrow button {
 }
 
 .btn-edit {
-    background: rgba(255, 166, 0, 0.279);
+    background: rgba(255, 165, 0, 0.3);
 }
 
 .btn-edit:hover {
@@ -2274,7 +2277,7 @@ body {
 .topbar-center {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;  /* Απόσταση ανάμεσα στα κουμπιά */
+  gap: 17px;  /* Απόσταση ανάμεσα στα κουμπιά */
   justify-content: center;
   flex: 1;
   min-width: 0;
@@ -2306,11 +2309,11 @@ body {
     font-weight: 600;
     cursor: pointer;
     font-size: 13px !important;
-    min-width: 85px;
+    min-width: 75px;
     text-align: center;
     white-space: nowrap; /* Να μην σπάει το κείμενο */
     flex-shrink: 0; /* Να μην συρρικνώνονται */
-    margin: 4px; /* Αφαίρεση όλων των margins */
+    margin: 0; /* Αφαίρεση όλων των margins */
 }
 
 #videoToggle.video-on, #audioButton.audio-on {
@@ -2413,111 +2416,8 @@ body {
 
 
 
-/* =====================================================================
-   ☀️ 15. WIDGET ΚΑΙΡΟΥ (Weather Widget)
-   ===================================================================== */
 
-/* Θέση αριστερά απο την επωνυμία και στυλ Glass-morphism */
 
-.weather-widget {
-  position: relative;
-  background: rgba(30, 30, 30, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 14px;
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
-  box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  padding: 12px 18px;
-  min-width: 150px;
-  text-align: center;
-  flex-shrink: 0;
-  margin-right: 30px;
-  transition: all 0.25s ease-in-out;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Neon effect (χρησιμοποιεί πορτοκαλί/κίτρινο τόνο) */
-.weather-widget::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  padding: 2px;
-  background: linear-gradient(
-    130deg,
-    rgba(255, 165, 0, 0.6), /* Χρώμα που ταιριάζει με τον καιρό (ήλιος/accent) */
-    rgba(255, 255, 0, 0.6),
-    rgba(255, 165, 0, 0.6)
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.35;
-  transition: opacity 0.3s ease;
-}
-
-.weather-widget:hover::before {
-  opacity: 0.8;
-}
-
-.weather-widget:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.55),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1);
-}
-
-.weather-widget .location {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent); /* Χρησιμοποιεί το accent color */
-    margin-bottom: 5px;
-}
-
-.weather-widget .temp-icon {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 5px;
-}
-
-.weather-widget .temperature {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--text);
-    text-shadow: 0 0 8px rgba(244, 162, 97, 0.4);
-}
-
-.weather-widget .weather-icon {
-    width: 30px;
-    height: 30px;
-}
-
-.weather-widget .condition {
-    font-size: 14px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Responsive adjustment: Στις μικρές οθόνες τοποθετείται πρώτο στη στήλη */
-@media (max-width: 768px) {
-  .weather-widget {
-    margin: 0 auto 10px auto;
-    order: -2;
-  }
-  
-  /* Πρέπει να ενημερώσετε και το header/logo-title για να υποστηρίζει και τα δύο widgets */
-  header {
-    /* Εάν χρειάζεται, αφαιρέστε το flex-shrink: 0; από το datetime-widget για να χωρέσει */
-  }
-}
 
 
  </style>
@@ -2550,14 +2450,7 @@ body {
 <header>
 
 
-<div class="weather-widget">
-    <div id="weatherLocation" class="location">Φόρτωση...</div>
-    <div class="temp-icon">
-        <span id="weatherTemp" class="temperature">--°C</span>
-        <img id="weatherIcon" src="" alt="Κατάσταση Καιρού" class="weather-icon">
-    </div>
-    <div id="weatherCondition" class="condition">--</div>
-</div>
+
 
 
 
@@ -5522,81 +5415,7 @@ function initAutoNavigation() {
     }, { passive: true });
   });
   
-  
-  // ΕΝΣΩΜΑΤΩΣΗ 3/3: Κώδικας JavaScript για Λήψη Δεδομένων Καιρού
 
-// ⚠️ ΠΡΟΣΟΧΗ: Θέλετε να αντικαταστήσετε:
-// 1. ΤΟ ΚΛΕΙΔΙ (YOUR_API_KEY) με το δικό σας κλειδί API από το OpenWeatherMap.
-// 2. ΤΗΝ ΠΟΛΗ (Athens,gr) με την πόλη που θέλετε να εμφανίζεται.
-
-const API_KEY = "3223af2ac93eb986a413910d73fda803"; // <-- Αλλάξτε εδώ!
-const CITY_NAME = "Athens,gr";   // <-- Αλλάξτε εδώ (π.χ. "Thessaloniki,gr")
-const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&units=metric&lang=el&appid=${API_KEY}`;
-
-// Αντιστοίχιση κωδικών OpenWeatherMap με εικονίδια
-// Μπορείτε να χρησιμοποιήσετε τα επίσημα εικονίδια της OWM ή να βρείτε δικά σας.
-// Εδώ χρησιμοποιούμε τα επίσημα. 
-const OWM_ICON_URL = "https://openweathermap.org/img/wn/";
-
-function updateWeatherWidget() {
-    // Έλεγχος για κλειδί API
-    // (Αν το κλειδί είναι ακόμα το placeholder 'YOUR_API_KEY', εμφανίζει μήνυμα)
-    if (API_KEY === "YOUR_API_KEY") {
-        const weatherLocation = document.getElementById('weatherLocation');
-        const weatherTemp = document.getElementById('weatherTemp');
-        if (weatherLocation) weatherLocation.textContent = "API Key λείπει!";
-        if (weatherTemp) weatherTemp.textContent = "⚠️";
-        return;
-    }
-    
-    fetch(weatherUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.cod === 200 && data.weather && data.weather[0]) {
-                const temp = Math.round(data.main.temp);
-                const condition = data.weather[0].description;
-                const city = data.name;
-                const iconCode = data.weather[0].icon;
-
-                const weatherLocation = document.getElementById('weatherLocation');
-                const weatherTemp = document.getElementById('weatherTemp');
-                const weatherCondition = document.getElementById('weatherCondition');
-                const weatherIcon = document.getElementById('weatherIcon');
-                
-                if (weatherLocation) weatherLocation.textContent = city;
-                if (weatherTemp) weatherTemp.textContent = `${temp}°C`;
-                if (weatherCondition) weatherCondition.textContent = condition.charAt(0).toUpperCase() + condition.slice(1);
-                
-                // Έλεγχος αν το iconCode είναι valid πριν θέσουμε το src
-                if (weatherIcon && iconCode && typeof iconCode === 'string' && iconCode.length > 0) {
-                    weatherIcon.src = `${OWM_ICON_URL}${iconCode}@2x.png`;
-                    weatherIcon.alt = condition;
-                } else {
-                    // Καθαρισμός του src αν δεν υπάρχει valid iconCode
-                    if (weatherIcon) weatherIcon.src = '';
-                }
-            } else {
-                const weatherLocation = document.getElementById('weatherLocation');
-                const weatherTemp = document.getElementById('weatherTemp');
-                if (weatherLocation) weatherLocation.textContent = "Πόλη/Key Λάθος";
-                if (weatherTemp) weatherTemp.textContent = "--°C";
-                console.error("Weather API error:", data.message);
-            }
-        })
-        .catch(error => {
-            const weatherLocation = document.getElementById('weatherLocation');
-            const weatherTemp = document.getElementById('weatherTemp');
-            if (weatherLocation) weatherLocation.textContent = "Σφάλμα Δικτύου";
-            if (weatherTemp) weatherTemp.textContent = "--°C";
-            console.error("Fetch error:", error);
-        });
-}
-
-// Εκτελέστε την ενημέρωση μια φορά με την φόρτωση της σελίδας
-updateWeatherWidget();
-
-// Ενημερώστε τον καιρό κάθε 10 λεπτά (600000 ms)
-setInterval(updateWeatherWidget, 600000);
 
   
   
